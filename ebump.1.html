@@ -1,199 +1,222 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8"/>
-<style>
-table.head, table.foot { width: 100%; }
-td.head-rtitle, td.foot-os { text-align: right; }
-td.head-vol { text-align: center; }
-table.foot td { width: 50%; }
-table.head td { width: 33%; }
-div.spacer { margin: 1em 0; }
-</style>
-<title>
-ebump(1)</title>
-</head>
-<body>
-<div class="mandoc">
-<table class="head">
-<tbody>
-<tr>
-<td class="head-ltitle">
-ebump(1)</td>
-<td class="head-vol">
-Gentoo Administration</td>
-<td class="head-rtitle">
-ebump(1)</td>
-</tr>
-</tbody>
-</table>
-<div class="section">
-<h1>NAME</h1> ebump - Gentoo: Ebuild revision bumper</div>
-<div class="section">
-<h1>SYNTAX</h1> ebump [ <i>option</i>] &lt;<i>package-name[-version]</i>&gt;<div style="height: 1.00em;">
-&#160;</div>
-</div>
-<div class="section">
-<h1>DESCRIPTION</h1>  <i>ebump</i> bumps the revision of a particular ebuild, and all auxiliary files in the files/ directory that have a matching version suffix.<div style="height: 1.00em;">
-&#160;</div>
-<div class="spacer">
-</div>
-By default, the all new revision files will be added to the VCS.<div style="height: 1.00em;">
-&#160;</div>
-<div class="spacer">
-</div>
-You must stand in the directory of the ebuild to be bumped.<div style="height: 1.00em;">
-&#160;</div>
-</div>
-<div class="section">
-<h1>OPTIONS</h1>  <b>-C</b><div style="height: 0.00em;">
-&#160;</div>
-<b>--no-vcs</b><b></b><dl>
-<dt>
-</dt>
-<dd>
-Do not add new files to VCS.<div style="height: 1.00em;">
-&#160;</div>
-</dd>
-</dl>
-<div class="spacer">
-</div>
-<b>-V</b><div style="height: 0.00em;">
-&#160;</div>
-<b>--version</b><b></b><dl>
-<dt>
-</dt>
-<dd>
-Display version information and exit.<div style="height: 1.00em;">
-&#160;</div>
-</dd>
-</dl>
-<div class="spacer">
-</div>
-<b>-v</b><div style="height: 0.00em;">
-&#160;</div>
-<b>--verbose</b><b></b><dl>
-<dt>
-</dt>
-<dd>
-Increase verbosity level. May be used more than once.<div style="height: 1.00em;">
-&#160;</div>
-</dd>
-</dl>
-<div class="spacer">
-</div>
-<b>-q</b><div style="height: 0.00em;">
-&#160;</div>
-<b>--quiet</b><b></b><dl>
-<dt>
-</dt>
-<dd>
-Do not output any non-essential information.<div style="height: 1.00em;">
-&#160;</div>
-</dd>
-</dl>
-<div class="spacer">
-</div>
-<b>-a</b><div style="height: 0.00em;">
-&#160;</div>
-<b>--no-auxfiles</b><b></b><dl>
-<dt>
-</dt>
-<dd>
-don't bump auxfiles (files/*)<div style="height: 1.00em;">
-&#160;</div>
-</dd>
-</dl>
-<div class="spacer">
-</div>
-<b>-c</b><div style="height: 0.00em;">
-&#160;</div>
-<b>--no-changelog</b><b></b><dl>
-<dt>
-</dt>
-<dd>
-do not update ChangeLog (via echangelog)<div style="height: 1.00em;">
-&#160;</div>
-</dd>
-</dl>
-<div class="spacer">
-</div>
-<b>-m</b> &lt;<i>ChangeLog text</i>&gt;<div style="height: 0.00em;">
-&#160;</div>
-<b>--message</b> &lt;<i>ChangeLog text</i>&gt;<dl>
-<dt>
-</dt>
-<dd>
-Specifies the message to add to the ChangeLog, instead of the standard placeholder.<div style="height: 1.00em;">
-&#160;</div>
-</dd>
-</dl>
-<div class="spacer">
-</div>
-<b>-d</b><div style="height: 0.00em;">
-&#160;</div>
-<b>--delete-old</b><dl>
-<dt>
-</dt>
-<dd>
-Delete old revision and old auxiliary files from VCS. This is  <i>dangerous</i> and should only be used if you know exactly what you are doing, because<div style="height: 0.00em;">
-&#160;</div>
-1) the old revision may be stable on a different architecture than the one you are working on.<div style="height: 0.00em;">
-&#160;</div>
-2) the auxiliary files may be required by other versions of the ebuild.<div style="height: 0.00em;">
-&#160;</div>
-3) the new revision should usually undergo a period of testing before being marked stable.<div style="height: 1.00em;">
-&#160;</div>
-</dd>
-</dl>
-</div>
-<div class="section">
-<h1>CONFIGURATION</h1>  <b>/etc/gentoolkit/ebump.conf</b><div style="height: 0.00em;">
-&#160;</div>
-<b>~/.gentoo/ebump.conf</b><dl>
-<dt>
-</dt>
-<dd>
-From these files, <i>ebump</i> will load the settings<div style="height: 0.00em;">
-&#160;</div>
-<b>opt_verbosity</b> (default <i>1</i>) - verbosity level 0-10<div style="height: 0.00em;">
-&#160;</div>
-<b>opt_add_changelog</b> (default <i>y</i>) - add entry in ChangeLog<div style="height: 0.00em;">
-&#160;</div>
-<b>opt_add_vcs</b> (default <i>y</i>) - add new files to VCS<div style="height: 0.00em;">
-&#160;</div>
-<b>opt_bump_auxfiles</b> (default <i>y</i>) - bump auxiliary files in files/<div style="height: 0.00em;">
-&#160;</div>
-<b>opt_delete_old</b> (default <i>n</i>) - delete old revision (DANGEROUS!)<div style="height: 0.00em;">
-&#160;</div>
-<b>opt_commitmessage</b> (default <i>&quot;&quot;</i>) - default ChangeLog message<div style="height: 1.00em;">
-&#160;</div>
-</dd>
-</dl>
-<div class="spacer">
-</div>
-<b>(DEPRECATED)</b><div style="height: 0.00em;">
-&#160;</div>
-<b>~/.gentoo/gentool-env</b> From this file,  <i>ebump</i> will load the env vars <b>AUTHORNAME</b> and  <b>AUTHOREMAIL</b>, which are used to generate proper ChangeLog entries.<div style="height: 1.00em;">
-&#160;</div>
-</div>
-<div class="section">
-<h1>SEE ALSO</h1> The rest of the utilities in  <i>app-portage/gentoolkit-dev</i>, such as  <i>echangelog(1)</i> and <i>ekeyword(1)</i>.<div style="height: 1.00em;">
-&#160;</div>
-</div>
-<div class="section">
-<h1>AUTHORS</h1> Karl Trygve Kalleberg &lt;karltk@gentoo.org&gt;<div style="height: 0.00em;">
-&#160;</div>
-Christian Ruppert &lt;idl0r@gentoo.org&gt;</div>
-<table class="foot">
-<tr>
-<td class="foot-date">
-0.1.1</td>
-<td class="foot-os">
-Gentoolkit</td>
-</tr>
-</table>
-</div>
-</body>
-</html>
+Content-type: text/html
 
+<HTML><HEAD><TITLE>Manpage of EBUMP</TITLE>
+</HEAD><BODY>
+<H1>EBUMP</H1>
+Section: Gentoo Administration (1)<BR>Updated: 0.4.0<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+<P>
+
+ebump - Gentoo: Ebuild revision bumper
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNTAX</H2>
+
+<P>
+
+ebump [<I>option</I>] &lt;<I>package-name[-version]</I>&gt;
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+<P>
+
+<I>ebump</I> bumps the revision of a particular ebuild, and all auxiliary
+files in the files/ directory that have a matching version suffix.
+<P>
+<P>
+
+By default, the all new revision files will be added to the VCS.
+<P>
+<P>
+
+You must stand in the directory of the ebuild to be bumped.
+<P>
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+<B>-C</B>
+<BR>
+
+<B>--no-vcs
+<DL COMPACT>
+<DT><DD>
+Do not add new files to VCS.
+<P>
+</DL>
+<P>
+
+-V</B>
+<BR>
+
+<B>--version
+<DL COMPACT>
+<DT><DD>
+Display version information and exit.
+<P>
+</DL>
+<P>
+
+-v</B>
+<BR>
+
+<B>--verbose
+<DL COMPACT>
+<DT><DD>
+Increase verbosity level. May be used more than once.
+<P>
+</DL>
+<P>
+
+-q</B>
+<BR>
+
+<B>--quiet
+<DL COMPACT>
+<DT><DD>
+Do not output any non-essential information.
+<P>
+</DL>
+<P>
+
+-a</B>
+<BR>
+
+<B>--no-auxfiles
+<DL COMPACT>
+<DT><DD>
+don't bump auxfiles (files/*)
+<P>
+</DL>
+<P>
+
+-c</B>
+<BR>
+
+<B>--no-changelog
+<DL COMPACT>
+<DT><DD>
+do not update ChangeLog (via echangelog)
+<P>
+</DL>
+<P>
+
+-m</B> &lt;<I>ChangeLog text</I>&gt;
+<BR>
+
+<B>--message</B> &lt;<I>ChangeLog text</I>&gt;
+<DL COMPACT>
+<DT><DD>
+Specifies the message to add to the ChangeLog, instead of the standard
+placeholder.
+<P>
+</DL>
+<P>
+
+<B>-d</B>
+<BR>
+
+<B>--delete-old</B>
+<DL COMPACT>
+<DT><DD>
+Delete old revision and old auxiliary files from VCS. This is
+<I>dangerous</I> and should only be used if you know exactly what you are
+doing, because
+<BR>
+
+1) the old revision may be stable on a different architecture than the one you
+are working on.
+<BR>
+
+2) the auxiliary files may be required by other versions of the ebuild.
+<BR>
+
+3) the new revision should usually undergo a period of testing before being marked stable.
+<P>
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>CONFIGURATION</H2>
+
+<P>
+<P>
+
+<B>/etc/gentoolkit/ebump.conf</B>
+<BR>
+
+<B>~/.gentoo/ebump.conf</B>
+<DL COMPACT>
+<DT><DD>
+From these files, <I>ebump</I> will load the settings
+<BR>
+
+<B>opt_verbosity</B> (default <I>1</I>) - verbosity level 0-10
+<BR>
+
+<B>opt_add_changelog</B> (default <I>y</I>) - add entry in ChangeLog
+<BR>
+
+<B>opt_add_vcs</B> (default <I>y</I>) - add new files to VCS
+<BR>
+
+<B>opt_bump_auxfiles</B> (default <I>y</I>) - bump auxiliary files in files/
+<BR>
+
+<B>opt_delete_old</B> (default <I>n</I>) - delete old revision (DANGEROUS!)
+<BR>
+
+<B>opt_commitmessage</B> (default <I>&quot;&quot;</I>) - default ChangeLog message
+<P>
+</DL>
+<P>
+
+<B>(DEPRECATED)</B>
+<BR>
+
+<B>~/.gentoo/gentool-env</B>
+<I>From</I>this<I>file,</I><I>ebump</I><I>will</I>load<I>the</I>env<I>vars</I><B>AUTHORNAME</B><I>and</I>
+
+<B>AUTHOREMAIL</B>, which are used to generate proper ChangeLog entries.
+<P>
+<A NAME="lbAG">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+
+The rest of the utilities in <I>app-portage/gentoolkit-dev</I>, such as
+<I><A HREF="http://localhost/cgi-bin/man/man2html?1+echangelog">echangelog</A>(1)</I> and <I><A HREF="http://localhost/cgi-bin/man/man2html?1+ekeyword">ekeyword</A>(1)</I>.
+<P>
+<A NAME="lbAH">&nbsp;</A>
+<H2>AUTHORS</H2>
+
+<P>
+
+Karl Trygve Kalleberg &lt;<A HREF="mailto:karltk@gentoo.org">karltk@gentoo.org</A>&gt;
+<BR>
+
+Christian Ruppert &lt;<A HREF="mailto:idl0r@gentoo.org">idl0r@gentoo.org</A>&gt;
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNTAX</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">CONFIGURATION</A><DD>
+<DT><A HREF="#lbAG">SEE ALSO</A><DD>
+<DT><A HREF="#lbAH">AUTHORS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 11:41:31 GMT, June 13, 2017
+</BODY>
+</HTML>
