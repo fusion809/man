@@ -1,0 +1,333 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of Git::SVN::Editor</TITLE>
+</HEAD><BODY>
+<H1>Git::SVN::Editor</H1>
+Section: User Contributed Perl Documentation (3)<BR>Updated: 2017-06-05<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+Git::SVN::Editor - commit driver for &quot;git svn set-tree&quot; and dcommit
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<A NAME="ixAAC"></A>
+
+
+<PRE>
+        use Git::SVN::Editor;
+        use Git::SVN::Ra;
+
+        my $ra = Git::SVN::Ra-&gt;new($url);
+        my %opts = (
+                r =&gt; 19,
+                log =&gt; &quot;log message&quot;,
+                ra =&gt; $ra,
+                config =&gt; SVN::Core::config_get_config($svn_config_dir),
+                tree_a =&gt; &quot;$commit^&quot;,
+                tree_b =&gt; &quot;$commit&quot;,
+                editor_cb =&gt; sub { print &quot;Committed r$_[0]\n&quot;; },
+                mergeinfo =&gt; &quot;/branches/foo:1-10&quot;,
+                svn_path =&gt; &quot;trunk&quot;
+        );
+        Git::SVN::Editor-&gt;new(\%opts)-&gt;apply_diff or print &quot;No changes\n&quot;;
+
+        my $re = Git::SVN::Editor::glob2pat(&quot;trunk/*&quot;);
+        if ($branchname =~ /$re/) {
+                print &quot;matched!\n&quot;;
+        }
+
+</PRE>
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<A NAME="ixAAD"></A>
+This module is an implementation detail of the ``git svn'' command.
+Do not use it unless you are developing git-svn.
+<P>
+
+This module adapts the <TT>&quot;SVN::Delta::Editor&quot;</TT> object returned by
+<TT>&quot;SVN::Delta::get_commit_editor&quot;</TT> and drives it to convey the
+difference between two git tree objects to a remote Subversion
+repository.
+<P>
+
+The interface will change as git-svn evolves.
+<A NAME="lbAE">&nbsp;</A>
+<H2>DEPENDENCIES</H2>
+
+<A NAME="ixAAE"></A>
+Subversion perl bindings,
+the core Carp module,
+and git's Git helper module.
+<P>
+
+<TT>&quot;Git::SVN::Editor&quot;</TT> has not been tested using callers other than
+<B>git-svn</B> itself.
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A NAME="ixAAF"></A>
+SVN::Delta,
+Git::SVN::Fetcher.
+<A NAME="lbAG">&nbsp;</A>
+<H2>INCOMPATIBILITIES</H2>
+
+<A NAME="ixAAG"></A>
+None reported.
+<A NAME="lbAH">&nbsp;</A>
+<H2>BUGS</H2>
+
+<A NAME="ixAAH"></A>
+None.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">DEPENDENCIES</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">INCOMPATIBILITIES</A><DD>
+<DT><A HREF="#lbAH">BUGS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:34:56 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of Git::SVN::Editor</TITLE>
+</HEAD><BODY>
+<H1>Git::SVN::Editor</H1>
+Section: User Contributed Perl Documentation (3)<BR>Updated: 2017-06-05<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+Git::SVN::Editor - commit driver for &quot;git svn set-tree&quot; and dcommit
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<A NAME="ixAAC"></A>
+
+
+<PRE>
+        use Git::SVN::Editor;
+        use Git::SVN::Ra;
+
+        my $ra = Git::SVN::Ra-&gt;new($url);
+        my %opts = (
+                r =&gt; 19,
+                log =&gt; &quot;log message&quot;,
+                ra =&gt; $ra,
+                config =&gt; SVN::Core::config_get_config($svn_config_dir),
+                tree_a =&gt; &quot;$commit^&quot;,
+                tree_b =&gt; &quot;$commit&quot;,
+                editor_cb =&gt; sub { print &quot;Committed r$_[0]\n&quot;; },
+                mergeinfo =&gt; &quot;/branches/foo:1-10&quot;,
+                svn_path =&gt; &quot;trunk&quot;
+        );
+        Git::SVN::Editor-&gt;new(\%opts)-&gt;apply_diff or print &quot;No changes\n&quot;;
+
+        my $re = Git::SVN::Editor::glob2pat(&quot;trunk/*&quot;);
+        if ($branchname =~ /$re/) {
+                print &quot;matched!\n&quot;;
+        }
+
+</PRE>
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<A NAME="ixAAD"></A>
+This module is an implementation detail of the ``git svn'' command.
+Do not use it unless you are developing git-svn.
+<P>
+
+This module adapts the <TT>&quot;SVN::Delta::Editor&quot;</TT> object returned by
+<TT>&quot;SVN::Delta::get_commit_editor&quot;</TT> and drives it to convey the
+difference between two git tree objects to a remote Subversion
+repository.
+<P>
+
+The interface will change as git-svn evolves.
+<A NAME="lbAE">&nbsp;</A>
+<H2>DEPENDENCIES</H2>
+
+<A NAME="ixAAE"></A>
+Subversion perl bindings,
+the core Carp module,
+and git's Git helper module.
+<P>
+
+<TT>&quot;Git::SVN::Editor&quot;</TT> has not been tested using callers other than
+<B>git-svn</B> itself.
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A NAME="ixAAF"></A>
+SVN::Delta,
+Git::SVN::Fetcher.
+<A NAME="lbAG">&nbsp;</A>
+<H2>INCOMPATIBILITIES</H2>
+
+<A NAME="ixAAG"></A>
+None reported.
+<A NAME="lbAH">&nbsp;</A>
+<H2>BUGS</H2>
+
+<A NAME="ixAAH"></A>
+None.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">DEPENDENCIES</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">INCOMPATIBILITIES</A><DD>
+<DT><A HREF="#lbAH">BUGS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:39:07 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of Git::SVN::Editor</TITLE>
+</HEAD><BODY>
+<H1>Git::SVN::Editor</H1>
+Section: User Contributed Perl Documentation (3)<BR>Updated: 2017-06-05<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+Git::SVN::Editor - commit driver for &quot;git svn set-tree&quot; and dcommit
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<A NAME="ixAAC"></A>
+
+
+<PRE>
+        use Git::SVN::Editor;
+        use Git::SVN::Ra;
+
+        my $ra = Git::SVN::Ra-&gt;new($url);
+        my %opts = (
+                r =&gt; 19,
+                log =&gt; &quot;log message&quot;,
+                ra =&gt; $ra,
+                config =&gt; SVN::Core::config_get_config($svn_config_dir),
+                tree_a =&gt; &quot;$commit^&quot;,
+                tree_b =&gt; &quot;$commit&quot;,
+                editor_cb =&gt; sub { print &quot;Committed r$_[0]\n&quot;; },
+                mergeinfo =&gt; &quot;/branches/foo:1-10&quot;,
+                svn_path =&gt; &quot;trunk&quot;
+        );
+        Git::SVN::Editor-&gt;new(\%opts)-&gt;apply_diff or print &quot;No changes\n&quot;;
+
+        my $re = Git::SVN::Editor::glob2pat(&quot;trunk/*&quot;);
+        if ($branchname =~ /$re/) {
+                print &quot;matched!\n&quot;;
+        }
+
+</PRE>
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<A NAME="ixAAD"></A>
+This module is an implementation detail of the ``git svn'' command.
+Do not use it unless you are developing git-svn.
+<P>
+
+This module adapts the <TT>&quot;SVN::Delta::Editor&quot;</TT> object returned by
+<TT>&quot;SVN::Delta::get_commit_editor&quot;</TT> and drives it to convey the
+difference between two git tree objects to a remote Subversion
+repository.
+<P>
+
+The interface will change as git-svn evolves.
+<A NAME="lbAE">&nbsp;</A>
+<H2>DEPENDENCIES</H2>
+
+<A NAME="ixAAE"></A>
+Subversion perl bindings,
+the core Carp module,
+and git's Git helper module.
+<P>
+
+<TT>&quot;Git::SVN::Editor&quot;</TT> has not been tested using callers other than
+<B>git-svn</B> itself.
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A NAME="ixAAF"></A>
+SVN::Delta,
+Git::SVN::Fetcher.
+<A NAME="lbAG">&nbsp;</A>
+<H2>INCOMPATIBILITIES</H2>
+
+<A NAME="ixAAG"></A>
+None reported.
+<A NAME="lbAH">&nbsp;</A>
+<H2>BUGS</H2>
+
+<A NAME="ixAAH"></A>
+None.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">DEPENDENCIES</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">INCOMPATIBILITIES</A><DD>
+<DT><A HREF="#lbAH">BUGS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:45:16 GMT, June 13, 2017
+</BODY>
+</HTML>

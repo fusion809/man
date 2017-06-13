@@ -1,0 +1,936 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-GUI</TITLE>
+</HEAD><BODY>
+<H1>GIT\-GUI</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-gui - A portable graphical interface to Git
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git gui</I> [&lt;command&gt;] [arguments]
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+A Tcl/Tk based graphical user interface to Git. <I>git gui</I> focuses on allowing users to make changes to their repository by making new commits, amending existing ones, creating branches, performing local merges, and fetching/pushing to remote repositories.
+<P>
+Unlike <I>gitk</I>, <I>git gui</I> focuses on commit generation and single file annotation and does not show project history. It does however supply menu actions to start a <I>gitk</I> session from within <I>git gui</I>.
+<P>
+<I>git gui</I> is known to work on all popular UNIX systems, Mac OS X, and Windows (under both Cygwin and MSYS). To the extent possible OS specific user interface guidelines are followed, making <I>git gui</I> a fairly native interface for users.
+<A NAME="lbAE">&nbsp;</A>
+<H2>COMMANDS</H2>
+
+<P>
+
+blame
+<DL COMPACT><DT><DD>
+Start a blame viewer on the specified file on the given version (or working directory if not specified).
+</DL>
+
+<P>
+
+browser
+<DL COMPACT><DT><DD>
+Start a tree browser showing all files in the specified commit. Files selected through the browser are opened in the blame viewer.
+</DL>
+
+<P>
+
+citool
+<DL COMPACT><DT><DD>
+Start
+<I>git gui</I>
+and arrange to make exactly one commit before exiting and returning to the shell. The interface is limited to only commit actions, slightly reducing the applicationcqs startup time and simplifying the menubar.
+</DL>
+
+<P>
+
+version
+<DL COMPACT><DT><DD>
+Display the currently running version of
+<I>git gui</I>.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>EXAMPLES</H2>
+
+<P>
+
+<B>git gui blame Makefile</B>
+<DL COMPACT><DT><DD>
+Show the contents of the file
+<I>Makefile</I>
+in the current working directory, and provide annotations for both the original author of each line, and who moved the line to its current location. The uncommitted file is annotated, and uncommitted changes (if any) are explicitly attributed to
+<I>Not Yet Committed</I>.
+</DL>
+
+<P>
+
+<B>git gui blame v0.99.8 Makefile</B>
+<DL COMPACT><DT><DD>
+Show the contents of
+<I>Makefile</I>
+in revision
+<I>v0.99.8</I>
+and provide annotations for each line. Unlike the above example the file is read from the object database and not the working directory.
+</DL>
+
+<P>
+
+<B>git gui blame --line=100 Makefile</B>
+<DL COMPACT><DT><DD>
+Loads annotations as described above and automatically scrolls the view to center on line
+<I>100</I>.
+</DL>
+
+<P>
+
+<B>git gui citool</B>
+<DL COMPACT><DT><DD>
+Make one commit and return to the shell when it is complete. This command returns a non-zero exit code if the window was closed in any way other than by making a commit.
+</DL>
+
+<P>
+
+<B>git gui citool --amend</B>
+<DL COMPACT><DT><DD>
+Automatically enter the
+<I>Amend Last Commit</I>
+mode of the interface.
+</DL>
+
+<P>
+
+<B>git gui citool --nocommit</B>
+<DL COMPACT><DT><DD>
+Behave as normal citool, but instead of making a commit simply terminate with a zero exit code. It still checks that the index does not contain any unmerged entries, so you can use it as a GUI version of
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-mergetool">git-mergetool</A></B>(1)
+</DL>
+
+<P>
+
+<B>git citool</B>
+<DL COMPACT><DT><DD>
+Same as
+<B>git gui citool</B>
+(above).
+</DL>
+
+<P>
+
+<B>git gui browser maint</B>
+<DL COMPACT><DT><DD>
+Show a browser for the tree of the
+<I>maint</I>
+branch. Files selected in the browser can be viewed with the internal blame viewer.
+</DL>
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+gitk">gitk</A></B>(1)
+<DL COMPACT><DT><DD>
+The Git repository browser. Shows branches, commit history and file differences. gitk is the utility started by
+<I>git gui</I>'s Repository Visualize actions.
+</DL>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>OTHER</H2>
+
+<P>
+<I>git gui</I> is actually maintained as an independent project, but stable versions are distributed as part of the Git suite for the convenience of end users.
+<P>
+A <I>git gui</I> development repository can be obtained from:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+git clone <A HREF="git://repo.or.cz/git-gui.git">git://repo.or.cz/git-gui.git</A>
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+or
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+git clone <A HREF="http://repo.or.cz/r/git-gui.git">http://repo.or.cz/r/git-gui.git</A>
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+or browsed online at m[blue]<B><A HREF="http://repo.or.cz/w/git-gui.git/">http://repo.or.cz/w/git-gui.git/</A></B>m[].
+<A NAME="lbAI">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">COMMANDS</A><DD>
+<DT><A HREF="#lbAF">EXAMPLES</A><DD>
+<DT><A HREF="#lbAG">SEE ALSO</A><DD>
+<DT><A HREF="#lbAH">OTHER</A><DD>
+<DT><A HREF="#lbAI">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:24:33 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-GUI</TITLE>
+</HEAD><BODY>
+<H1>GIT\-GUI</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-gui - A portable graphical interface to Git
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git gui</I> [&lt;command&gt;] [arguments]
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+A Tcl/Tk based graphical user interface to Git. <I>git gui</I> focuses on allowing users to make changes to their repository by making new commits, amending existing ones, creating branches, performing local merges, and fetching/pushing to remote repositories.
+<P>
+Unlike <I>gitk</I>, <I>git gui</I> focuses on commit generation and single file annotation and does not show project history. It does however supply menu actions to start a <I>gitk</I> session from within <I>git gui</I>.
+<P>
+<I>git gui</I> is known to work on all popular UNIX systems, Mac OS X, and Windows (under both Cygwin and MSYS). To the extent possible OS specific user interface guidelines are followed, making <I>git gui</I> a fairly native interface for users.
+<A NAME="lbAE">&nbsp;</A>
+<H2>COMMANDS</H2>
+
+<P>
+
+blame
+<DL COMPACT><DT><DD>
+Start a blame viewer on the specified file on the given version (or working directory if not specified).
+</DL>
+
+<P>
+
+browser
+<DL COMPACT><DT><DD>
+Start a tree browser showing all files in the specified commit. Files selected through the browser are opened in the blame viewer.
+</DL>
+
+<P>
+
+citool
+<DL COMPACT><DT><DD>
+Start
+<I>git gui</I>
+and arrange to make exactly one commit before exiting and returning to the shell. The interface is limited to only commit actions, slightly reducing the applicationcqs startup time and simplifying the menubar.
+</DL>
+
+<P>
+
+version
+<DL COMPACT><DT><DD>
+Display the currently running version of
+<I>git gui</I>.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>EXAMPLES</H2>
+
+<P>
+
+<B>git gui blame Makefile</B>
+<DL COMPACT><DT><DD>
+Show the contents of the file
+<I>Makefile</I>
+in the current working directory, and provide annotations for both the original author of each line, and who moved the line to its current location. The uncommitted file is annotated, and uncommitted changes (if any) are explicitly attributed to
+<I>Not Yet Committed</I>.
+</DL>
+
+<P>
+
+<B>git gui blame v0.99.8 Makefile</B>
+<DL COMPACT><DT><DD>
+Show the contents of
+<I>Makefile</I>
+in revision
+<I>v0.99.8</I>
+and provide annotations for each line. Unlike the above example the file is read from the object database and not the working directory.
+</DL>
+
+<P>
+
+<B>git gui blame --line=100 Makefile</B>
+<DL COMPACT><DT><DD>
+Loads annotations as described above and automatically scrolls the view to center on line
+<I>100</I>.
+</DL>
+
+<P>
+
+<B>git gui citool</B>
+<DL COMPACT><DT><DD>
+Make one commit and return to the shell when it is complete. This command returns a non-zero exit code if the window was closed in any way other than by making a commit.
+</DL>
+
+<P>
+
+<B>git gui citool --amend</B>
+<DL COMPACT><DT><DD>
+Automatically enter the
+<I>Amend Last Commit</I>
+mode of the interface.
+</DL>
+
+<P>
+
+<B>git gui citool --nocommit</B>
+<DL COMPACT><DT><DD>
+Behave as normal citool, but instead of making a commit simply terminate with a zero exit code. It still checks that the index does not contain any unmerged entries, so you can use it as a GUI version of
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-mergetool">git-mergetool</A></B>(1)
+</DL>
+
+<P>
+
+<B>git citool</B>
+<DL COMPACT><DT><DD>
+Same as
+<B>git gui citool</B>
+(above).
+</DL>
+
+<P>
+
+<B>git gui browser maint</B>
+<DL COMPACT><DT><DD>
+Show a browser for the tree of the
+<I>maint</I>
+branch. Files selected in the browser can be viewed with the internal blame viewer.
+</DL>
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+gitk">gitk</A></B>(1)
+<DL COMPACT><DT><DD>
+The Git repository browser. Shows branches, commit history and file differences. gitk is the utility started by
+<I>git gui</I>'s Repository Visualize actions.
+</DL>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>OTHER</H2>
+
+<P>
+<I>git gui</I> is actually maintained as an independent project, but stable versions are distributed as part of the Git suite for the convenience of end users.
+<P>
+A <I>git gui</I> development repository can be obtained from:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+git clone <A HREF="git://repo.or.cz/git-gui.git">git://repo.or.cz/git-gui.git</A>
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+or
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+git clone <A HREF="http://repo.or.cz/r/git-gui.git">http://repo.or.cz/r/git-gui.git</A>
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+or browsed online at m[blue]<B><A HREF="http://repo.or.cz/w/git-gui.git/">http://repo.or.cz/w/git-gui.git/</A></B>m[].
+<A NAME="lbAI">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">COMMANDS</A><DD>
+<DT><A HREF="#lbAF">EXAMPLES</A><DD>
+<DT><A HREF="#lbAG">SEE ALSO</A><DD>
+<DT><A HREF="#lbAH">OTHER</A><DD>
+<DT><A HREF="#lbAI">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:34:55 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-GUI</TITLE>
+</HEAD><BODY>
+<H1>GIT\-GUI</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-gui - A portable graphical interface to Git
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git gui</I> [&lt;command&gt;] [arguments]
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+A Tcl/Tk based graphical user interface to Git. <I>git gui</I> focuses on allowing users to make changes to their repository by making new commits, amending existing ones, creating branches, performing local merges, and fetching/pushing to remote repositories.
+<P>
+Unlike <I>gitk</I>, <I>git gui</I> focuses on commit generation and single file annotation and does not show project history. It does however supply menu actions to start a <I>gitk</I> session from within <I>git gui</I>.
+<P>
+<I>git gui</I> is known to work on all popular UNIX systems, Mac OS X, and Windows (under both Cygwin and MSYS). To the extent possible OS specific user interface guidelines are followed, making <I>git gui</I> a fairly native interface for users.
+<A NAME="lbAE">&nbsp;</A>
+<H2>COMMANDS</H2>
+
+<P>
+
+blame
+<DL COMPACT><DT><DD>
+Start a blame viewer on the specified file on the given version (or working directory if not specified).
+</DL>
+
+<P>
+
+browser
+<DL COMPACT><DT><DD>
+Start a tree browser showing all files in the specified commit. Files selected through the browser are opened in the blame viewer.
+</DL>
+
+<P>
+
+citool
+<DL COMPACT><DT><DD>
+Start
+<I>git gui</I>
+and arrange to make exactly one commit before exiting and returning to the shell. The interface is limited to only commit actions, slightly reducing the applicationcqs startup time and simplifying the menubar.
+</DL>
+
+<P>
+
+version
+<DL COMPACT><DT><DD>
+Display the currently running version of
+<I>git gui</I>.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>EXAMPLES</H2>
+
+<P>
+
+<B>git gui blame Makefile</B>
+<DL COMPACT><DT><DD>
+Show the contents of the file
+<I>Makefile</I>
+in the current working directory, and provide annotations for both the original author of each line, and who moved the line to its current location. The uncommitted file is annotated, and uncommitted changes (if any) are explicitly attributed to
+<I>Not Yet Committed</I>.
+</DL>
+
+<P>
+
+<B>git gui blame v0.99.8 Makefile</B>
+<DL COMPACT><DT><DD>
+Show the contents of
+<I>Makefile</I>
+in revision
+<I>v0.99.8</I>
+and provide annotations for each line. Unlike the above example the file is read from the object database and not the working directory.
+</DL>
+
+<P>
+
+<B>git gui blame --line=100 Makefile</B>
+<DL COMPACT><DT><DD>
+Loads annotations as described above and automatically scrolls the view to center on line
+<I>100</I>.
+</DL>
+
+<P>
+
+<B>git gui citool</B>
+<DL COMPACT><DT><DD>
+Make one commit and return to the shell when it is complete. This command returns a non-zero exit code if the window was closed in any way other than by making a commit.
+</DL>
+
+<P>
+
+<B>git gui citool --amend</B>
+<DL COMPACT><DT><DD>
+Automatically enter the
+<I>Amend Last Commit</I>
+mode of the interface.
+</DL>
+
+<P>
+
+<B>git gui citool --nocommit</B>
+<DL COMPACT><DT><DD>
+Behave as normal citool, but instead of making a commit simply terminate with a zero exit code. It still checks that the index does not contain any unmerged entries, so you can use it as a GUI version of
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-mergetool">git-mergetool</A></B>(1)
+</DL>
+
+<P>
+
+<B>git citool</B>
+<DL COMPACT><DT><DD>
+Same as
+<B>git gui citool</B>
+(above).
+</DL>
+
+<P>
+
+<B>git gui browser maint</B>
+<DL COMPACT><DT><DD>
+Show a browser for the tree of the
+<I>maint</I>
+branch. Files selected in the browser can be viewed with the internal blame viewer.
+</DL>
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+gitk">gitk</A></B>(1)
+<DL COMPACT><DT><DD>
+The Git repository browser. Shows branches, commit history and file differences. gitk is the utility started by
+<I>git gui</I>'s Repository Visualize actions.
+</DL>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>OTHER</H2>
+
+<P>
+<I>git gui</I> is actually maintained as an independent project, but stable versions are distributed as part of the Git suite for the convenience of end users.
+<P>
+A <I>git gui</I> development repository can be obtained from:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+git clone <A HREF="git://repo.or.cz/git-gui.git">git://repo.or.cz/git-gui.git</A>
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+or
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+git clone <A HREF="http://repo.or.cz/r/git-gui.git">http://repo.or.cz/r/git-gui.git</A>
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+or browsed online at m[blue]<B><A HREF="http://repo.or.cz/w/git-gui.git/">http://repo.or.cz/w/git-gui.git/</A></B>m[].
+<A NAME="lbAI">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">COMMANDS</A><DD>
+<DT><A HREF="#lbAF">EXAMPLES</A><DD>
+<DT><A HREF="#lbAG">SEE ALSO</A><DD>
+<DT><A HREF="#lbAH">OTHER</A><DD>
+<DT><A HREF="#lbAI">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:39:07 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-GUI</TITLE>
+</HEAD><BODY>
+<H1>GIT\-GUI</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-gui - A portable graphical interface to Git
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git gui</I> [&lt;command&gt;] [arguments]
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+A Tcl/Tk based graphical user interface to Git. <I>git gui</I> focuses on allowing users to make changes to their repository by making new commits, amending existing ones, creating branches, performing local merges, and fetching/pushing to remote repositories.
+<P>
+Unlike <I>gitk</I>, <I>git gui</I> focuses on commit generation and single file annotation and does not show project history. It does however supply menu actions to start a <I>gitk</I> session from within <I>git gui</I>.
+<P>
+<I>git gui</I> is known to work on all popular UNIX systems, Mac OS X, and Windows (under both Cygwin and MSYS). To the extent possible OS specific user interface guidelines are followed, making <I>git gui</I> a fairly native interface for users.
+<A NAME="lbAE">&nbsp;</A>
+<H2>COMMANDS</H2>
+
+<P>
+
+blame
+<DL COMPACT><DT><DD>
+Start a blame viewer on the specified file on the given version (or working directory if not specified).
+</DL>
+
+<P>
+
+browser
+<DL COMPACT><DT><DD>
+Start a tree browser showing all files in the specified commit. Files selected through the browser are opened in the blame viewer.
+</DL>
+
+<P>
+
+citool
+<DL COMPACT><DT><DD>
+Start
+<I>git gui</I>
+and arrange to make exactly one commit before exiting and returning to the shell. The interface is limited to only commit actions, slightly reducing the applicationcqs startup time and simplifying the menubar.
+</DL>
+
+<P>
+
+version
+<DL COMPACT><DT><DD>
+Display the currently running version of
+<I>git gui</I>.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>EXAMPLES</H2>
+
+<P>
+
+<B>git gui blame Makefile</B>
+<DL COMPACT><DT><DD>
+Show the contents of the file
+<I>Makefile</I>
+in the current working directory, and provide annotations for both the original author of each line, and who moved the line to its current location. The uncommitted file is annotated, and uncommitted changes (if any) are explicitly attributed to
+<I>Not Yet Committed</I>.
+</DL>
+
+<P>
+
+<B>git gui blame v0.99.8 Makefile</B>
+<DL COMPACT><DT><DD>
+Show the contents of
+<I>Makefile</I>
+in revision
+<I>v0.99.8</I>
+and provide annotations for each line. Unlike the above example the file is read from the object database and not the working directory.
+</DL>
+
+<P>
+
+<B>git gui blame --line=100 Makefile</B>
+<DL COMPACT><DT><DD>
+Loads annotations as described above and automatically scrolls the view to center on line
+<I>100</I>.
+</DL>
+
+<P>
+
+<B>git gui citool</B>
+<DL COMPACT><DT><DD>
+Make one commit and return to the shell when it is complete. This command returns a non-zero exit code if the window was closed in any way other than by making a commit.
+</DL>
+
+<P>
+
+<B>git gui citool --amend</B>
+<DL COMPACT><DT><DD>
+Automatically enter the
+<I>Amend Last Commit</I>
+mode of the interface.
+</DL>
+
+<P>
+
+<B>git gui citool --nocommit</B>
+<DL COMPACT><DT><DD>
+Behave as normal citool, but instead of making a commit simply terminate with a zero exit code. It still checks that the index does not contain any unmerged entries, so you can use it as a GUI version of
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-mergetool">git-mergetool</A></B>(1)
+</DL>
+
+<P>
+
+<B>git citool</B>
+<DL COMPACT><DT><DD>
+Same as
+<B>git gui citool</B>
+(above).
+</DL>
+
+<P>
+
+<B>git gui browser maint</B>
+<DL COMPACT><DT><DD>
+Show a browser for the tree of the
+<I>maint</I>
+branch. Files selected in the browser can be viewed with the internal blame viewer.
+</DL>
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+gitk">gitk</A></B>(1)
+<DL COMPACT><DT><DD>
+The Git repository browser. Shows branches, commit history and file differences. gitk is the utility started by
+<I>git gui</I>'s Repository Visualize actions.
+</DL>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>OTHER</H2>
+
+<P>
+<I>git gui</I> is actually maintained as an independent project, but stable versions are distributed as part of the Git suite for the convenience of end users.
+<P>
+A <I>git gui</I> development repository can be obtained from:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+git clone <A HREF="git://repo.or.cz/git-gui.git">git://repo.or.cz/git-gui.git</A>
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+or
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+git clone <A HREF="http://repo.or.cz/r/git-gui.git">http://repo.or.cz/r/git-gui.git</A>
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+or browsed online at m[blue]<B><A HREF="http://repo.or.cz/w/git-gui.git/">http://repo.or.cz/w/git-gui.git/</A></B>m[].
+<A NAME="lbAI">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">COMMANDS</A><DD>
+<DT><A HREF="#lbAF">EXAMPLES</A><DD>
+<DT><A HREF="#lbAG">SEE ALSO</A><DD>
+<DT><A HREF="#lbAH">OTHER</A><DD>
+<DT><A HREF="#lbAI">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:45:15 GMT, June 13, 2017
+</BODY>
+</HTML>

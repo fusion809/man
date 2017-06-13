@@ -1,0 +1,1072 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-FSCK</TITLE>
+</HEAD><BODY>
+<H1>GIT\-FSCK</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-fsck - Verifies the connectivity and validity of the objects in the database
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git fsck</I> [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]
+         [--[no-]full] [--strict] [--verbose] [--lost-found]
+         [--[no-]dangling] [--[no-]progress] [--connectivity-only]
+         [--[no-]name-objects] [&lt;object&gt;*]
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+Verifies the connectivity and validity of the objects in the database.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+&lt;object&gt;
+<DL COMPACT><DT><DD>
+An object to treat as the head of an unreachability trace.
+<P>
+If no objects are given,
+<I>git fsck</I>
+defaults to using the index file, all SHA-1 references in
+<B>refs</B>
+namespace, and all reflogs (unless --no-reflogs is given) as heads.
+</DL>
+
+<P>
+
+--unreachable
+<DL COMPACT><DT><DD>
+Print out objects that exist but that arencqt reachable from any of the reference nodes.
+</DL>
+
+<P>
+
+--[no-]dangling
+<DL COMPACT><DT><DD>
+Print objects that exist but that are never
+<I>directly</I>
+used (default).
+<B>--no-dangling</B>
+can be used to omit this information from the output.
+</DL>
+
+<P>
+
+--root
+<DL COMPACT><DT><DD>
+Report root nodes.
+</DL>
+
+<P>
+
+--tags
+<DL COMPACT><DT><DD>
+Report tags.
+</DL>
+
+<P>
+
+--cache
+<DL COMPACT><DT><DD>
+Consider any object recorded in the index also as a head node for an unreachability trace.
+</DL>
+
+<P>
+
+--no-reflogs
+<DL COMPACT><DT><DD>
+Do not consider commits that are referenced only by an entry in a reflog to be reachable. This option is meant only to search for commits that used to be in a ref, but now arencqt, but are still in that corresponding reflog.
+</DL>
+
+<P>
+
+--full
+<DL COMPACT><DT><DD>
+Check not just objects in GIT_OBJECT_DIRECTORY ($GIT_DIR/objects), but also the ones found in alternate object pools listed in GIT_ALTERNATE_OBJECT_DIRECTORIES or $GIT_DIR/objects/info/alternates, and in packed Git archives found in $GIT_DIR/objects/pack and corresponding pack subdirectories in alternate object pools. This is now default; you can turn it off with --no-full.
+</DL>
+
+<P>
+
+--connectivity-only
+<DL COMPACT><DT><DD>
+Check only the connectivity of tags, commits and tree objects. By avoiding to unpack blobs, this speeds up the operation, at the expense of missing corrupt objects or other problematic issues.
+</DL>
+
+<P>
+
+--strict
+<DL COMPACT><DT><DD>
+Enable more strict checking, namely to catch a file mode recorded with g+w bit set, which was created by older versions of Git. Existing repositories, including the Linux kernel, Git itself, and sparse repository have old objects that triggers this check, but it is recommended to check new projects with this flag.
+</DL>
+
+<P>
+
+--verbose
+<DL COMPACT><DT><DD>
+Be chatty.
+</DL>
+
+<P>
+
+--lost-found
+<DL COMPACT><DT><DD>
+Write dangling objects into .git/lost-found/commit/ or .git/lost-found/other/, depending on type. If the object is a blob, the contents are written into the file, rather than its object name.
+</DL>
+
+<P>
+
+--name-objects
+<DL COMPACT><DT><DD>
+When displaying names of reachable objects, in addition to the SHA-1 also display a name that describes
+<B>how</B>
+they are reachable, compatible with
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-rev-parse">git-rev-parse</A></B>(1), e.g.
+<B>HEAD@{1234567890}~25^2:src/</B>.
+</DL>
+
+<P>
+
+--[no-]progress
+<DL COMPACT><DT><DD>
+Progress status is reported on the standard error stream by default when it is attached to a terminal, unless --no-progress or --verbose is specified. --progress forces progress status even if the standard error stream is not directed to a terminal.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>DISCUSSION</H2>
+
+<P>
+git-fsck tests SHA-1 and general object sanity, and it does full tracking of the resulting reachability and everything else. It prints out any corruption it finds (missing or bad objects), and if you use the <B>--unreachable</B> flag it will also print out objects that exist but that arencqt reachable from any of the specified head nodes (or the default set, as mentioned above).
+<P>
+Any corrupt objects you will have to find in backups or other archives (i.e., you can just remove them and do an <I>rsync</I> with some other site in the hopes that somebody else has the object you have corrupted).
+<A NAME="lbAG">&nbsp;</A>
+<H2>EXTRACTED DIAGNOSTICS</H2>
+
+<P>
+
+expect dangling commits - potential heads - due to lack of head information
+<DL COMPACT><DT><DD>
+You havencqt specified any nodes as heads so it woncqt be possible to differentiate between un-parented commits and root nodes.
+</DL>
+
+<P>
+
+missing sha1 directory <I>&lt;dir&gt;</I>
+<DL COMPACT><DT><DD>
+The directory holding the sha1 objects is missing.
+</DL>
+
+<P>
+
+unreachable &lt;type&gt; &lt;object&gt;
+<DL COMPACT><DT><DD>
+The &lt;type&gt; object &lt;object&gt;, isncqt actually referred to directly or indirectly in any of the trees or commits seen. This can mean that therecqs another root node that youcqre not specifying or that the tree is corrupt. If you havencqt missed a root node then you might as well delete unreachable nodes since they cancqt be used.
+</DL>
+
+<P>
+
+missing &lt;type&gt; &lt;object&gt;
+<DL COMPACT><DT><DD>
+The &lt;type&gt; object &lt;object&gt;, is referred to but isncqt present in the database.
+</DL>
+
+<P>
+
+dangling &lt;type&gt; &lt;object&gt;
+<DL COMPACT><DT><DD>
+The &lt;type&gt; object &lt;object&gt;, is present in the database but never
+<I>directly</I>
+used. A dangling commit could be a root node.
+</DL>
+
+<P>
+
+sha1 mismatch &lt;object&gt;
+<DL COMPACT><DT><DD>
+The database has an object whocqs sha1 doesncqt match the database value. This indicates a serious data integrity problem.
+</DL>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>ENVIRONMENT VARIABLES</H2>
+
+<P>
+
+GIT_OBJECT_DIRECTORY
+<DL COMPACT><DT><DD>
+used to specify the object database root (usually $GIT_DIR/objects)
+</DL>
+
+<P>
+
+GIT_INDEX_FILE
+<DL COMPACT><DT><DD>
+used to specify the index file of the index
+</DL>
+
+<P>
+
+GIT_ALTERNATE_OBJECT_DIRECTORIES
+<DL COMPACT><DT><DD>
+used to specify additional object database roots (usually unset)
+</DL>
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">DISCUSSION</A><DD>
+<DT><A HREF="#lbAG">EXTRACTED DIAGNOSTICS</A><DD>
+<DT><A HREF="#lbAH">ENVIRONMENT VARIABLES</A><DD>
+<DT><A HREF="#lbAI">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:24:33 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-FSCK</TITLE>
+</HEAD><BODY>
+<H1>GIT\-FSCK</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-fsck - Verifies the connectivity and validity of the objects in the database
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git fsck</I> [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]
+         [--[no-]full] [--strict] [--verbose] [--lost-found]
+         [--[no-]dangling] [--[no-]progress] [--connectivity-only]
+         [--[no-]name-objects] [&lt;object&gt;*]
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+Verifies the connectivity and validity of the objects in the database.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+&lt;object&gt;
+<DL COMPACT><DT><DD>
+An object to treat as the head of an unreachability trace.
+<P>
+If no objects are given,
+<I>git fsck</I>
+defaults to using the index file, all SHA-1 references in
+<B>refs</B>
+namespace, and all reflogs (unless --no-reflogs is given) as heads.
+</DL>
+
+<P>
+
+--unreachable
+<DL COMPACT><DT><DD>
+Print out objects that exist but that arencqt reachable from any of the reference nodes.
+</DL>
+
+<P>
+
+--[no-]dangling
+<DL COMPACT><DT><DD>
+Print objects that exist but that are never
+<I>directly</I>
+used (default).
+<B>--no-dangling</B>
+can be used to omit this information from the output.
+</DL>
+
+<P>
+
+--root
+<DL COMPACT><DT><DD>
+Report root nodes.
+</DL>
+
+<P>
+
+--tags
+<DL COMPACT><DT><DD>
+Report tags.
+</DL>
+
+<P>
+
+--cache
+<DL COMPACT><DT><DD>
+Consider any object recorded in the index also as a head node for an unreachability trace.
+</DL>
+
+<P>
+
+--no-reflogs
+<DL COMPACT><DT><DD>
+Do not consider commits that are referenced only by an entry in a reflog to be reachable. This option is meant only to search for commits that used to be in a ref, but now arencqt, but are still in that corresponding reflog.
+</DL>
+
+<P>
+
+--full
+<DL COMPACT><DT><DD>
+Check not just objects in GIT_OBJECT_DIRECTORY ($GIT_DIR/objects), but also the ones found in alternate object pools listed in GIT_ALTERNATE_OBJECT_DIRECTORIES or $GIT_DIR/objects/info/alternates, and in packed Git archives found in $GIT_DIR/objects/pack and corresponding pack subdirectories in alternate object pools. This is now default; you can turn it off with --no-full.
+</DL>
+
+<P>
+
+--connectivity-only
+<DL COMPACT><DT><DD>
+Check only the connectivity of tags, commits and tree objects. By avoiding to unpack blobs, this speeds up the operation, at the expense of missing corrupt objects or other problematic issues.
+</DL>
+
+<P>
+
+--strict
+<DL COMPACT><DT><DD>
+Enable more strict checking, namely to catch a file mode recorded with g+w bit set, which was created by older versions of Git. Existing repositories, including the Linux kernel, Git itself, and sparse repository have old objects that triggers this check, but it is recommended to check new projects with this flag.
+</DL>
+
+<P>
+
+--verbose
+<DL COMPACT><DT><DD>
+Be chatty.
+</DL>
+
+<P>
+
+--lost-found
+<DL COMPACT><DT><DD>
+Write dangling objects into .git/lost-found/commit/ or .git/lost-found/other/, depending on type. If the object is a blob, the contents are written into the file, rather than its object name.
+</DL>
+
+<P>
+
+--name-objects
+<DL COMPACT><DT><DD>
+When displaying names of reachable objects, in addition to the SHA-1 also display a name that describes
+<B>how</B>
+they are reachable, compatible with
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-rev-parse">git-rev-parse</A></B>(1), e.g.
+<B>HEAD@{1234567890}~25^2:src/</B>.
+</DL>
+
+<P>
+
+--[no-]progress
+<DL COMPACT><DT><DD>
+Progress status is reported on the standard error stream by default when it is attached to a terminal, unless --no-progress or --verbose is specified. --progress forces progress status even if the standard error stream is not directed to a terminal.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>DISCUSSION</H2>
+
+<P>
+git-fsck tests SHA-1 and general object sanity, and it does full tracking of the resulting reachability and everything else. It prints out any corruption it finds (missing or bad objects), and if you use the <B>--unreachable</B> flag it will also print out objects that exist but that arencqt reachable from any of the specified head nodes (or the default set, as mentioned above).
+<P>
+Any corrupt objects you will have to find in backups or other archives (i.e., you can just remove them and do an <I>rsync</I> with some other site in the hopes that somebody else has the object you have corrupted).
+<A NAME="lbAG">&nbsp;</A>
+<H2>EXTRACTED DIAGNOSTICS</H2>
+
+<P>
+
+expect dangling commits - potential heads - due to lack of head information
+<DL COMPACT><DT><DD>
+You havencqt specified any nodes as heads so it woncqt be possible to differentiate between un-parented commits and root nodes.
+</DL>
+
+<P>
+
+missing sha1 directory <I>&lt;dir&gt;</I>
+<DL COMPACT><DT><DD>
+The directory holding the sha1 objects is missing.
+</DL>
+
+<P>
+
+unreachable &lt;type&gt; &lt;object&gt;
+<DL COMPACT><DT><DD>
+The &lt;type&gt; object &lt;object&gt;, isncqt actually referred to directly or indirectly in any of the trees or commits seen. This can mean that therecqs another root node that youcqre not specifying or that the tree is corrupt. If you havencqt missed a root node then you might as well delete unreachable nodes since they cancqt be used.
+</DL>
+
+<P>
+
+missing &lt;type&gt; &lt;object&gt;
+<DL COMPACT><DT><DD>
+The &lt;type&gt; object &lt;object&gt;, is referred to but isncqt present in the database.
+</DL>
+
+<P>
+
+dangling &lt;type&gt; &lt;object&gt;
+<DL COMPACT><DT><DD>
+The &lt;type&gt; object &lt;object&gt;, is present in the database but never
+<I>directly</I>
+used. A dangling commit could be a root node.
+</DL>
+
+<P>
+
+sha1 mismatch &lt;object&gt;
+<DL COMPACT><DT><DD>
+The database has an object whocqs sha1 doesncqt match the database value. This indicates a serious data integrity problem.
+</DL>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>ENVIRONMENT VARIABLES</H2>
+
+<P>
+
+GIT_OBJECT_DIRECTORY
+<DL COMPACT><DT><DD>
+used to specify the object database root (usually $GIT_DIR/objects)
+</DL>
+
+<P>
+
+GIT_INDEX_FILE
+<DL COMPACT><DT><DD>
+used to specify the index file of the index
+</DL>
+
+<P>
+
+GIT_ALTERNATE_OBJECT_DIRECTORIES
+<DL COMPACT><DT><DD>
+used to specify additional object database roots (usually unset)
+</DL>
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">DISCUSSION</A><DD>
+<DT><A HREF="#lbAG">EXTRACTED DIAGNOSTICS</A><DD>
+<DT><A HREF="#lbAH">ENVIRONMENT VARIABLES</A><DD>
+<DT><A HREF="#lbAI">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:34:55 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-FSCK</TITLE>
+</HEAD><BODY>
+<H1>GIT\-FSCK</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-fsck - Verifies the connectivity and validity of the objects in the database
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git fsck</I> [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]
+         [--[no-]full] [--strict] [--verbose] [--lost-found]
+         [--[no-]dangling] [--[no-]progress] [--connectivity-only]
+         [--[no-]name-objects] [&lt;object&gt;*]
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+Verifies the connectivity and validity of the objects in the database.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+&lt;object&gt;
+<DL COMPACT><DT><DD>
+An object to treat as the head of an unreachability trace.
+<P>
+If no objects are given,
+<I>git fsck</I>
+defaults to using the index file, all SHA-1 references in
+<B>refs</B>
+namespace, and all reflogs (unless --no-reflogs is given) as heads.
+</DL>
+
+<P>
+
+--unreachable
+<DL COMPACT><DT><DD>
+Print out objects that exist but that arencqt reachable from any of the reference nodes.
+</DL>
+
+<P>
+
+--[no-]dangling
+<DL COMPACT><DT><DD>
+Print objects that exist but that are never
+<I>directly</I>
+used (default).
+<B>--no-dangling</B>
+can be used to omit this information from the output.
+</DL>
+
+<P>
+
+--root
+<DL COMPACT><DT><DD>
+Report root nodes.
+</DL>
+
+<P>
+
+--tags
+<DL COMPACT><DT><DD>
+Report tags.
+</DL>
+
+<P>
+
+--cache
+<DL COMPACT><DT><DD>
+Consider any object recorded in the index also as a head node for an unreachability trace.
+</DL>
+
+<P>
+
+--no-reflogs
+<DL COMPACT><DT><DD>
+Do not consider commits that are referenced only by an entry in a reflog to be reachable. This option is meant only to search for commits that used to be in a ref, but now arencqt, but are still in that corresponding reflog.
+</DL>
+
+<P>
+
+--full
+<DL COMPACT><DT><DD>
+Check not just objects in GIT_OBJECT_DIRECTORY ($GIT_DIR/objects), but also the ones found in alternate object pools listed in GIT_ALTERNATE_OBJECT_DIRECTORIES or $GIT_DIR/objects/info/alternates, and in packed Git archives found in $GIT_DIR/objects/pack and corresponding pack subdirectories in alternate object pools. This is now default; you can turn it off with --no-full.
+</DL>
+
+<P>
+
+--connectivity-only
+<DL COMPACT><DT><DD>
+Check only the connectivity of tags, commits and tree objects. By avoiding to unpack blobs, this speeds up the operation, at the expense of missing corrupt objects or other problematic issues.
+</DL>
+
+<P>
+
+--strict
+<DL COMPACT><DT><DD>
+Enable more strict checking, namely to catch a file mode recorded with g+w bit set, which was created by older versions of Git. Existing repositories, including the Linux kernel, Git itself, and sparse repository have old objects that triggers this check, but it is recommended to check new projects with this flag.
+</DL>
+
+<P>
+
+--verbose
+<DL COMPACT><DT><DD>
+Be chatty.
+</DL>
+
+<P>
+
+--lost-found
+<DL COMPACT><DT><DD>
+Write dangling objects into .git/lost-found/commit/ or .git/lost-found/other/, depending on type. If the object is a blob, the contents are written into the file, rather than its object name.
+</DL>
+
+<P>
+
+--name-objects
+<DL COMPACT><DT><DD>
+When displaying names of reachable objects, in addition to the SHA-1 also display a name that describes
+<B>how</B>
+they are reachable, compatible with
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-rev-parse">git-rev-parse</A></B>(1), e.g.
+<B>HEAD@{1234567890}~25^2:src/</B>.
+</DL>
+
+<P>
+
+--[no-]progress
+<DL COMPACT><DT><DD>
+Progress status is reported on the standard error stream by default when it is attached to a terminal, unless --no-progress or --verbose is specified. --progress forces progress status even if the standard error stream is not directed to a terminal.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>DISCUSSION</H2>
+
+<P>
+git-fsck tests SHA-1 and general object sanity, and it does full tracking of the resulting reachability and everything else. It prints out any corruption it finds (missing or bad objects), and if you use the <B>--unreachable</B> flag it will also print out objects that exist but that arencqt reachable from any of the specified head nodes (or the default set, as mentioned above).
+<P>
+Any corrupt objects you will have to find in backups or other archives (i.e., you can just remove them and do an <I>rsync</I> with some other site in the hopes that somebody else has the object you have corrupted).
+<A NAME="lbAG">&nbsp;</A>
+<H2>EXTRACTED DIAGNOSTICS</H2>
+
+<P>
+
+expect dangling commits - potential heads - due to lack of head information
+<DL COMPACT><DT><DD>
+You havencqt specified any nodes as heads so it woncqt be possible to differentiate between un-parented commits and root nodes.
+</DL>
+
+<P>
+
+missing sha1 directory <I>&lt;dir&gt;</I>
+<DL COMPACT><DT><DD>
+The directory holding the sha1 objects is missing.
+</DL>
+
+<P>
+
+unreachable &lt;type&gt; &lt;object&gt;
+<DL COMPACT><DT><DD>
+The &lt;type&gt; object &lt;object&gt;, isncqt actually referred to directly or indirectly in any of the trees or commits seen. This can mean that therecqs another root node that youcqre not specifying or that the tree is corrupt. If you havencqt missed a root node then you might as well delete unreachable nodes since they cancqt be used.
+</DL>
+
+<P>
+
+missing &lt;type&gt; &lt;object&gt;
+<DL COMPACT><DT><DD>
+The &lt;type&gt; object &lt;object&gt;, is referred to but isncqt present in the database.
+</DL>
+
+<P>
+
+dangling &lt;type&gt; &lt;object&gt;
+<DL COMPACT><DT><DD>
+The &lt;type&gt; object &lt;object&gt;, is present in the database but never
+<I>directly</I>
+used. A dangling commit could be a root node.
+</DL>
+
+<P>
+
+sha1 mismatch &lt;object&gt;
+<DL COMPACT><DT><DD>
+The database has an object whocqs sha1 doesncqt match the database value. This indicates a serious data integrity problem.
+</DL>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>ENVIRONMENT VARIABLES</H2>
+
+<P>
+
+GIT_OBJECT_DIRECTORY
+<DL COMPACT><DT><DD>
+used to specify the object database root (usually $GIT_DIR/objects)
+</DL>
+
+<P>
+
+GIT_INDEX_FILE
+<DL COMPACT><DT><DD>
+used to specify the index file of the index
+</DL>
+
+<P>
+
+GIT_ALTERNATE_OBJECT_DIRECTORIES
+<DL COMPACT><DT><DD>
+used to specify additional object database roots (usually unset)
+</DL>
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">DISCUSSION</A><DD>
+<DT><A HREF="#lbAG">EXTRACTED DIAGNOSTICS</A><DD>
+<DT><A HREF="#lbAH">ENVIRONMENT VARIABLES</A><DD>
+<DT><A HREF="#lbAI">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:39:07 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-FSCK</TITLE>
+</HEAD><BODY>
+<H1>GIT\-FSCK</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-fsck - Verifies the connectivity and validity of the objects in the database
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git fsck</I> [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]
+         [--[no-]full] [--strict] [--verbose] [--lost-found]
+         [--[no-]dangling] [--[no-]progress] [--connectivity-only]
+         [--[no-]name-objects] [&lt;object&gt;*]
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+Verifies the connectivity and validity of the objects in the database.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+&lt;object&gt;
+<DL COMPACT><DT><DD>
+An object to treat as the head of an unreachability trace.
+<P>
+If no objects are given,
+<I>git fsck</I>
+defaults to using the index file, all SHA-1 references in
+<B>refs</B>
+namespace, and all reflogs (unless --no-reflogs is given) as heads.
+</DL>
+
+<P>
+
+--unreachable
+<DL COMPACT><DT><DD>
+Print out objects that exist but that arencqt reachable from any of the reference nodes.
+</DL>
+
+<P>
+
+--[no-]dangling
+<DL COMPACT><DT><DD>
+Print objects that exist but that are never
+<I>directly</I>
+used (default).
+<B>--no-dangling</B>
+can be used to omit this information from the output.
+</DL>
+
+<P>
+
+--root
+<DL COMPACT><DT><DD>
+Report root nodes.
+</DL>
+
+<P>
+
+--tags
+<DL COMPACT><DT><DD>
+Report tags.
+</DL>
+
+<P>
+
+--cache
+<DL COMPACT><DT><DD>
+Consider any object recorded in the index also as a head node for an unreachability trace.
+</DL>
+
+<P>
+
+--no-reflogs
+<DL COMPACT><DT><DD>
+Do not consider commits that are referenced only by an entry in a reflog to be reachable. This option is meant only to search for commits that used to be in a ref, but now arencqt, but are still in that corresponding reflog.
+</DL>
+
+<P>
+
+--full
+<DL COMPACT><DT><DD>
+Check not just objects in GIT_OBJECT_DIRECTORY ($GIT_DIR/objects), but also the ones found in alternate object pools listed in GIT_ALTERNATE_OBJECT_DIRECTORIES or $GIT_DIR/objects/info/alternates, and in packed Git archives found in $GIT_DIR/objects/pack and corresponding pack subdirectories in alternate object pools. This is now default; you can turn it off with --no-full.
+</DL>
+
+<P>
+
+--connectivity-only
+<DL COMPACT><DT><DD>
+Check only the connectivity of tags, commits and tree objects. By avoiding to unpack blobs, this speeds up the operation, at the expense of missing corrupt objects or other problematic issues.
+</DL>
+
+<P>
+
+--strict
+<DL COMPACT><DT><DD>
+Enable more strict checking, namely to catch a file mode recorded with g+w bit set, which was created by older versions of Git. Existing repositories, including the Linux kernel, Git itself, and sparse repository have old objects that triggers this check, but it is recommended to check new projects with this flag.
+</DL>
+
+<P>
+
+--verbose
+<DL COMPACT><DT><DD>
+Be chatty.
+</DL>
+
+<P>
+
+--lost-found
+<DL COMPACT><DT><DD>
+Write dangling objects into .git/lost-found/commit/ or .git/lost-found/other/, depending on type. If the object is a blob, the contents are written into the file, rather than its object name.
+</DL>
+
+<P>
+
+--name-objects
+<DL COMPACT><DT><DD>
+When displaying names of reachable objects, in addition to the SHA-1 also display a name that describes
+<B>how</B>
+they are reachable, compatible with
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-rev-parse">git-rev-parse</A></B>(1), e.g.
+<B>HEAD@{1234567890}~25^2:src/</B>.
+</DL>
+
+<P>
+
+--[no-]progress
+<DL COMPACT><DT><DD>
+Progress status is reported on the standard error stream by default when it is attached to a terminal, unless --no-progress or --verbose is specified. --progress forces progress status even if the standard error stream is not directed to a terminal.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>DISCUSSION</H2>
+
+<P>
+git-fsck tests SHA-1 and general object sanity, and it does full tracking of the resulting reachability and everything else. It prints out any corruption it finds (missing or bad objects), and if you use the <B>--unreachable</B> flag it will also print out objects that exist but that arencqt reachable from any of the specified head nodes (or the default set, as mentioned above).
+<P>
+Any corrupt objects you will have to find in backups or other archives (i.e., you can just remove them and do an <I>rsync</I> with some other site in the hopes that somebody else has the object you have corrupted).
+<A NAME="lbAG">&nbsp;</A>
+<H2>EXTRACTED DIAGNOSTICS</H2>
+
+<P>
+
+expect dangling commits - potential heads - due to lack of head information
+<DL COMPACT><DT><DD>
+You havencqt specified any nodes as heads so it woncqt be possible to differentiate between un-parented commits and root nodes.
+</DL>
+
+<P>
+
+missing sha1 directory <I>&lt;dir&gt;</I>
+<DL COMPACT><DT><DD>
+The directory holding the sha1 objects is missing.
+</DL>
+
+<P>
+
+unreachable &lt;type&gt; &lt;object&gt;
+<DL COMPACT><DT><DD>
+The &lt;type&gt; object &lt;object&gt;, isncqt actually referred to directly or indirectly in any of the trees or commits seen. This can mean that therecqs another root node that youcqre not specifying or that the tree is corrupt. If you havencqt missed a root node then you might as well delete unreachable nodes since they cancqt be used.
+</DL>
+
+<P>
+
+missing &lt;type&gt; &lt;object&gt;
+<DL COMPACT><DT><DD>
+The &lt;type&gt; object &lt;object&gt;, is referred to but isncqt present in the database.
+</DL>
+
+<P>
+
+dangling &lt;type&gt; &lt;object&gt;
+<DL COMPACT><DT><DD>
+The &lt;type&gt; object &lt;object&gt;, is present in the database but never
+<I>directly</I>
+used. A dangling commit could be a root node.
+</DL>
+
+<P>
+
+sha1 mismatch &lt;object&gt;
+<DL COMPACT><DT><DD>
+The database has an object whocqs sha1 doesncqt match the database value. This indicates a serious data integrity problem.
+</DL>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>ENVIRONMENT VARIABLES</H2>
+
+<P>
+
+GIT_OBJECT_DIRECTORY
+<DL COMPACT><DT><DD>
+used to specify the object database root (usually $GIT_DIR/objects)
+</DL>
+
+<P>
+
+GIT_INDEX_FILE
+<DL COMPACT><DT><DD>
+used to specify the index file of the index
+</DL>
+
+<P>
+
+GIT_ALTERNATE_OBJECT_DIRECTORIES
+<DL COMPACT><DT><DD>
+used to specify additional object database roots (usually unset)
+</DL>
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">DISCUSSION</A><DD>
+<DT><A HREF="#lbAG">EXTRACTED DIAGNOSTICS</A><DD>
+<DT><A HREF="#lbAH">ENVIRONMENT VARIABLES</A><DD>
+<DT><A HREF="#lbAI">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:45:15 GMT, June 13, 2017
+</BODY>
+</HTML>

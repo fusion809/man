@@ -1,0 +1,270 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of Git::SVN::Ra</TITLE>
+</HEAD><BODY>
+<H1>Git::SVN::Ra</H1>
+Section: User Contributed Perl Documentation (3)<BR>Updated: 2017-06-05<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+Git::SVN::Ra - Subversion remote access functions for git-svn
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<A NAME="ixAAC"></A>
+
+
+<PRE>
+    use Git::SVN::Ra;
+
+    my $ra = Git::SVN::Ra-&gt;new($branchurl);
+    my ($dirents, $fetched_revnum, $props) =
+        $ra-&gt;get_dir('.', $SVN::Core::INVALID_REVNUM);
+
+</PRE>
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<A NAME="ixAAD"></A>
+This is a wrapper around the SVN::Ra module for use by <B>git-svn</B>.
+It fills in some default parameters (such as the authentication
+scheme), smooths over incompatibilities between libsvn versions, adds
+caching, and implements some functions specific to <B>git-svn</B>.
+<P>
+
+Do not use it unless you are developing git-svn.  The interface will
+change as git-svn evolves.
+<A NAME="lbAE">&nbsp;</A>
+<H2>DEPENDENCIES</H2>
+
+<A NAME="ixAAE"></A>
+Subversion perl bindings,
+Git::SVN.
+<P>
+
+<TT>&quot;Git::SVN::Ra&quot;</TT> has not been tested using callers other than
+<B>git-svn</B> itself.
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A NAME="ixAAF"></A>
+SVN::Ra.
+<A NAME="lbAG">&nbsp;</A>
+<H2>INCOMPATIBILITIES</H2>
+
+<A NAME="ixAAG"></A>
+None reported.
+<A NAME="lbAH">&nbsp;</A>
+<H2>BUGS</H2>
+
+<A NAME="ixAAH"></A>
+None.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">DEPENDENCIES</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">INCOMPATIBILITIES</A><DD>
+<DT><A HREF="#lbAH">BUGS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:34:56 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of Git::SVN::Ra</TITLE>
+</HEAD><BODY>
+<H1>Git::SVN::Ra</H1>
+Section: User Contributed Perl Documentation (3)<BR>Updated: 2017-06-05<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+Git::SVN::Ra - Subversion remote access functions for git-svn
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<A NAME="ixAAC"></A>
+
+
+<PRE>
+    use Git::SVN::Ra;
+
+    my $ra = Git::SVN::Ra-&gt;new($branchurl);
+    my ($dirents, $fetched_revnum, $props) =
+        $ra-&gt;get_dir('.', $SVN::Core::INVALID_REVNUM);
+
+</PRE>
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<A NAME="ixAAD"></A>
+This is a wrapper around the SVN::Ra module for use by <B>git-svn</B>.
+It fills in some default parameters (such as the authentication
+scheme), smooths over incompatibilities between libsvn versions, adds
+caching, and implements some functions specific to <B>git-svn</B>.
+<P>
+
+Do not use it unless you are developing git-svn.  The interface will
+change as git-svn evolves.
+<A NAME="lbAE">&nbsp;</A>
+<H2>DEPENDENCIES</H2>
+
+<A NAME="ixAAE"></A>
+Subversion perl bindings,
+Git::SVN.
+<P>
+
+<TT>&quot;Git::SVN::Ra&quot;</TT> has not been tested using callers other than
+<B>git-svn</B> itself.
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A NAME="ixAAF"></A>
+SVN::Ra.
+<A NAME="lbAG">&nbsp;</A>
+<H2>INCOMPATIBILITIES</H2>
+
+<A NAME="ixAAG"></A>
+None reported.
+<A NAME="lbAH">&nbsp;</A>
+<H2>BUGS</H2>
+
+<A NAME="ixAAH"></A>
+None.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">DEPENDENCIES</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">INCOMPATIBILITIES</A><DD>
+<DT><A HREF="#lbAH">BUGS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:39:07 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of Git::SVN::Ra</TITLE>
+</HEAD><BODY>
+<H1>Git::SVN::Ra</H1>
+Section: User Contributed Perl Documentation (3)<BR>Updated: 2017-06-05<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+Git::SVN::Ra - Subversion remote access functions for git-svn
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<A NAME="ixAAC"></A>
+
+
+<PRE>
+    use Git::SVN::Ra;
+
+    my $ra = Git::SVN::Ra-&gt;new($branchurl);
+    my ($dirents, $fetched_revnum, $props) =
+        $ra-&gt;get_dir('.', $SVN::Core::INVALID_REVNUM);
+
+</PRE>
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<A NAME="ixAAD"></A>
+This is a wrapper around the SVN::Ra module for use by <B>git-svn</B>.
+It fills in some default parameters (such as the authentication
+scheme), smooths over incompatibilities between libsvn versions, adds
+caching, and implements some functions specific to <B>git-svn</B>.
+<P>
+
+Do not use it unless you are developing git-svn.  The interface will
+change as git-svn evolves.
+<A NAME="lbAE">&nbsp;</A>
+<H2>DEPENDENCIES</H2>
+
+<A NAME="ixAAE"></A>
+Subversion perl bindings,
+Git::SVN.
+<P>
+
+<TT>&quot;Git::SVN::Ra&quot;</TT> has not been tested using callers other than
+<B>git-svn</B> itself.
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A NAME="ixAAF"></A>
+SVN::Ra.
+<A NAME="lbAG">&nbsp;</A>
+<H2>INCOMPATIBILITIES</H2>
+
+<A NAME="ixAAG"></A>
+None reported.
+<A NAME="lbAH">&nbsp;</A>
+<H2>BUGS</H2>
+
+<A NAME="ixAAH"></A>
+None.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">DEPENDENCIES</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">INCOMPATIBILITIES</A><DD>
+<DT><A HREF="#lbAH">BUGS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:45:16 GMT, June 13, 2017
+</BODY>
+</HTML>

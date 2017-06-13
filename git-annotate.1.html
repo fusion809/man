@@ -1,0 +1,1140 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-ANNOTATE</TITLE>
+</HEAD><BODY>
+<H1>GIT\-ANNOTATE</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-annotate - Annotate file lines with commit information
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git annotate</I> [options] file [revision]
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+Annotates each line in the given file with information from the commit which introduced the line. Optionally annotates from a given revision.
+<P>
+The only difference between this command and <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-blame">git-blame</A></B>(1) is that they use slightly different output formats, and this command exists only for backward compatibility to support existing scripts, and provide a more familiar command name for people coming from other SCM systems.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+-b
+<DL COMPACT><DT><DD>
+Show blank SHA-1 for boundary commits. This can also be controlled via the
+<B>blame.blankboundary</B>
+config option.
+</DL>
+
+<P>
+
+--root
+<DL COMPACT><DT><DD>
+Do not treat root commits as boundaries. This can also be controlled via the
+<B>blame.showRoot</B>
+config option.
+</DL>
+
+<P>
+
+--show-stats
+<DL COMPACT><DT><DD>
+Include additional statistics at the end of blame output.
+</DL>
+
+<P>
+
+-L &lt;start&gt;,&lt;end&gt;, -L :&lt;funcname&gt;
+<DL COMPACT><DT><DD>
+Annotate only the given line range. May be specified multiple times. Overlapping ranges are allowed.
+<P>
+&lt;start&gt; and &lt;end&gt; are optional. lq-L &lt;start&gt;rq or lq-L &lt;start&gt;,rq spans from &lt;start&gt; to end of file. lq-L ,&lt;end&gt;rq spans from start of file to &lt;end&gt;.
+<P>
+&lt;start&gt; and &lt;end&gt; can take one of these forms:
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+number
+<P>
+If &lt;start&gt; or &lt;end&gt; is a number, it specifies an absolute line number (lines count from 1).
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+/regex/
+<P>
+This form will use the first line matching the given POSIX regex. If &lt;start&gt; is a regex, it will search from the end of the previous
+<B>-L</B>
+range, if any, otherwise from the start of file. If &lt;start&gt; is lq^/regex/rq, it will search from the start of file. If &lt;end&gt; is a regex, it will search starting at the line given by &lt;start&gt;.
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
++offset or -offset
+<P>
+This is only valid for &lt;end&gt; and will specify a number of lines before or after the line given by &lt;start&gt;.
+</DL>
+
+<P>
+If lq:&lt;funcname&gt;rq is given in place of &lt;start&gt; and &lt;end&gt;, it is a regular expression that denotes the range from the first funcname line that matches &lt;funcname&gt;, up to the next funcname line. lq:&lt;funcname&gt;rq searches from the end of the previous
+<B>-L</B>
+range, if any, otherwise from the start of file. lq^:&lt;funcname&gt;rq searches from the start of file.
+</DL>
+
+<P>
+
+-l
+<DL COMPACT><DT><DD>
+Show long rev (Default: off).
+</DL>
+
+<P>
+
+-t
+<DL COMPACT><DT><DD>
+Show raw timestamp (Default: off).
+</DL>
+
+<P>
+
+-S &lt;revs-file&gt;
+<DL COMPACT><DT><DD>
+Use revisions from revs-file instead of calling
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-rev-list">git-rev-list</A></B>(1).
+</DL>
+
+<P>
+
+--reverse &lt;rev&gt;..&lt;rev&gt;
+<DL COMPACT><DT><DD>
+Walk history forward instead of backward. Instead of showing the revision in which a line appeared, this shows the last revision in which a line has existed. This requires a range of revision like START..END where the path to blame exists in START.
+<B>git blame --reverse START</B>
+is taken as
+<B>git blame --reverse START..HEAD</B>
+for convenience.
+</DL>
+
+<P>
+
+-p, --porcelain
+<DL COMPACT><DT><DD>
+Show in a format designed for machine consumption.
+</DL>
+
+<P>
+
+--line-porcelain
+<DL COMPACT><DT><DD>
+Show the porcelain format, but output commit information for each line, not just the first time a commit is referenced. Implies --porcelain.
+</DL>
+
+<P>
+
+--incremental
+<DL COMPACT><DT><DD>
+Show the result incrementally in a format designed for machine consumption.
+</DL>
+
+<P>
+
+--encoding=&lt;encoding&gt;
+<DL COMPACT><DT><DD>
+Specifies the encoding used to output author names and commit summaries. Setting it to
+<B>none</B>
+makes blame output unconverted data. For more information see the discussion about encoding in the
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-log">git-log</A></B>(1)
+manual page.
+</DL>
+
+<P>
+
+--contents &lt;file&gt;
+<DL COMPACT><DT><DD>
+When &lt;rev&gt; is not specified, the command annotates the changes starting backwards from the working tree copy. This flag makes the command pretend as if the working tree copy has the contents of the named file (specify
+<B>-</B>
+to make the command read from the standard input).
+</DL>
+
+<P>
+
+--date &lt;format&gt;
+<DL COMPACT><DT><DD>
+Specifies the format used to output dates. If --date is not provided, the value of the blame.date config variable is used. If the blame.date config variable is also not set, the iso format is used. For supported values, see the discussion of the --date option at
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-log">git-log</A></B>(1).
+</DL>
+
+<P>
+
+--[no-]progress
+<DL COMPACT><DT><DD>
+Progress status is reported on the standard error stream by default when it is attached to a terminal. This flag enables progress reporting even if not attached to a terminal. Cancqt use
+<B>--progress</B>
+together with
+<B>--porcelain</B>
+or
+<B>--incremental</B>.
+</DL>
+
+<P>
+
+-M[&lt;num&gt;]
+<DL COMPACT><DT><DD>
+Detect moved or copied lines within a file. When a commit moves or copies a block of lines (e.g. the original file has A and then B, and the commit changes it to B and then A), the traditional
+<I>blame</I>
+algorithm notices only half of the movement and typically blames the lines that were moved up (i.e. B) to the parent and assigns blame to the lines that were moved down (i.e. A) to the child commit. With this option, both groups of lines are blamed on the parent by running extra passes of inspection.
+<P>
+&lt;num&gt; is optional but it is the lower bound on the number of alphanumeric characters that Git must detect as moving/copying within a file for it to associate those lines with the parent commit. The default value is 20.
+</DL>
+
+<P>
+
+-C[&lt;num&gt;]
+<DL COMPACT><DT><DD>
+In addition to
+<B>-M</B>, detect lines moved or copied from other files that were modified in the same commit. This is useful when you reorganize your program and move code around across files. When this option is given twice, the command additionally looks for copies from other files in the commit that creates the file. When this option is given three times, the command additionally looks for copies from other files in any commit.
+<P>
+&lt;num&gt; is optional but it is the lower bound on the number of alphanumeric characters that Git must detect as moving/copying between files for it to associate those lines with the parent commit. And the default value is 40. If there are more than one
+<B>-C</B>
+options given, the &lt;num&gt; argument of the last
+<B>-C</B>
+will take effect.
+</DL>
+
+<P>
+
+-h
+<DL COMPACT><DT><DD>
+Show help message.
+</DL>
+
+<P>
+
+--indent-heuristic, --no-indent-heuristic
+<DL COMPACT><DT><DD>
+These are to help debugging and tuning experimental heuristics (which are off by default) that shift diff hunk boundaries to make patches easier to read.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-blame">git-blame</A></B>(1)
+<A NAME="lbAG">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:24:32 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-ANNOTATE</TITLE>
+</HEAD><BODY>
+<H1>GIT\-ANNOTATE</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-annotate - Annotate file lines with commit information
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git annotate</I> [options] file [revision]
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+Annotates each line in the given file with information from the commit which introduced the line. Optionally annotates from a given revision.
+<P>
+The only difference between this command and <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-blame">git-blame</A></B>(1) is that they use slightly different output formats, and this command exists only for backward compatibility to support existing scripts, and provide a more familiar command name for people coming from other SCM systems.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+-b
+<DL COMPACT><DT><DD>
+Show blank SHA-1 for boundary commits. This can also be controlled via the
+<B>blame.blankboundary</B>
+config option.
+</DL>
+
+<P>
+
+--root
+<DL COMPACT><DT><DD>
+Do not treat root commits as boundaries. This can also be controlled via the
+<B>blame.showRoot</B>
+config option.
+</DL>
+
+<P>
+
+--show-stats
+<DL COMPACT><DT><DD>
+Include additional statistics at the end of blame output.
+</DL>
+
+<P>
+
+-L &lt;start&gt;,&lt;end&gt;, -L :&lt;funcname&gt;
+<DL COMPACT><DT><DD>
+Annotate only the given line range. May be specified multiple times. Overlapping ranges are allowed.
+<P>
+&lt;start&gt; and &lt;end&gt; are optional. lq-L &lt;start&gt;rq or lq-L &lt;start&gt;,rq spans from &lt;start&gt; to end of file. lq-L ,&lt;end&gt;rq spans from start of file to &lt;end&gt;.
+<P>
+&lt;start&gt; and &lt;end&gt; can take one of these forms:
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+number
+<P>
+If &lt;start&gt; or &lt;end&gt; is a number, it specifies an absolute line number (lines count from 1).
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+/regex/
+<P>
+This form will use the first line matching the given POSIX regex. If &lt;start&gt; is a regex, it will search from the end of the previous
+<B>-L</B>
+range, if any, otherwise from the start of file. If &lt;start&gt; is lq^/regex/rq, it will search from the start of file. If &lt;end&gt; is a regex, it will search starting at the line given by &lt;start&gt;.
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
++offset or -offset
+<P>
+This is only valid for &lt;end&gt; and will specify a number of lines before or after the line given by &lt;start&gt;.
+</DL>
+
+<P>
+If lq:&lt;funcname&gt;rq is given in place of &lt;start&gt; and &lt;end&gt;, it is a regular expression that denotes the range from the first funcname line that matches &lt;funcname&gt;, up to the next funcname line. lq:&lt;funcname&gt;rq searches from the end of the previous
+<B>-L</B>
+range, if any, otherwise from the start of file. lq^:&lt;funcname&gt;rq searches from the start of file.
+</DL>
+
+<P>
+
+-l
+<DL COMPACT><DT><DD>
+Show long rev (Default: off).
+</DL>
+
+<P>
+
+-t
+<DL COMPACT><DT><DD>
+Show raw timestamp (Default: off).
+</DL>
+
+<P>
+
+-S &lt;revs-file&gt;
+<DL COMPACT><DT><DD>
+Use revisions from revs-file instead of calling
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-rev-list">git-rev-list</A></B>(1).
+</DL>
+
+<P>
+
+--reverse &lt;rev&gt;..&lt;rev&gt;
+<DL COMPACT><DT><DD>
+Walk history forward instead of backward. Instead of showing the revision in which a line appeared, this shows the last revision in which a line has existed. This requires a range of revision like START..END where the path to blame exists in START.
+<B>git blame --reverse START</B>
+is taken as
+<B>git blame --reverse START..HEAD</B>
+for convenience.
+</DL>
+
+<P>
+
+-p, --porcelain
+<DL COMPACT><DT><DD>
+Show in a format designed for machine consumption.
+</DL>
+
+<P>
+
+--line-porcelain
+<DL COMPACT><DT><DD>
+Show the porcelain format, but output commit information for each line, not just the first time a commit is referenced. Implies --porcelain.
+</DL>
+
+<P>
+
+--incremental
+<DL COMPACT><DT><DD>
+Show the result incrementally in a format designed for machine consumption.
+</DL>
+
+<P>
+
+--encoding=&lt;encoding&gt;
+<DL COMPACT><DT><DD>
+Specifies the encoding used to output author names and commit summaries. Setting it to
+<B>none</B>
+makes blame output unconverted data. For more information see the discussion about encoding in the
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-log">git-log</A></B>(1)
+manual page.
+</DL>
+
+<P>
+
+--contents &lt;file&gt;
+<DL COMPACT><DT><DD>
+When &lt;rev&gt; is not specified, the command annotates the changes starting backwards from the working tree copy. This flag makes the command pretend as if the working tree copy has the contents of the named file (specify
+<B>-</B>
+to make the command read from the standard input).
+</DL>
+
+<P>
+
+--date &lt;format&gt;
+<DL COMPACT><DT><DD>
+Specifies the format used to output dates. If --date is not provided, the value of the blame.date config variable is used. If the blame.date config variable is also not set, the iso format is used. For supported values, see the discussion of the --date option at
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-log">git-log</A></B>(1).
+</DL>
+
+<P>
+
+--[no-]progress
+<DL COMPACT><DT><DD>
+Progress status is reported on the standard error stream by default when it is attached to a terminal. This flag enables progress reporting even if not attached to a terminal. Cancqt use
+<B>--progress</B>
+together with
+<B>--porcelain</B>
+or
+<B>--incremental</B>.
+</DL>
+
+<P>
+
+-M[&lt;num&gt;]
+<DL COMPACT><DT><DD>
+Detect moved or copied lines within a file. When a commit moves or copies a block of lines (e.g. the original file has A and then B, and the commit changes it to B and then A), the traditional
+<I>blame</I>
+algorithm notices only half of the movement and typically blames the lines that were moved up (i.e. B) to the parent and assigns blame to the lines that were moved down (i.e. A) to the child commit. With this option, both groups of lines are blamed on the parent by running extra passes of inspection.
+<P>
+&lt;num&gt; is optional but it is the lower bound on the number of alphanumeric characters that Git must detect as moving/copying within a file for it to associate those lines with the parent commit. The default value is 20.
+</DL>
+
+<P>
+
+-C[&lt;num&gt;]
+<DL COMPACT><DT><DD>
+In addition to
+<B>-M</B>, detect lines moved or copied from other files that were modified in the same commit. This is useful when you reorganize your program and move code around across files. When this option is given twice, the command additionally looks for copies from other files in the commit that creates the file. When this option is given three times, the command additionally looks for copies from other files in any commit.
+<P>
+&lt;num&gt; is optional but it is the lower bound on the number of alphanumeric characters that Git must detect as moving/copying between files for it to associate those lines with the parent commit. And the default value is 40. If there are more than one
+<B>-C</B>
+options given, the &lt;num&gt; argument of the last
+<B>-C</B>
+will take effect.
+</DL>
+
+<P>
+
+-h
+<DL COMPACT><DT><DD>
+Show help message.
+</DL>
+
+<P>
+
+--indent-heuristic, --no-indent-heuristic
+<DL COMPACT><DT><DD>
+These are to help debugging and tuning experimental heuristics (which are off by default) that shift diff hunk boundaries to make patches easier to read.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-blame">git-blame</A></B>(1)
+<A NAME="lbAG">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:34:55 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-ANNOTATE</TITLE>
+</HEAD><BODY>
+<H1>GIT\-ANNOTATE</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-annotate - Annotate file lines with commit information
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git annotate</I> [options] file [revision]
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+Annotates each line in the given file with information from the commit which introduced the line. Optionally annotates from a given revision.
+<P>
+The only difference between this command and <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-blame">git-blame</A></B>(1) is that they use slightly different output formats, and this command exists only for backward compatibility to support existing scripts, and provide a more familiar command name for people coming from other SCM systems.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+-b
+<DL COMPACT><DT><DD>
+Show blank SHA-1 for boundary commits. This can also be controlled via the
+<B>blame.blankboundary</B>
+config option.
+</DL>
+
+<P>
+
+--root
+<DL COMPACT><DT><DD>
+Do not treat root commits as boundaries. This can also be controlled via the
+<B>blame.showRoot</B>
+config option.
+</DL>
+
+<P>
+
+--show-stats
+<DL COMPACT><DT><DD>
+Include additional statistics at the end of blame output.
+</DL>
+
+<P>
+
+-L &lt;start&gt;,&lt;end&gt;, -L :&lt;funcname&gt;
+<DL COMPACT><DT><DD>
+Annotate only the given line range. May be specified multiple times. Overlapping ranges are allowed.
+<P>
+&lt;start&gt; and &lt;end&gt; are optional. lq-L &lt;start&gt;rq or lq-L &lt;start&gt;,rq spans from &lt;start&gt; to end of file. lq-L ,&lt;end&gt;rq spans from start of file to &lt;end&gt;.
+<P>
+&lt;start&gt; and &lt;end&gt; can take one of these forms:
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+number
+<P>
+If &lt;start&gt; or &lt;end&gt; is a number, it specifies an absolute line number (lines count from 1).
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+/regex/
+<P>
+This form will use the first line matching the given POSIX regex. If &lt;start&gt; is a regex, it will search from the end of the previous
+<B>-L</B>
+range, if any, otherwise from the start of file. If &lt;start&gt; is lq^/regex/rq, it will search from the start of file. If &lt;end&gt; is a regex, it will search starting at the line given by &lt;start&gt;.
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
++offset or -offset
+<P>
+This is only valid for &lt;end&gt; and will specify a number of lines before or after the line given by &lt;start&gt;.
+</DL>
+
+<P>
+If lq:&lt;funcname&gt;rq is given in place of &lt;start&gt; and &lt;end&gt;, it is a regular expression that denotes the range from the first funcname line that matches &lt;funcname&gt;, up to the next funcname line. lq:&lt;funcname&gt;rq searches from the end of the previous
+<B>-L</B>
+range, if any, otherwise from the start of file. lq^:&lt;funcname&gt;rq searches from the start of file.
+</DL>
+
+<P>
+
+-l
+<DL COMPACT><DT><DD>
+Show long rev (Default: off).
+</DL>
+
+<P>
+
+-t
+<DL COMPACT><DT><DD>
+Show raw timestamp (Default: off).
+</DL>
+
+<P>
+
+-S &lt;revs-file&gt;
+<DL COMPACT><DT><DD>
+Use revisions from revs-file instead of calling
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-rev-list">git-rev-list</A></B>(1).
+</DL>
+
+<P>
+
+--reverse &lt;rev&gt;..&lt;rev&gt;
+<DL COMPACT><DT><DD>
+Walk history forward instead of backward. Instead of showing the revision in which a line appeared, this shows the last revision in which a line has existed. This requires a range of revision like START..END where the path to blame exists in START.
+<B>git blame --reverse START</B>
+is taken as
+<B>git blame --reverse START..HEAD</B>
+for convenience.
+</DL>
+
+<P>
+
+-p, --porcelain
+<DL COMPACT><DT><DD>
+Show in a format designed for machine consumption.
+</DL>
+
+<P>
+
+--line-porcelain
+<DL COMPACT><DT><DD>
+Show the porcelain format, but output commit information for each line, not just the first time a commit is referenced. Implies --porcelain.
+</DL>
+
+<P>
+
+--incremental
+<DL COMPACT><DT><DD>
+Show the result incrementally in a format designed for machine consumption.
+</DL>
+
+<P>
+
+--encoding=&lt;encoding&gt;
+<DL COMPACT><DT><DD>
+Specifies the encoding used to output author names and commit summaries. Setting it to
+<B>none</B>
+makes blame output unconverted data. For more information see the discussion about encoding in the
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-log">git-log</A></B>(1)
+manual page.
+</DL>
+
+<P>
+
+--contents &lt;file&gt;
+<DL COMPACT><DT><DD>
+When &lt;rev&gt; is not specified, the command annotates the changes starting backwards from the working tree copy. This flag makes the command pretend as if the working tree copy has the contents of the named file (specify
+<B>-</B>
+to make the command read from the standard input).
+</DL>
+
+<P>
+
+--date &lt;format&gt;
+<DL COMPACT><DT><DD>
+Specifies the format used to output dates. If --date is not provided, the value of the blame.date config variable is used. If the blame.date config variable is also not set, the iso format is used. For supported values, see the discussion of the --date option at
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-log">git-log</A></B>(1).
+</DL>
+
+<P>
+
+--[no-]progress
+<DL COMPACT><DT><DD>
+Progress status is reported on the standard error stream by default when it is attached to a terminal. This flag enables progress reporting even if not attached to a terminal. Cancqt use
+<B>--progress</B>
+together with
+<B>--porcelain</B>
+or
+<B>--incremental</B>.
+</DL>
+
+<P>
+
+-M[&lt;num&gt;]
+<DL COMPACT><DT><DD>
+Detect moved or copied lines within a file. When a commit moves or copies a block of lines (e.g. the original file has A and then B, and the commit changes it to B and then A), the traditional
+<I>blame</I>
+algorithm notices only half of the movement and typically blames the lines that were moved up (i.e. B) to the parent and assigns blame to the lines that were moved down (i.e. A) to the child commit. With this option, both groups of lines are blamed on the parent by running extra passes of inspection.
+<P>
+&lt;num&gt; is optional but it is the lower bound on the number of alphanumeric characters that Git must detect as moving/copying within a file for it to associate those lines with the parent commit. The default value is 20.
+</DL>
+
+<P>
+
+-C[&lt;num&gt;]
+<DL COMPACT><DT><DD>
+In addition to
+<B>-M</B>, detect lines moved or copied from other files that were modified in the same commit. This is useful when you reorganize your program and move code around across files. When this option is given twice, the command additionally looks for copies from other files in the commit that creates the file. When this option is given three times, the command additionally looks for copies from other files in any commit.
+<P>
+&lt;num&gt; is optional but it is the lower bound on the number of alphanumeric characters that Git must detect as moving/copying between files for it to associate those lines with the parent commit. And the default value is 40. If there are more than one
+<B>-C</B>
+options given, the &lt;num&gt; argument of the last
+<B>-C</B>
+will take effect.
+</DL>
+
+<P>
+
+-h
+<DL COMPACT><DT><DD>
+Show help message.
+</DL>
+
+<P>
+
+--indent-heuristic, --no-indent-heuristic
+<DL COMPACT><DT><DD>
+These are to help debugging and tuning experimental heuristics (which are off by default) that shift diff hunk boundaries to make patches easier to read.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-blame">git-blame</A></B>(1)
+<A NAME="lbAG">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:39:06 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-ANNOTATE</TITLE>
+</HEAD><BODY>
+<H1>GIT\-ANNOTATE</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-annotate - Annotate file lines with commit information
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git annotate</I> [options] file [revision]
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+Annotates each line in the given file with information from the commit which introduced the line. Optionally annotates from a given revision.
+<P>
+The only difference between this command and <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-blame">git-blame</A></B>(1) is that they use slightly different output formats, and this command exists only for backward compatibility to support existing scripts, and provide a more familiar command name for people coming from other SCM systems.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+-b
+<DL COMPACT><DT><DD>
+Show blank SHA-1 for boundary commits. This can also be controlled via the
+<B>blame.blankboundary</B>
+config option.
+</DL>
+
+<P>
+
+--root
+<DL COMPACT><DT><DD>
+Do not treat root commits as boundaries. This can also be controlled via the
+<B>blame.showRoot</B>
+config option.
+</DL>
+
+<P>
+
+--show-stats
+<DL COMPACT><DT><DD>
+Include additional statistics at the end of blame output.
+</DL>
+
+<P>
+
+-L &lt;start&gt;,&lt;end&gt;, -L :&lt;funcname&gt;
+<DL COMPACT><DT><DD>
+Annotate only the given line range. May be specified multiple times. Overlapping ranges are allowed.
+<P>
+&lt;start&gt; and &lt;end&gt; are optional. lq-L &lt;start&gt;rq or lq-L &lt;start&gt;,rq spans from &lt;start&gt; to end of file. lq-L ,&lt;end&gt;rq spans from start of file to &lt;end&gt;.
+<P>
+&lt;start&gt; and &lt;end&gt; can take one of these forms:
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+number
+<P>
+If &lt;start&gt; or &lt;end&gt; is a number, it specifies an absolute line number (lines count from 1).
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+/regex/
+<P>
+This form will use the first line matching the given POSIX regex. If &lt;start&gt; is a regex, it will search from the end of the previous
+<B>-L</B>
+range, if any, otherwise from the start of file. If &lt;start&gt; is lq^/regex/rq, it will search from the start of file. If &lt;end&gt; is a regex, it will search starting at the line given by &lt;start&gt;.
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
++offset or -offset
+<P>
+This is only valid for &lt;end&gt; and will specify a number of lines before or after the line given by &lt;start&gt;.
+</DL>
+
+<P>
+If lq:&lt;funcname&gt;rq is given in place of &lt;start&gt; and &lt;end&gt;, it is a regular expression that denotes the range from the first funcname line that matches &lt;funcname&gt;, up to the next funcname line. lq:&lt;funcname&gt;rq searches from the end of the previous
+<B>-L</B>
+range, if any, otherwise from the start of file. lq^:&lt;funcname&gt;rq searches from the start of file.
+</DL>
+
+<P>
+
+-l
+<DL COMPACT><DT><DD>
+Show long rev (Default: off).
+</DL>
+
+<P>
+
+-t
+<DL COMPACT><DT><DD>
+Show raw timestamp (Default: off).
+</DL>
+
+<P>
+
+-S &lt;revs-file&gt;
+<DL COMPACT><DT><DD>
+Use revisions from revs-file instead of calling
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-rev-list">git-rev-list</A></B>(1).
+</DL>
+
+<P>
+
+--reverse &lt;rev&gt;..&lt;rev&gt;
+<DL COMPACT><DT><DD>
+Walk history forward instead of backward. Instead of showing the revision in which a line appeared, this shows the last revision in which a line has existed. This requires a range of revision like START..END where the path to blame exists in START.
+<B>git blame --reverse START</B>
+is taken as
+<B>git blame --reverse START..HEAD</B>
+for convenience.
+</DL>
+
+<P>
+
+-p, --porcelain
+<DL COMPACT><DT><DD>
+Show in a format designed for machine consumption.
+</DL>
+
+<P>
+
+--line-porcelain
+<DL COMPACT><DT><DD>
+Show the porcelain format, but output commit information for each line, not just the first time a commit is referenced. Implies --porcelain.
+</DL>
+
+<P>
+
+--incremental
+<DL COMPACT><DT><DD>
+Show the result incrementally in a format designed for machine consumption.
+</DL>
+
+<P>
+
+--encoding=&lt;encoding&gt;
+<DL COMPACT><DT><DD>
+Specifies the encoding used to output author names and commit summaries. Setting it to
+<B>none</B>
+makes blame output unconverted data. For more information see the discussion about encoding in the
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-log">git-log</A></B>(1)
+manual page.
+</DL>
+
+<P>
+
+--contents &lt;file&gt;
+<DL COMPACT><DT><DD>
+When &lt;rev&gt; is not specified, the command annotates the changes starting backwards from the working tree copy. This flag makes the command pretend as if the working tree copy has the contents of the named file (specify
+<B>-</B>
+to make the command read from the standard input).
+</DL>
+
+<P>
+
+--date &lt;format&gt;
+<DL COMPACT><DT><DD>
+Specifies the format used to output dates. If --date is not provided, the value of the blame.date config variable is used. If the blame.date config variable is also not set, the iso format is used. For supported values, see the discussion of the --date option at
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-log">git-log</A></B>(1).
+</DL>
+
+<P>
+
+--[no-]progress
+<DL COMPACT><DT><DD>
+Progress status is reported on the standard error stream by default when it is attached to a terminal. This flag enables progress reporting even if not attached to a terminal. Cancqt use
+<B>--progress</B>
+together with
+<B>--porcelain</B>
+or
+<B>--incremental</B>.
+</DL>
+
+<P>
+
+-M[&lt;num&gt;]
+<DL COMPACT><DT><DD>
+Detect moved or copied lines within a file. When a commit moves or copies a block of lines (e.g. the original file has A and then B, and the commit changes it to B and then A), the traditional
+<I>blame</I>
+algorithm notices only half of the movement and typically blames the lines that were moved up (i.e. B) to the parent and assigns blame to the lines that were moved down (i.e. A) to the child commit. With this option, both groups of lines are blamed on the parent by running extra passes of inspection.
+<P>
+&lt;num&gt; is optional but it is the lower bound on the number of alphanumeric characters that Git must detect as moving/copying within a file for it to associate those lines with the parent commit. The default value is 20.
+</DL>
+
+<P>
+
+-C[&lt;num&gt;]
+<DL COMPACT><DT><DD>
+In addition to
+<B>-M</B>, detect lines moved or copied from other files that were modified in the same commit. This is useful when you reorganize your program and move code around across files. When this option is given twice, the command additionally looks for copies from other files in the commit that creates the file. When this option is given three times, the command additionally looks for copies from other files in any commit.
+<P>
+&lt;num&gt; is optional but it is the lower bound on the number of alphanumeric characters that Git must detect as moving/copying between files for it to associate those lines with the parent commit. And the default value is 40. If there are more than one
+<B>-C</B>
+options given, the &lt;num&gt; argument of the last
+<B>-C</B>
+will take effect.
+</DL>
+
+<P>
+
+-h
+<DL COMPACT><DT><DD>
+Show help message.
+</DL>
+
+<P>
+
+--indent-heuristic, --no-indent-heuristic
+<DL COMPACT><DT><DD>
+These are to help debugging and tuning experimental heuristics (which are off by default) that shift diff hunk boundaries to make patches easier to read.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-blame">git-blame</A></B>(1)
+<A NAME="lbAG">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:45:15 GMT, June 13, 2017
+</BODY>
+</HTML>

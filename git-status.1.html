@@ -1,0 +1,2440 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-STATUS</TITLE>
+</HEAD><BODY>
+<H1>GIT\-STATUS</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-status - Show the working tree status
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git status</I> [&lt;options&gt;...] [--] [&lt;pathspec&gt;...]
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+Displays paths that have differences between the index file and the current HEAD commit, paths that have differences between the working tree and the index file, and paths in the working tree that are not tracked by Git (and are not ignored by <B><A HREF="http://localhost/cgi-bin/man/man2html?5+gitignore">gitignore</A></B>(5)). The first are what you <I>would</I> commit by running <B>git commit</B>; the second and third are what you <I>could</I> commit by running <I>git add</I> before running <B>git commit</B>.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+-s, --short
+<DL COMPACT><DT><DD>
+Give the output in the short-format.
+</DL>
+
+<P>
+
+-b, --branch
+<DL COMPACT><DT><DD>
+Show the branch and tracking info even in short-format.
+</DL>
+
+<P>
+
+--porcelain[=&lt;version&gt;]
+<DL COMPACT><DT><DD>
+Give the output in an easy-to-parse format for scripts. This is similar to the short output, but will remain stable across Git versions and regardless of user configuration. See below for details.
+<P>
+The version parameter is used to specify the format version. This is optional and defaults to the original version
+<I>v1</I>
+format.
+</DL>
+
+<P>
+
+--long
+<DL COMPACT><DT><DD>
+Give the output in the long-format. This is the default.
+</DL>
+
+<P>
+
+-v, --verbose
+<DL COMPACT><DT><DD>
+In addition to the names of files that have been changed, also show the textual changes that are staged to be committed (i.e., like the output of
+<B>git diff --cached</B>). If
+<B>-v</B>
+is specified twice, then also show the changes in the working tree that have not yet been staged (i.e., like the output of
+<B>git diff</B>).
+</DL>
+
+<P>
+
+-u[&lt;mode&gt;], --untracked-files[=&lt;mode&gt;]
+<DL COMPACT><DT><DD>
+Show untracked files.
+<P>
+The mode parameter is used to specify the handling of untracked files. It is optional: it defaults to
+<I>all</I>, and if specified, it must be stuck to the option (e.g.
+<B>-uno</B>, but not
+<B>-u no</B>).
+<P>
+The possible options are:
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>no</I>
+- Show no untracked files.
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>normal</I>
+- Shows untracked files and directories.
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>all</I>
+- Also shows individual files in untracked directories.
+<P>
+When
+<B>-u</B>
+option is not used, untracked files and directories are shown (i.e. the same as specifying
+<B>normal</B>), to help you avoid forgetting to add newly created files. Because it takes extra work to find untracked files in the filesystem, this mode may take some time in a large working tree. Consider enabling untracked cache and split index if supported (see
+<B>git update-index --untracked-cache</B>
+and
+<B>git update-index --split-index</B>), Otherwise you can use
+<B>no</B>
+to have
+<B>git status</B>
+return more quickly without showing untracked files.
+<P>
+The default can be changed using the status.showUntrackedFiles configuration variable documented in
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-config">git-config</A></B>(1).
+</DL>
+
+</DL>
+
+<P>
+
+--ignore-submodules[=&lt;when&gt;]
+<DL COMPACT><DT><DD>
+Ignore changes to submodules when looking for changes. &lt;when&gt; can be either &quot;none&quot;, &quot;untracked&quot;, &quot;dirty&quot; or &quot;all&quot;, which is the default. Using &quot;none&quot; will consider the submodule modified when it either contains untracked or modified files or its HEAD differs from the commit recorded in the superproject and can be used to override any settings of the
+<I>ignore</I>
+option in
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-config">git-config</A></B>(1)
+or
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+gitmodules">gitmodules</A></B>(5). When &quot;untracked&quot; is used submodules are not considered dirty when they only contain untracked content (but they are still scanned for modified content). Using &quot;dirty&quot; ignores all changes to the work tree of submodules, only changes to the commits stored in the superproject are shown (this was the behavior before 1.7.0). Using &quot;all&quot; hides all changes to submodules (and suppresses the output of submodule summaries when the config option
+<B>status.submoduleSummary</B>
+is set).
+</DL>
+
+<P>
+
+--ignored
+<DL COMPACT><DT><DD>
+Show ignored files as well.
+</DL>
+
+<P>
+
+-z
+<DL COMPACT><DT><DD>
+Terminate entries with NUL, instead of LF. This implies the
+<B>--porcelain=v1</B>
+output format if no other format is given.
+</DL>
+
+<P>
+
+--column[=&lt;options&gt;], --no-column
+<DL COMPACT><DT><DD>
+Display untracked files in columns. See configuration variable column.status for option syntax.<B>--column</B>
+and
+<B>--no-column</B>
+without options are equivalent to
+<I>always</I>
+and
+<I>never</I>
+respectively.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>OUTPUT</H2>
+
+<P>
+The output from this command is designed to be used as a commit template comment. The default, long format, is designed to be human readable, verbose and descriptive. Its contents and format are subject to change at any time.
+<P>
+The paths mentioned in the output, unlike many other Git commands, are made relative to the current directory if you are working in a subdirectory (this is on purpose, to help cutting and pasting). See the status.relativePaths config option below.
+<A NAME="lbAG">&nbsp;</A>
+<H3>Short Format</H3>
+
+<P>
+In the short-format, the status of each path is shown as
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+XY PATH1 -&gt; PATH2
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+where <B>PATH1</B> is the path in the <B>HEAD</B>, and the &quot; <B>-&gt; PATH2</B>&quot; part is shown only when <B>PATH1</B> corresponds to a different path in the index/worktree (i.e. the file is renamed). The <B>XY</B> is a two-letter status code.
+<P>
+The fields (including the <B>-&gt;</B>) are separated from each other by a single space. If a filename contains whitespace or other nonprintable characters, that field will be quoted in the manner of a C string literal: surrounded by ASCII double quote (34) characters, and with interior special characters backslash-escaped.
+<P>
+For paths with merge conflicts, <B>X</B> and <B>Y</B> show the modification states of each side of the merge. For paths that do not have merge conflicts, <B>X</B> shows the status of the index, and <B>Y</B> shows the status of the work tree. For untracked paths, <B>XY</B> are <B>??</B>. Other status codes can be interpreted as follows:
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+' ' = unmodified
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>M</I>
+= modified
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>A</I>
+= added
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>D</I>
+= deleted
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>R</I>
+= renamed
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>C</I>
+= copied
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>U</I>
+= updated but unmerged
+</DL>
+
+<P>
+Ignored files are not listed, unless <B>--ignored</B> option is in effect, in which case <B>XY</B> are <B>!!</B>.
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+X          Y     Meaning
+-------------------------------------------------
+          [MD]   not updated
+M        [ MD]   updated in index
+A        [ MD]   added to index
+D         [ M]   deleted from index
+R        [ MD]   renamed in index
+C        [ MD]   copied in index
+[MARC]           index and work tree matches
+[ MARC]     M    work tree changed since index
+[ MARC]     D    deleted in work tree
+-------------------------------------------------
+D           D    unmerged, both deleted
+A           U    unmerged, added by us
+U           D    unmerged, deleted by them
+U           A    unmerged, added by them
+D           U    unmerged, deleted by us
+A           A    unmerged, both added
+U           U    unmerged, both modified
+-------------------------------------------------
+?           ?    untracked
+!           !    ignored
+-------------------------------------------------
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+Submodules have more state and instead report M the submodule has a different HEAD than recorded in the index m the submodule has modified content ? the submodule has untracked files since modified content or untracked files in a submodule cannot be added via <B>git add</B> in the superproject to prepare a commit.
+<P>
+<I>m</I> and <I>?</I> are applied recursively. For example if a nested submodule in a submodule contains an untracked file, this is reported as <I>?</I> as well.
+<P>
+If -b is used the short-format status is preceded by a line
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+## branchname tracking info
+</PRE>
+
+</DL>
+
+
+
+
+<A NAME="lbAH">&nbsp;</A>
+<H3>Porcelain Format Version 1</H3>
+
+<P>
+Version 1 porcelain format is similar to the short format, but is guaranteed not to change in a backwards-incompatible way between Git versions or based on user configuration. This makes it ideal for parsing by scripts. The description of the short format above also describes the porcelain format, with a few exceptions:
+<P>
+<DL COMPACT><DT><DD>
+ 1.
+
+
+The usercqs color.status configuration is not respected; color will always be off.
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+ 2.
+
+
+The usercqs status.relativePaths configuration is not respected; paths shown will always be relative to the repository root.
+</DL>
+
+<P>
+There is also an alternate -z format recommended for machine parsing. In that format, the status field is the same, but some other things change. First, the <I>-&gt;</I> is omitted from rename entries and the field order is reversed (e.g <I>from -&gt; to</I> becomes <I>to from</I>). Second, a NUL (ASCII 0) follows each filename, replacing space as a field separator and the terminating newline (but a space still separates the status field from the first filename). Third, filenames containing special characters are not specially formatted; no quoting or backslash-escaping is performed.
+<P>
+Any submodule changes are reported as modified <B>M</B> instead of <B>m</B> or single <B>?</B>.
+<A NAME="lbAI">&nbsp;</A>
+<H3>Porcelain Format Version 2</H3>
+
+<P>
+Version 2 format adds more detailed information about the state of the worktree and changed items. Version 2 also defines an extensible set of easy to parse optional headers.
+<P>
+Header lines start with &quot;#&quot; and are added in response to specific command line arguments. Parsers should ignore headers they doncqt recognize.
+<P>
+# Branch Headers
+<P>
+If <B>--branch</B> is given, a series of header lines are printed with information about the current branch.
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+Line                                     Notes
+------------------------------------------------------------
+# branch.oid &lt;commit&gt; | (initial)        Current commit.
+# branch.head &lt;branch&gt; | (detached)      Current branch.
+# branch.upstream &lt;upstream_branch&gt;      If upstream is set.
+# branch.ab +&lt;ahead&gt; -&lt;behind&gt;           If upstream is set and
+                                         the commit is present.
+------------------------------------------------------------
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+# Changed Tracked Entries
+<P>
+Following the headers, a series of lines are printed for tracked entries. One of three different line formats may be used to describe an entry depending on the type of change. Tracked entries are printed in an undefined order; parsers should allow for a mixture of the 3 line types in any order.
+<P>
+Ordinary changed entries have the following format:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+1 &lt;XY&gt; &lt;sub&gt; &lt;mH&gt; &lt;mI&gt; &lt;mW&gt; &lt;hH&gt; &lt;hI&gt; &lt;path&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+Renamed or copied entries have the following format:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+2 &lt;XY&gt; &lt;sub&gt; &lt;mH&gt; &lt;mI&gt; &lt;mW&gt; &lt;hH&gt; &lt;hI&gt; &lt;X&gt;&lt;score&gt; &lt;path&gt;&lt;sep&gt;&lt;origPath&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+Field       Meaning
+--------------------------------------------------------
+&lt;XY&gt;        A 2 character field containing the staged and
+            unstaged XY values described in the short format,
+            with unchanged indicated by a &quot;.&quot; rather than
+            a space.
+&lt;sub&gt;       A 4 character field describing the submodule state.
+            &quot;N...&quot; when the entry is not a submodule.
+            &quot;S&lt;c&gt;&lt;m&gt;&lt;u&gt;&quot; when the entry is a submodule.
+            &lt;c&gt; is &quot;C&quot; if the commit changed; otherwise &quot;.&quot;.
+            &lt;m&gt; is &quot;M&quot; if it has tracked changes; otherwise &quot;.&quot;.
+            &lt;u&gt; is &quot;U&quot; if there are untracked changes; otherwise &quot;.&quot;.
+&lt;mH&gt;        The octal file mode in HEAD.
+&lt;mI&gt;        The octal file mode in the index.
+&lt;mW&gt;        The octal file mode in the worktree.
+&lt;hH&gt;        The object name in HEAD.
+&lt;hI&gt;        The object name in the index.
+&lt;X&gt;&lt;score&gt;  The rename or copy score (denoting the percentage
+            of similarity between the source and target of the
+            move or copy). For example &quot;R100&quot; or &quot;C75&quot;.
+&lt;path&gt;      The pathname.  In a renamed/copied entry, this
+            is the path in the index and in the working tree.
+&lt;sep&gt;       When the `-z` option is used, the 2 pathnames are separated
+            with a NUL (ASCII 0x00) byte; otherwise, a tab (ASCII 0x09)
+            byte separates them.
+&lt;origPath&gt;  The pathname in the commit at HEAD.  This is only
+            present in a renamed/copied entry, and tells
+            where the renamed/copied contents came from.
+--------------------------------------------------------
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+Unmerged entries have the following format; the first character is a &quot;u&quot; to distinguish from ordinary changed entries.
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+u &lt;xy&gt; &lt;sub&gt; &lt;m1&gt; &lt;m2&gt; &lt;m3&gt; &lt;mW&gt; &lt;h1&gt; &lt;h2&gt; &lt;h3&gt; &lt;path&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+Field       Meaning
+--------------------------------------------------------
+&lt;XY&gt;        A 2 character field describing the conflict type
+            as described in the short format.
+&lt;sub&gt;       A 4 character field describing the submodule state
+            as described above.
+&lt;m1&gt;        The octal file mode in stage 1.
+&lt;m2&gt;        The octal file mode in stage 2.
+&lt;m3&gt;        The octal file mode in stage 3.
+&lt;mW&gt;        The octal file mode in the worktree.
+&lt;h1&gt;        The object name in stage 1.
+&lt;h2&gt;        The object name in stage 2.
+&lt;h3&gt;        The object name in stage 3.
+&lt;path&gt;      The pathname.
+--------------------------------------------------------
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+# Other Items
+<P>
+Following the tracked entries (and if requested), a series of lines will be printed for untracked and then ignored items found in the worktree.
+<P>
+Untracked items have the following format:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+? &lt;path&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+Ignored items have the following format:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+! &lt;path&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+# Pathname Format Notes and -z
+<P>
+When the <B>-z</B> option is given, pathnames are printed as is and without any quoting and lines are terminated with a NUL (ASCII 0x00) byte.
+<P>
+Without the <B>-z</B> option, pathnames with &quot;unusual&quot; characters are quoted as explained for the configuration variable <B>core.quotePath</B> (see <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-config">git-config</A></B>(1)).
+<A NAME="lbAJ">&nbsp;</A>
+<H2>CONFIGURATION</H2>
+
+<P>
+The command honors <B>color.status</B> (or <B>status.color</B> --- they mean the same thing and the latter is kept for backward compatibility) and <B>color.status.&lt;slot&gt;</B> configuration variables to colorize its output.
+<P>
+If the config variable <B>status.relativePaths</B> is set to false, then all paths shown are relative to the repository root, not to the current directory.
+<P>
+If <B>status.submoduleSummary</B> is set to a non zero number or true (identical to -1 or an unlimited number), the submodule summary will be enabled for the long format and a summary of commits for modified submodules will be shown (see --summary-limit option of <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-submodule">git-submodule</A></B>(1)). Please note that the summary output from the status command will be suppressed for all submodules when <B>diff.ignoreSubmodules</B> is set to <I>all</I> or only for those submodules where <B>submodule.&lt;name&gt;.ignore=all</B>. To also view the summary for ignored submodules you can either use the --ignore-submodules=dirty command line option or the <I>git submodule summary</I> command, which shows a similar output but does not honor these settings.
+<A NAME="lbAK">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+gitignore">gitignore</A></B>(5)
+<A NAME="lbAL">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">OUTPUT</A><DD>
+<DL>
+<DT><A HREF="#lbAG">Short Format</A><DD>
+<DT><A HREF="#lbAH">Porcelain Format Version 1</A><DD>
+<DT><A HREF="#lbAI">Porcelain Format Version 2</A><DD>
+</DL>
+<DT><A HREF="#lbAJ">CONFIGURATION</A><DD>
+<DT><A HREF="#lbAK">SEE ALSO</A><DD>
+<DT><A HREF="#lbAL">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:24:33 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-STATUS</TITLE>
+</HEAD><BODY>
+<H1>GIT\-STATUS</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-status - Show the working tree status
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git status</I> [&lt;options&gt;...] [--] [&lt;pathspec&gt;...]
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+Displays paths that have differences between the index file and the current HEAD commit, paths that have differences between the working tree and the index file, and paths in the working tree that are not tracked by Git (and are not ignored by <B><A HREF="http://localhost/cgi-bin/man/man2html?5+gitignore">gitignore</A></B>(5)). The first are what you <I>would</I> commit by running <B>git commit</B>; the second and third are what you <I>could</I> commit by running <I>git add</I> before running <B>git commit</B>.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+-s, --short
+<DL COMPACT><DT><DD>
+Give the output in the short-format.
+</DL>
+
+<P>
+
+-b, --branch
+<DL COMPACT><DT><DD>
+Show the branch and tracking info even in short-format.
+</DL>
+
+<P>
+
+--porcelain[=&lt;version&gt;]
+<DL COMPACT><DT><DD>
+Give the output in an easy-to-parse format for scripts. This is similar to the short output, but will remain stable across Git versions and regardless of user configuration. See below for details.
+<P>
+The version parameter is used to specify the format version. This is optional and defaults to the original version
+<I>v1</I>
+format.
+</DL>
+
+<P>
+
+--long
+<DL COMPACT><DT><DD>
+Give the output in the long-format. This is the default.
+</DL>
+
+<P>
+
+-v, --verbose
+<DL COMPACT><DT><DD>
+In addition to the names of files that have been changed, also show the textual changes that are staged to be committed (i.e., like the output of
+<B>git diff --cached</B>). If
+<B>-v</B>
+is specified twice, then also show the changes in the working tree that have not yet been staged (i.e., like the output of
+<B>git diff</B>).
+</DL>
+
+<P>
+
+-u[&lt;mode&gt;], --untracked-files[=&lt;mode&gt;]
+<DL COMPACT><DT><DD>
+Show untracked files.
+<P>
+The mode parameter is used to specify the handling of untracked files. It is optional: it defaults to
+<I>all</I>, and if specified, it must be stuck to the option (e.g.
+<B>-uno</B>, but not
+<B>-u no</B>).
+<P>
+The possible options are:
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>no</I>
+- Show no untracked files.
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>normal</I>
+- Shows untracked files and directories.
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>all</I>
+- Also shows individual files in untracked directories.
+<P>
+When
+<B>-u</B>
+option is not used, untracked files and directories are shown (i.e. the same as specifying
+<B>normal</B>), to help you avoid forgetting to add newly created files. Because it takes extra work to find untracked files in the filesystem, this mode may take some time in a large working tree. Consider enabling untracked cache and split index if supported (see
+<B>git update-index --untracked-cache</B>
+and
+<B>git update-index --split-index</B>), Otherwise you can use
+<B>no</B>
+to have
+<B>git status</B>
+return more quickly without showing untracked files.
+<P>
+The default can be changed using the status.showUntrackedFiles configuration variable documented in
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-config">git-config</A></B>(1).
+</DL>
+
+</DL>
+
+<P>
+
+--ignore-submodules[=&lt;when&gt;]
+<DL COMPACT><DT><DD>
+Ignore changes to submodules when looking for changes. &lt;when&gt; can be either &quot;none&quot;, &quot;untracked&quot;, &quot;dirty&quot; or &quot;all&quot;, which is the default. Using &quot;none&quot; will consider the submodule modified when it either contains untracked or modified files or its HEAD differs from the commit recorded in the superproject and can be used to override any settings of the
+<I>ignore</I>
+option in
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-config">git-config</A></B>(1)
+or
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+gitmodules">gitmodules</A></B>(5). When &quot;untracked&quot; is used submodules are not considered dirty when they only contain untracked content (but they are still scanned for modified content). Using &quot;dirty&quot; ignores all changes to the work tree of submodules, only changes to the commits stored in the superproject are shown (this was the behavior before 1.7.0). Using &quot;all&quot; hides all changes to submodules (and suppresses the output of submodule summaries when the config option
+<B>status.submoduleSummary</B>
+is set).
+</DL>
+
+<P>
+
+--ignored
+<DL COMPACT><DT><DD>
+Show ignored files as well.
+</DL>
+
+<P>
+
+-z
+<DL COMPACT><DT><DD>
+Terminate entries with NUL, instead of LF. This implies the
+<B>--porcelain=v1</B>
+output format if no other format is given.
+</DL>
+
+<P>
+
+--column[=&lt;options&gt;], --no-column
+<DL COMPACT><DT><DD>
+Display untracked files in columns. See configuration variable column.status for option syntax.<B>--column</B>
+and
+<B>--no-column</B>
+without options are equivalent to
+<I>always</I>
+and
+<I>never</I>
+respectively.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>OUTPUT</H2>
+
+<P>
+The output from this command is designed to be used as a commit template comment. The default, long format, is designed to be human readable, verbose and descriptive. Its contents and format are subject to change at any time.
+<P>
+The paths mentioned in the output, unlike many other Git commands, are made relative to the current directory if you are working in a subdirectory (this is on purpose, to help cutting and pasting). See the status.relativePaths config option below.
+<A NAME="lbAG">&nbsp;</A>
+<H3>Short Format</H3>
+
+<P>
+In the short-format, the status of each path is shown as
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+XY PATH1 -&gt; PATH2
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+where <B>PATH1</B> is the path in the <B>HEAD</B>, and the &quot; <B>-&gt; PATH2</B>&quot; part is shown only when <B>PATH1</B> corresponds to a different path in the index/worktree (i.e. the file is renamed). The <B>XY</B> is a two-letter status code.
+<P>
+The fields (including the <B>-&gt;</B>) are separated from each other by a single space. If a filename contains whitespace or other nonprintable characters, that field will be quoted in the manner of a C string literal: surrounded by ASCII double quote (34) characters, and with interior special characters backslash-escaped.
+<P>
+For paths with merge conflicts, <B>X</B> and <B>Y</B> show the modification states of each side of the merge. For paths that do not have merge conflicts, <B>X</B> shows the status of the index, and <B>Y</B> shows the status of the work tree. For untracked paths, <B>XY</B> are <B>??</B>. Other status codes can be interpreted as follows:
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+' ' = unmodified
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>M</I>
+= modified
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>A</I>
+= added
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>D</I>
+= deleted
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>R</I>
+= renamed
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>C</I>
+= copied
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>U</I>
+= updated but unmerged
+</DL>
+
+<P>
+Ignored files are not listed, unless <B>--ignored</B> option is in effect, in which case <B>XY</B> are <B>!!</B>.
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+X          Y     Meaning
+-------------------------------------------------
+          [MD]   not updated
+M        [ MD]   updated in index
+A        [ MD]   added to index
+D         [ M]   deleted from index
+R        [ MD]   renamed in index
+C        [ MD]   copied in index
+[MARC]           index and work tree matches
+[ MARC]     M    work tree changed since index
+[ MARC]     D    deleted in work tree
+-------------------------------------------------
+D           D    unmerged, both deleted
+A           U    unmerged, added by us
+U           D    unmerged, deleted by them
+U           A    unmerged, added by them
+D           U    unmerged, deleted by us
+A           A    unmerged, both added
+U           U    unmerged, both modified
+-------------------------------------------------
+?           ?    untracked
+!           !    ignored
+-------------------------------------------------
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+Submodules have more state and instead report M the submodule has a different HEAD than recorded in the index m the submodule has modified content ? the submodule has untracked files since modified content or untracked files in a submodule cannot be added via <B>git add</B> in the superproject to prepare a commit.
+<P>
+<I>m</I> and <I>?</I> are applied recursively. For example if a nested submodule in a submodule contains an untracked file, this is reported as <I>?</I> as well.
+<P>
+If -b is used the short-format status is preceded by a line
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+## branchname tracking info
+</PRE>
+
+</DL>
+
+
+
+
+<A NAME="lbAH">&nbsp;</A>
+<H3>Porcelain Format Version 1</H3>
+
+<P>
+Version 1 porcelain format is similar to the short format, but is guaranteed not to change in a backwards-incompatible way between Git versions or based on user configuration. This makes it ideal for parsing by scripts. The description of the short format above also describes the porcelain format, with a few exceptions:
+<P>
+<DL COMPACT><DT><DD>
+ 1.
+
+
+The usercqs color.status configuration is not respected; color will always be off.
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+ 2.
+
+
+The usercqs status.relativePaths configuration is not respected; paths shown will always be relative to the repository root.
+</DL>
+
+<P>
+There is also an alternate -z format recommended for machine parsing. In that format, the status field is the same, but some other things change. First, the <I>-&gt;</I> is omitted from rename entries and the field order is reversed (e.g <I>from -&gt; to</I> becomes <I>to from</I>). Second, a NUL (ASCII 0) follows each filename, replacing space as a field separator and the terminating newline (but a space still separates the status field from the first filename). Third, filenames containing special characters are not specially formatted; no quoting or backslash-escaping is performed.
+<P>
+Any submodule changes are reported as modified <B>M</B> instead of <B>m</B> or single <B>?</B>.
+<A NAME="lbAI">&nbsp;</A>
+<H3>Porcelain Format Version 2</H3>
+
+<P>
+Version 2 format adds more detailed information about the state of the worktree and changed items. Version 2 also defines an extensible set of easy to parse optional headers.
+<P>
+Header lines start with &quot;#&quot; and are added in response to specific command line arguments. Parsers should ignore headers they doncqt recognize.
+<P>
+# Branch Headers
+<P>
+If <B>--branch</B> is given, a series of header lines are printed with information about the current branch.
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+Line                                     Notes
+------------------------------------------------------------
+# branch.oid &lt;commit&gt; | (initial)        Current commit.
+# branch.head &lt;branch&gt; | (detached)      Current branch.
+# branch.upstream &lt;upstream_branch&gt;      If upstream is set.
+# branch.ab +&lt;ahead&gt; -&lt;behind&gt;           If upstream is set and
+                                         the commit is present.
+------------------------------------------------------------
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+# Changed Tracked Entries
+<P>
+Following the headers, a series of lines are printed for tracked entries. One of three different line formats may be used to describe an entry depending on the type of change. Tracked entries are printed in an undefined order; parsers should allow for a mixture of the 3 line types in any order.
+<P>
+Ordinary changed entries have the following format:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+1 &lt;XY&gt; &lt;sub&gt; &lt;mH&gt; &lt;mI&gt; &lt;mW&gt; &lt;hH&gt; &lt;hI&gt; &lt;path&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+Renamed or copied entries have the following format:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+2 &lt;XY&gt; &lt;sub&gt; &lt;mH&gt; &lt;mI&gt; &lt;mW&gt; &lt;hH&gt; &lt;hI&gt; &lt;X&gt;&lt;score&gt; &lt;path&gt;&lt;sep&gt;&lt;origPath&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+Field       Meaning
+--------------------------------------------------------
+&lt;XY&gt;        A 2 character field containing the staged and
+            unstaged XY values described in the short format,
+            with unchanged indicated by a &quot;.&quot; rather than
+            a space.
+&lt;sub&gt;       A 4 character field describing the submodule state.
+            &quot;N...&quot; when the entry is not a submodule.
+            &quot;S&lt;c&gt;&lt;m&gt;&lt;u&gt;&quot; when the entry is a submodule.
+            &lt;c&gt; is &quot;C&quot; if the commit changed; otherwise &quot;.&quot;.
+            &lt;m&gt; is &quot;M&quot; if it has tracked changes; otherwise &quot;.&quot;.
+            &lt;u&gt; is &quot;U&quot; if there are untracked changes; otherwise &quot;.&quot;.
+&lt;mH&gt;        The octal file mode in HEAD.
+&lt;mI&gt;        The octal file mode in the index.
+&lt;mW&gt;        The octal file mode in the worktree.
+&lt;hH&gt;        The object name in HEAD.
+&lt;hI&gt;        The object name in the index.
+&lt;X&gt;&lt;score&gt;  The rename or copy score (denoting the percentage
+            of similarity between the source and target of the
+            move or copy). For example &quot;R100&quot; or &quot;C75&quot;.
+&lt;path&gt;      The pathname.  In a renamed/copied entry, this
+            is the path in the index and in the working tree.
+&lt;sep&gt;       When the `-z` option is used, the 2 pathnames are separated
+            with a NUL (ASCII 0x00) byte; otherwise, a tab (ASCII 0x09)
+            byte separates them.
+&lt;origPath&gt;  The pathname in the commit at HEAD.  This is only
+            present in a renamed/copied entry, and tells
+            where the renamed/copied contents came from.
+--------------------------------------------------------
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+Unmerged entries have the following format; the first character is a &quot;u&quot; to distinguish from ordinary changed entries.
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+u &lt;xy&gt; &lt;sub&gt; &lt;m1&gt; &lt;m2&gt; &lt;m3&gt; &lt;mW&gt; &lt;h1&gt; &lt;h2&gt; &lt;h3&gt; &lt;path&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+Field       Meaning
+--------------------------------------------------------
+&lt;XY&gt;        A 2 character field describing the conflict type
+            as described in the short format.
+&lt;sub&gt;       A 4 character field describing the submodule state
+            as described above.
+&lt;m1&gt;        The octal file mode in stage 1.
+&lt;m2&gt;        The octal file mode in stage 2.
+&lt;m3&gt;        The octal file mode in stage 3.
+&lt;mW&gt;        The octal file mode in the worktree.
+&lt;h1&gt;        The object name in stage 1.
+&lt;h2&gt;        The object name in stage 2.
+&lt;h3&gt;        The object name in stage 3.
+&lt;path&gt;      The pathname.
+--------------------------------------------------------
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+# Other Items
+<P>
+Following the tracked entries (and if requested), a series of lines will be printed for untracked and then ignored items found in the worktree.
+<P>
+Untracked items have the following format:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+? &lt;path&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+Ignored items have the following format:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+! &lt;path&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+# Pathname Format Notes and -z
+<P>
+When the <B>-z</B> option is given, pathnames are printed as is and without any quoting and lines are terminated with a NUL (ASCII 0x00) byte.
+<P>
+Without the <B>-z</B> option, pathnames with &quot;unusual&quot; characters are quoted as explained for the configuration variable <B>core.quotePath</B> (see <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-config">git-config</A></B>(1)).
+<A NAME="lbAJ">&nbsp;</A>
+<H2>CONFIGURATION</H2>
+
+<P>
+The command honors <B>color.status</B> (or <B>status.color</B> --- they mean the same thing and the latter is kept for backward compatibility) and <B>color.status.&lt;slot&gt;</B> configuration variables to colorize its output.
+<P>
+If the config variable <B>status.relativePaths</B> is set to false, then all paths shown are relative to the repository root, not to the current directory.
+<P>
+If <B>status.submoduleSummary</B> is set to a non zero number or true (identical to -1 or an unlimited number), the submodule summary will be enabled for the long format and a summary of commits for modified submodules will be shown (see --summary-limit option of <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-submodule">git-submodule</A></B>(1)). Please note that the summary output from the status command will be suppressed for all submodules when <B>diff.ignoreSubmodules</B> is set to <I>all</I> or only for those submodules where <B>submodule.&lt;name&gt;.ignore=all</B>. To also view the summary for ignored submodules you can either use the --ignore-submodules=dirty command line option or the <I>git submodule summary</I> command, which shows a similar output but does not honor these settings.
+<A NAME="lbAK">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+gitignore">gitignore</A></B>(5)
+<A NAME="lbAL">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">OUTPUT</A><DD>
+<DL>
+<DT><A HREF="#lbAG">Short Format</A><DD>
+<DT><A HREF="#lbAH">Porcelain Format Version 1</A><DD>
+<DT><A HREF="#lbAI">Porcelain Format Version 2</A><DD>
+</DL>
+<DT><A HREF="#lbAJ">CONFIGURATION</A><DD>
+<DT><A HREF="#lbAK">SEE ALSO</A><DD>
+<DT><A HREF="#lbAL">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:34:56 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-STATUS</TITLE>
+</HEAD><BODY>
+<H1>GIT\-STATUS</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-status - Show the working tree status
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git status</I> [&lt;options&gt;...] [--] [&lt;pathspec&gt;...]
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+Displays paths that have differences between the index file and the current HEAD commit, paths that have differences between the working tree and the index file, and paths in the working tree that are not tracked by Git (and are not ignored by <B><A HREF="http://localhost/cgi-bin/man/man2html?5+gitignore">gitignore</A></B>(5)). The first are what you <I>would</I> commit by running <B>git commit</B>; the second and third are what you <I>could</I> commit by running <I>git add</I> before running <B>git commit</B>.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+-s, --short
+<DL COMPACT><DT><DD>
+Give the output in the short-format.
+</DL>
+
+<P>
+
+-b, --branch
+<DL COMPACT><DT><DD>
+Show the branch and tracking info even in short-format.
+</DL>
+
+<P>
+
+--porcelain[=&lt;version&gt;]
+<DL COMPACT><DT><DD>
+Give the output in an easy-to-parse format for scripts. This is similar to the short output, but will remain stable across Git versions and regardless of user configuration. See below for details.
+<P>
+The version parameter is used to specify the format version. This is optional and defaults to the original version
+<I>v1</I>
+format.
+</DL>
+
+<P>
+
+--long
+<DL COMPACT><DT><DD>
+Give the output in the long-format. This is the default.
+</DL>
+
+<P>
+
+-v, --verbose
+<DL COMPACT><DT><DD>
+In addition to the names of files that have been changed, also show the textual changes that are staged to be committed (i.e., like the output of
+<B>git diff --cached</B>). If
+<B>-v</B>
+is specified twice, then also show the changes in the working tree that have not yet been staged (i.e., like the output of
+<B>git diff</B>).
+</DL>
+
+<P>
+
+-u[&lt;mode&gt;], --untracked-files[=&lt;mode&gt;]
+<DL COMPACT><DT><DD>
+Show untracked files.
+<P>
+The mode parameter is used to specify the handling of untracked files. It is optional: it defaults to
+<I>all</I>, and if specified, it must be stuck to the option (e.g.
+<B>-uno</B>, but not
+<B>-u no</B>).
+<P>
+The possible options are:
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>no</I>
+- Show no untracked files.
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>normal</I>
+- Shows untracked files and directories.
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>all</I>
+- Also shows individual files in untracked directories.
+<P>
+When
+<B>-u</B>
+option is not used, untracked files and directories are shown (i.e. the same as specifying
+<B>normal</B>), to help you avoid forgetting to add newly created files. Because it takes extra work to find untracked files in the filesystem, this mode may take some time in a large working tree. Consider enabling untracked cache and split index if supported (see
+<B>git update-index --untracked-cache</B>
+and
+<B>git update-index --split-index</B>), Otherwise you can use
+<B>no</B>
+to have
+<B>git status</B>
+return more quickly without showing untracked files.
+<P>
+The default can be changed using the status.showUntrackedFiles configuration variable documented in
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-config">git-config</A></B>(1).
+</DL>
+
+</DL>
+
+<P>
+
+--ignore-submodules[=&lt;when&gt;]
+<DL COMPACT><DT><DD>
+Ignore changes to submodules when looking for changes. &lt;when&gt; can be either &quot;none&quot;, &quot;untracked&quot;, &quot;dirty&quot; or &quot;all&quot;, which is the default. Using &quot;none&quot; will consider the submodule modified when it either contains untracked or modified files or its HEAD differs from the commit recorded in the superproject and can be used to override any settings of the
+<I>ignore</I>
+option in
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-config">git-config</A></B>(1)
+or
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+gitmodules">gitmodules</A></B>(5). When &quot;untracked&quot; is used submodules are not considered dirty when they only contain untracked content (but they are still scanned for modified content). Using &quot;dirty&quot; ignores all changes to the work tree of submodules, only changes to the commits stored in the superproject are shown (this was the behavior before 1.7.0). Using &quot;all&quot; hides all changes to submodules (and suppresses the output of submodule summaries when the config option
+<B>status.submoduleSummary</B>
+is set).
+</DL>
+
+<P>
+
+--ignored
+<DL COMPACT><DT><DD>
+Show ignored files as well.
+</DL>
+
+<P>
+
+-z
+<DL COMPACT><DT><DD>
+Terminate entries with NUL, instead of LF. This implies the
+<B>--porcelain=v1</B>
+output format if no other format is given.
+</DL>
+
+<P>
+
+--column[=&lt;options&gt;], --no-column
+<DL COMPACT><DT><DD>
+Display untracked files in columns. See configuration variable column.status for option syntax.<B>--column</B>
+and
+<B>--no-column</B>
+without options are equivalent to
+<I>always</I>
+and
+<I>never</I>
+respectively.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>OUTPUT</H2>
+
+<P>
+The output from this command is designed to be used as a commit template comment. The default, long format, is designed to be human readable, verbose and descriptive. Its contents and format are subject to change at any time.
+<P>
+The paths mentioned in the output, unlike many other Git commands, are made relative to the current directory if you are working in a subdirectory (this is on purpose, to help cutting and pasting). See the status.relativePaths config option below.
+<A NAME="lbAG">&nbsp;</A>
+<H3>Short Format</H3>
+
+<P>
+In the short-format, the status of each path is shown as
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+XY PATH1 -&gt; PATH2
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+where <B>PATH1</B> is the path in the <B>HEAD</B>, and the &quot; <B>-&gt; PATH2</B>&quot; part is shown only when <B>PATH1</B> corresponds to a different path in the index/worktree (i.e. the file is renamed). The <B>XY</B> is a two-letter status code.
+<P>
+The fields (including the <B>-&gt;</B>) are separated from each other by a single space. If a filename contains whitespace or other nonprintable characters, that field will be quoted in the manner of a C string literal: surrounded by ASCII double quote (34) characters, and with interior special characters backslash-escaped.
+<P>
+For paths with merge conflicts, <B>X</B> and <B>Y</B> show the modification states of each side of the merge. For paths that do not have merge conflicts, <B>X</B> shows the status of the index, and <B>Y</B> shows the status of the work tree. For untracked paths, <B>XY</B> are <B>??</B>. Other status codes can be interpreted as follows:
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+' ' = unmodified
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>M</I>
+= modified
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>A</I>
+= added
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>D</I>
+= deleted
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>R</I>
+= renamed
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>C</I>
+= copied
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>U</I>
+= updated but unmerged
+</DL>
+
+<P>
+Ignored files are not listed, unless <B>--ignored</B> option is in effect, in which case <B>XY</B> are <B>!!</B>.
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+X          Y     Meaning
+-------------------------------------------------
+          [MD]   not updated
+M        [ MD]   updated in index
+A        [ MD]   added to index
+D         [ M]   deleted from index
+R        [ MD]   renamed in index
+C        [ MD]   copied in index
+[MARC]           index and work tree matches
+[ MARC]     M    work tree changed since index
+[ MARC]     D    deleted in work tree
+-------------------------------------------------
+D           D    unmerged, both deleted
+A           U    unmerged, added by us
+U           D    unmerged, deleted by them
+U           A    unmerged, added by them
+D           U    unmerged, deleted by us
+A           A    unmerged, both added
+U           U    unmerged, both modified
+-------------------------------------------------
+?           ?    untracked
+!           !    ignored
+-------------------------------------------------
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+Submodules have more state and instead report M the submodule has a different HEAD than recorded in the index m the submodule has modified content ? the submodule has untracked files since modified content or untracked files in a submodule cannot be added via <B>git add</B> in the superproject to prepare a commit.
+<P>
+<I>m</I> and <I>?</I> are applied recursively. For example if a nested submodule in a submodule contains an untracked file, this is reported as <I>?</I> as well.
+<P>
+If -b is used the short-format status is preceded by a line
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+## branchname tracking info
+</PRE>
+
+</DL>
+
+
+
+
+<A NAME="lbAH">&nbsp;</A>
+<H3>Porcelain Format Version 1</H3>
+
+<P>
+Version 1 porcelain format is similar to the short format, but is guaranteed not to change in a backwards-incompatible way between Git versions or based on user configuration. This makes it ideal for parsing by scripts. The description of the short format above also describes the porcelain format, with a few exceptions:
+<P>
+<DL COMPACT><DT><DD>
+ 1.
+
+
+The usercqs color.status configuration is not respected; color will always be off.
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+ 2.
+
+
+The usercqs status.relativePaths configuration is not respected; paths shown will always be relative to the repository root.
+</DL>
+
+<P>
+There is also an alternate -z format recommended for machine parsing. In that format, the status field is the same, but some other things change. First, the <I>-&gt;</I> is omitted from rename entries and the field order is reversed (e.g <I>from -&gt; to</I> becomes <I>to from</I>). Second, a NUL (ASCII 0) follows each filename, replacing space as a field separator and the terminating newline (but a space still separates the status field from the first filename). Third, filenames containing special characters are not specially formatted; no quoting or backslash-escaping is performed.
+<P>
+Any submodule changes are reported as modified <B>M</B> instead of <B>m</B> or single <B>?</B>.
+<A NAME="lbAI">&nbsp;</A>
+<H3>Porcelain Format Version 2</H3>
+
+<P>
+Version 2 format adds more detailed information about the state of the worktree and changed items. Version 2 also defines an extensible set of easy to parse optional headers.
+<P>
+Header lines start with &quot;#&quot; and are added in response to specific command line arguments. Parsers should ignore headers they doncqt recognize.
+<P>
+# Branch Headers
+<P>
+If <B>--branch</B> is given, a series of header lines are printed with information about the current branch.
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+Line                                     Notes
+------------------------------------------------------------
+# branch.oid &lt;commit&gt; | (initial)        Current commit.
+# branch.head &lt;branch&gt; | (detached)      Current branch.
+# branch.upstream &lt;upstream_branch&gt;      If upstream is set.
+# branch.ab +&lt;ahead&gt; -&lt;behind&gt;           If upstream is set and
+                                         the commit is present.
+------------------------------------------------------------
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+# Changed Tracked Entries
+<P>
+Following the headers, a series of lines are printed for tracked entries. One of three different line formats may be used to describe an entry depending on the type of change. Tracked entries are printed in an undefined order; parsers should allow for a mixture of the 3 line types in any order.
+<P>
+Ordinary changed entries have the following format:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+1 &lt;XY&gt; &lt;sub&gt; &lt;mH&gt; &lt;mI&gt; &lt;mW&gt; &lt;hH&gt; &lt;hI&gt; &lt;path&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+Renamed or copied entries have the following format:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+2 &lt;XY&gt; &lt;sub&gt; &lt;mH&gt; &lt;mI&gt; &lt;mW&gt; &lt;hH&gt; &lt;hI&gt; &lt;X&gt;&lt;score&gt; &lt;path&gt;&lt;sep&gt;&lt;origPath&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+Field       Meaning
+--------------------------------------------------------
+&lt;XY&gt;        A 2 character field containing the staged and
+            unstaged XY values described in the short format,
+            with unchanged indicated by a &quot;.&quot; rather than
+            a space.
+&lt;sub&gt;       A 4 character field describing the submodule state.
+            &quot;N...&quot; when the entry is not a submodule.
+            &quot;S&lt;c&gt;&lt;m&gt;&lt;u&gt;&quot; when the entry is a submodule.
+            &lt;c&gt; is &quot;C&quot; if the commit changed; otherwise &quot;.&quot;.
+            &lt;m&gt; is &quot;M&quot; if it has tracked changes; otherwise &quot;.&quot;.
+            &lt;u&gt; is &quot;U&quot; if there are untracked changes; otherwise &quot;.&quot;.
+&lt;mH&gt;        The octal file mode in HEAD.
+&lt;mI&gt;        The octal file mode in the index.
+&lt;mW&gt;        The octal file mode in the worktree.
+&lt;hH&gt;        The object name in HEAD.
+&lt;hI&gt;        The object name in the index.
+&lt;X&gt;&lt;score&gt;  The rename or copy score (denoting the percentage
+            of similarity between the source and target of the
+            move or copy). For example &quot;R100&quot; or &quot;C75&quot;.
+&lt;path&gt;      The pathname.  In a renamed/copied entry, this
+            is the path in the index and in the working tree.
+&lt;sep&gt;       When the `-z` option is used, the 2 pathnames are separated
+            with a NUL (ASCII 0x00) byte; otherwise, a tab (ASCII 0x09)
+            byte separates them.
+&lt;origPath&gt;  The pathname in the commit at HEAD.  This is only
+            present in a renamed/copied entry, and tells
+            where the renamed/copied contents came from.
+--------------------------------------------------------
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+Unmerged entries have the following format; the first character is a &quot;u&quot; to distinguish from ordinary changed entries.
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+u &lt;xy&gt; &lt;sub&gt; &lt;m1&gt; &lt;m2&gt; &lt;m3&gt; &lt;mW&gt; &lt;h1&gt; &lt;h2&gt; &lt;h3&gt; &lt;path&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+Field       Meaning
+--------------------------------------------------------
+&lt;XY&gt;        A 2 character field describing the conflict type
+            as described in the short format.
+&lt;sub&gt;       A 4 character field describing the submodule state
+            as described above.
+&lt;m1&gt;        The octal file mode in stage 1.
+&lt;m2&gt;        The octal file mode in stage 2.
+&lt;m3&gt;        The octal file mode in stage 3.
+&lt;mW&gt;        The octal file mode in the worktree.
+&lt;h1&gt;        The object name in stage 1.
+&lt;h2&gt;        The object name in stage 2.
+&lt;h3&gt;        The object name in stage 3.
+&lt;path&gt;      The pathname.
+--------------------------------------------------------
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+# Other Items
+<P>
+Following the tracked entries (and if requested), a series of lines will be printed for untracked and then ignored items found in the worktree.
+<P>
+Untracked items have the following format:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+? &lt;path&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+Ignored items have the following format:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+! &lt;path&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+# Pathname Format Notes and -z
+<P>
+When the <B>-z</B> option is given, pathnames are printed as is and without any quoting and lines are terminated with a NUL (ASCII 0x00) byte.
+<P>
+Without the <B>-z</B> option, pathnames with &quot;unusual&quot; characters are quoted as explained for the configuration variable <B>core.quotePath</B> (see <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-config">git-config</A></B>(1)).
+<A NAME="lbAJ">&nbsp;</A>
+<H2>CONFIGURATION</H2>
+
+<P>
+The command honors <B>color.status</B> (or <B>status.color</B> --- they mean the same thing and the latter is kept for backward compatibility) and <B>color.status.&lt;slot&gt;</B> configuration variables to colorize its output.
+<P>
+If the config variable <B>status.relativePaths</B> is set to false, then all paths shown are relative to the repository root, not to the current directory.
+<P>
+If <B>status.submoduleSummary</B> is set to a non zero number or true (identical to -1 or an unlimited number), the submodule summary will be enabled for the long format and a summary of commits for modified submodules will be shown (see --summary-limit option of <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-submodule">git-submodule</A></B>(1)). Please note that the summary output from the status command will be suppressed for all submodules when <B>diff.ignoreSubmodules</B> is set to <I>all</I> or only for those submodules where <B>submodule.&lt;name&gt;.ignore=all</B>. To also view the summary for ignored submodules you can either use the --ignore-submodules=dirty command line option or the <I>git submodule summary</I> command, which shows a similar output but does not honor these settings.
+<A NAME="lbAK">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+gitignore">gitignore</A></B>(5)
+<A NAME="lbAL">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">OUTPUT</A><DD>
+<DL>
+<DT><A HREF="#lbAG">Short Format</A><DD>
+<DT><A HREF="#lbAH">Porcelain Format Version 1</A><DD>
+<DT><A HREF="#lbAI">Porcelain Format Version 2</A><DD>
+</DL>
+<DT><A HREF="#lbAJ">CONFIGURATION</A><DD>
+<DT><A HREF="#lbAK">SEE ALSO</A><DD>
+<DT><A HREF="#lbAL">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:39:07 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-STATUS</TITLE>
+</HEAD><BODY>
+<H1>GIT\-STATUS</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-status - Show the working tree status
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git status</I> [&lt;options&gt;...] [--] [&lt;pathspec&gt;...]
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+Displays paths that have differences between the index file and the current HEAD commit, paths that have differences between the working tree and the index file, and paths in the working tree that are not tracked by Git (and are not ignored by <B><A HREF="http://localhost/cgi-bin/man/man2html?5+gitignore">gitignore</A></B>(5)). The first are what you <I>would</I> commit by running <B>git commit</B>; the second and third are what you <I>could</I> commit by running <I>git add</I> before running <B>git commit</B>.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+-s, --short
+<DL COMPACT><DT><DD>
+Give the output in the short-format.
+</DL>
+
+<P>
+
+-b, --branch
+<DL COMPACT><DT><DD>
+Show the branch and tracking info even in short-format.
+</DL>
+
+<P>
+
+--porcelain[=&lt;version&gt;]
+<DL COMPACT><DT><DD>
+Give the output in an easy-to-parse format for scripts. This is similar to the short output, but will remain stable across Git versions and regardless of user configuration. See below for details.
+<P>
+The version parameter is used to specify the format version. This is optional and defaults to the original version
+<I>v1</I>
+format.
+</DL>
+
+<P>
+
+--long
+<DL COMPACT><DT><DD>
+Give the output in the long-format. This is the default.
+</DL>
+
+<P>
+
+-v, --verbose
+<DL COMPACT><DT><DD>
+In addition to the names of files that have been changed, also show the textual changes that are staged to be committed (i.e., like the output of
+<B>git diff --cached</B>). If
+<B>-v</B>
+is specified twice, then also show the changes in the working tree that have not yet been staged (i.e., like the output of
+<B>git diff</B>).
+</DL>
+
+<P>
+
+-u[&lt;mode&gt;], --untracked-files[=&lt;mode&gt;]
+<DL COMPACT><DT><DD>
+Show untracked files.
+<P>
+The mode parameter is used to specify the handling of untracked files. It is optional: it defaults to
+<I>all</I>, and if specified, it must be stuck to the option (e.g.
+<B>-uno</B>, but not
+<B>-u no</B>).
+<P>
+The possible options are:
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>no</I>
+- Show no untracked files.
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>normal</I>
+- Shows untracked files and directories.
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>all</I>
+- Also shows individual files in untracked directories.
+<P>
+When
+<B>-u</B>
+option is not used, untracked files and directories are shown (i.e. the same as specifying
+<B>normal</B>), to help you avoid forgetting to add newly created files. Because it takes extra work to find untracked files in the filesystem, this mode may take some time in a large working tree. Consider enabling untracked cache and split index if supported (see
+<B>git update-index --untracked-cache</B>
+and
+<B>git update-index --split-index</B>), Otherwise you can use
+<B>no</B>
+to have
+<B>git status</B>
+return more quickly without showing untracked files.
+<P>
+The default can be changed using the status.showUntrackedFiles configuration variable documented in
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-config">git-config</A></B>(1).
+</DL>
+
+</DL>
+
+<P>
+
+--ignore-submodules[=&lt;when&gt;]
+<DL COMPACT><DT><DD>
+Ignore changes to submodules when looking for changes. &lt;when&gt; can be either &quot;none&quot;, &quot;untracked&quot;, &quot;dirty&quot; or &quot;all&quot;, which is the default. Using &quot;none&quot; will consider the submodule modified when it either contains untracked or modified files or its HEAD differs from the commit recorded in the superproject and can be used to override any settings of the
+<I>ignore</I>
+option in
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-config">git-config</A></B>(1)
+or
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+gitmodules">gitmodules</A></B>(5). When &quot;untracked&quot; is used submodules are not considered dirty when they only contain untracked content (but they are still scanned for modified content). Using &quot;dirty&quot; ignores all changes to the work tree of submodules, only changes to the commits stored in the superproject are shown (this was the behavior before 1.7.0). Using &quot;all&quot; hides all changes to submodules (and suppresses the output of submodule summaries when the config option
+<B>status.submoduleSummary</B>
+is set).
+</DL>
+
+<P>
+
+--ignored
+<DL COMPACT><DT><DD>
+Show ignored files as well.
+</DL>
+
+<P>
+
+-z
+<DL COMPACT><DT><DD>
+Terminate entries with NUL, instead of LF. This implies the
+<B>--porcelain=v1</B>
+output format if no other format is given.
+</DL>
+
+<P>
+
+--column[=&lt;options&gt;], --no-column
+<DL COMPACT><DT><DD>
+Display untracked files in columns. See configuration variable column.status for option syntax.<B>--column</B>
+and
+<B>--no-column</B>
+without options are equivalent to
+<I>always</I>
+and
+<I>never</I>
+respectively.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>OUTPUT</H2>
+
+<P>
+The output from this command is designed to be used as a commit template comment. The default, long format, is designed to be human readable, verbose and descriptive. Its contents and format are subject to change at any time.
+<P>
+The paths mentioned in the output, unlike many other Git commands, are made relative to the current directory if you are working in a subdirectory (this is on purpose, to help cutting and pasting). See the status.relativePaths config option below.
+<A NAME="lbAG">&nbsp;</A>
+<H3>Short Format</H3>
+
+<P>
+In the short-format, the status of each path is shown as
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+XY PATH1 -&gt; PATH2
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+where <B>PATH1</B> is the path in the <B>HEAD</B>, and the &quot; <B>-&gt; PATH2</B>&quot; part is shown only when <B>PATH1</B> corresponds to a different path in the index/worktree (i.e. the file is renamed). The <B>XY</B> is a two-letter status code.
+<P>
+The fields (including the <B>-&gt;</B>) are separated from each other by a single space. If a filename contains whitespace or other nonprintable characters, that field will be quoted in the manner of a C string literal: surrounded by ASCII double quote (34) characters, and with interior special characters backslash-escaped.
+<P>
+For paths with merge conflicts, <B>X</B> and <B>Y</B> show the modification states of each side of the merge. For paths that do not have merge conflicts, <B>X</B> shows the status of the index, and <B>Y</B> shows the status of the work tree. For untracked paths, <B>XY</B> are <B>??</B>. Other status codes can be interpreted as follows:
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+' ' = unmodified
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>M</I>
+= modified
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>A</I>
+= added
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>D</I>
+= deleted
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>R</I>
+= renamed
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>C</I>
+= copied
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+<I>U</I>
+= updated but unmerged
+</DL>
+
+<P>
+Ignored files are not listed, unless <B>--ignored</B> option is in effect, in which case <B>XY</B> are <B>!!</B>.
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+X          Y     Meaning
+-------------------------------------------------
+          [MD]   not updated
+M        [ MD]   updated in index
+A        [ MD]   added to index
+D         [ M]   deleted from index
+R        [ MD]   renamed in index
+C        [ MD]   copied in index
+[MARC]           index and work tree matches
+[ MARC]     M    work tree changed since index
+[ MARC]     D    deleted in work tree
+-------------------------------------------------
+D           D    unmerged, both deleted
+A           U    unmerged, added by us
+U           D    unmerged, deleted by them
+U           A    unmerged, added by them
+D           U    unmerged, deleted by us
+A           A    unmerged, both added
+U           U    unmerged, both modified
+-------------------------------------------------
+?           ?    untracked
+!           !    ignored
+-------------------------------------------------
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+Submodules have more state and instead report M the submodule has a different HEAD than recorded in the index m the submodule has modified content ? the submodule has untracked files since modified content or untracked files in a submodule cannot be added via <B>git add</B> in the superproject to prepare a commit.
+<P>
+<I>m</I> and <I>?</I> are applied recursively. For example if a nested submodule in a submodule contains an untracked file, this is reported as <I>?</I> as well.
+<P>
+If -b is used the short-format status is preceded by a line
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+## branchname tracking info
+</PRE>
+
+</DL>
+
+
+
+
+<A NAME="lbAH">&nbsp;</A>
+<H3>Porcelain Format Version 1</H3>
+
+<P>
+Version 1 porcelain format is similar to the short format, but is guaranteed not to change in a backwards-incompatible way between Git versions or based on user configuration. This makes it ideal for parsing by scripts. The description of the short format above also describes the porcelain format, with a few exceptions:
+<P>
+<DL COMPACT><DT><DD>
+ 1.
+
+
+The usercqs color.status configuration is not respected; color will always be off.
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+ 2.
+
+
+The usercqs status.relativePaths configuration is not respected; paths shown will always be relative to the repository root.
+</DL>
+
+<P>
+There is also an alternate -z format recommended for machine parsing. In that format, the status field is the same, but some other things change. First, the <I>-&gt;</I> is omitted from rename entries and the field order is reversed (e.g <I>from -&gt; to</I> becomes <I>to from</I>). Second, a NUL (ASCII 0) follows each filename, replacing space as a field separator and the terminating newline (but a space still separates the status field from the first filename). Third, filenames containing special characters are not specially formatted; no quoting or backslash-escaping is performed.
+<P>
+Any submodule changes are reported as modified <B>M</B> instead of <B>m</B> or single <B>?</B>.
+<A NAME="lbAI">&nbsp;</A>
+<H3>Porcelain Format Version 2</H3>
+
+<P>
+Version 2 format adds more detailed information about the state of the worktree and changed items. Version 2 also defines an extensible set of easy to parse optional headers.
+<P>
+Header lines start with &quot;#&quot; and are added in response to specific command line arguments. Parsers should ignore headers they doncqt recognize.
+<P>
+# Branch Headers
+<P>
+If <B>--branch</B> is given, a series of header lines are printed with information about the current branch.
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+Line                                     Notes
+------------------------------------------------------------
+# branch.oid &lt;commit&gt; | (initial)        Current commit.
+# branch.head &lt;branch&gt; | (detached)      Current branch.
+# branch.upstream &lt;upstream_branch&gt;      If upstream is set.
+# branch.ab +&lt;ahead&gt; -&lt;behind&gt;           If upstream is set and
+                                         the commit is present.
+------------------------------------------------------------
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+# Changed Tracked Entries
+<P>
+Following the headers, a series of lines are printed for tracked entries. One of three different line formats may be used to describe an entry depending on the type of change. Tracked entries are printed in an undefined order; parsers should allow for a mixture of the 3 line types in any order.
+<P>
+Ordinary changed entries have the following format:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+1 &lt;XY&gt; &lt;sub&gt; &lt;mH&gt; &lt;mI&gt; &lt;mW&gt; &lt;hH&gt; &lt;hI&gt; &lt;path&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+Renamed or copied entries have the following format:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+2 &lt;XY&gt; &lt;sub&gt; &lt;mH&gt; &lt;mI&gt; &lt;mW&gt; &lt;hH&gt; &lt;hI&gt; &lt;X&gt;&lt;score&gt; &lt;path&gt;&lt;sep&gt;&lt;origPath&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+Field       Meaning
+--------------------------------------------------------
+&lt;XY&gt;        A 2 character field containing the staged and
+            unstaged XY values described in the short format,
+            with unchanged indicated by a &quot;.&quot; rather than
+            a space.
+&lt;sub&gt;       A 4 character field describing the submodule state.
+            &quot;N...&quot; when the entry is not a submodule.
+            &quot;S&lt;c&gt;&lt;m&gt;&lt;u&gt;&quot; when the entry is a submodule.
+            &lt;c&gt; is &quot;C&quot; if the commit changed; otherwise &quot;.&quot;.
+            &lt;m&gt; is &quot;M&quot; if it has tracked changes; otherwise &quot;.&quot;.
+            &lt;u&gt; is &quot;U&quot; if there are untracked changes; otherwise &quot;.&quot;.
+&lt;mH&gt;        The octal file mode in HEAD.
+&lt;mI&gt;        The octal file mode in the index.
+&lt;mW&gt;        The octal file mode in the worktree.
+&lt;hH&gt;        The object name in HEAD.
+&lt;hI&gt;        The object name in the index.
+&lt;X&gt;&lt;score&gt;  The rename or copy score (denoting the percentage
+            of similarity between the source and target of the
+            move or copy). For example &quot;R100&quot; or &quot;C75&quot;.
+&lt;path&gt;      The pathname.  In a renamed/copied entry, this
+            is the path in the index and in the working tree.
+&lt;sep&gt;       When the `-z` option is used, the 2 pathnames are separated
+            with a NUL (ASCII 0x00) byte; otherwise, a tab (ASCII 0x09)
+            byte separates them.
+&lt;origPath&gt;  The pathname in the commit at HEAD.  This is only
+            present in a renamed/copied entry, and tells
+            where the renamed/copied contents came from.
+--------------------------------------------------------
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+Unmerged entries have the following format; the first character is a &quot;u&quot; to distinguish from ordinary changed entries.
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+u &lt;xy&gt; &lt;sub&gt; &lt;m1&gt; &lt;m2&gt; &lt;m3&gt; &lt;mW&gt; &lt;h1&gt; &lt;h2&gt; &lt;h3&gt; &lt;path&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+Field       Meaning
+--------------------------------------------------------
+&lt;XY&gt;        A 2 character field describing the conflict type
+            as described in the short format.
+&lt;sub&gt;       A 4 character field describing the submodule state
+            as described above.
+&lt;m1&gt;        The octal file mode in stage 1.
+&lt;m2&gt;        The octal file mode in stage 2.
+&lt;m3&gt;        The octal file mode in stage 3.
+&lt;mW&gt;        The octal file mode in the worktree.
+&lt;h1&gt;        The object name in stage 1.
+&lt;h2&gt;        The object name in stage 2.
+&lt;h3&gt;        The object name in stage 3.
+&lt;path&gt;      The pathname.
+--------------------------------------------------------
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+# Other Items
+<P>
+Following the tracked entries (and if requested), a series of lines will be printed for untracked and then ignored items found in the worktree.
+<P>
+Untracked items have the following format:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+? &lt;path&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+Ignored items have the following format:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+! &lt;path&gt;
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+# Pathname Format Notes and -z
+<P>
+When the <B>-z</B> option is given, pathnames are printed as is and without any quoting and lines are terminated with a NUL (ASCII 0x00) byte.
+<P>
+Without the <B>-z</B> option, pathnames with &quot;unusual&quot; characters are quoted as explained for the configuration variable <B>core.quotePath</B> (see <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-config">git-config</A></B>(1)).
+<A NAME="lbAJ">&nbsp;</A>
+<H2>CONFIGURATION</H2>
+
+<P>
+The command honors <B>color.status</B> (or <B>status.color</B> --- they mean the same thing and the latter is kept for backward compatibility) and <B>color.status.&lt;slot&gt;</B> configuration variables to colorize its output.
+<P>
+If the config variable <B>status.relativePaths</B> is set to false, then all paths shown are relative to the repository root, not to the current directory.
+<P>
+If <B>status.submoduleSummary</B> is set to a non zero number or true (identical to -1 or an unlimited number), the submodule summary will be enabled for the long format and a summary of commits for modified submodules will be shown (see --summary-limit option of <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-submodule">git-submodule</A></B>(1)). Please note that the summary output from the status command will be suppressed for all submodules when <B>diff.ignoreSubmodules</B> is set to <I>all</I> or only for those submodules where <B>submodule.&lt;name&gt;.ignore=all</B>. To also view the summary for ignored submodules you can either use the --ignore-submodules=dirty command line option or the <I>git submodule summary</I> command, which shows a similar output but does not honor these settings.
+<A NAME="lbAK">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?5+gitignore">gitignore</A></B>(5)
+<A NAME="lbAL">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">OUTPUT</A><DD>
+<DL>
+<DT><A HREF="#lbAG">Short Format</A><DD>
+<DT><A HREF="#lbAH">Porcelain Format Version 1</A><DD>
+<DT><A HREF="#lbAI">Porcelain Format Version 2</A><DD>
+</DL>
+<DT><A HREF="#lbAJ">CONFIGURATION</A><DD>
+<DT><A HREF="#lbAK">SEE ALSO</A><DD>
+<DT><A HREF="#lbAL">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:45:16 GMT, June 13, 2017
+</BODY>
+</HTML>

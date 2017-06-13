@@ -1,0 +1,1252 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-PACK\-OBJECTS</TITLE>
+</HEAD><BODY>
+<H1>GIT\-PACK\-OBJECTS</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-pack-objects - Create a packed archive of objects
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git pack-objects</I> [-q | --progress | --all-progress] [--all-progress-implied]
+        [--no-reuse-delta] [--delta-base-offset] [--non-empty]
+        [--local] [--incremental] [--window=&lt;n&gt;] [--depth=&lt;n&gt;]
+        [--revs [--unpacked | --all]] [--stdout | base-name]
+        [--shallow] [--keep-true-parents] &lt; object-list
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+Reads list of objects from the standard input, and writes a packed archive with specified base-name, or to the standard output.
+<P>
+A packed archive is an efficient way to transfer a set of objects between two repositories as well as an access efficient archival format. In a packed archive, an object is either stored as a compressed whole or as a difference from some other object. The latter is often called a delta.
+<P>
+The packed archive format (.pack) is designed to be self-contained so that it can be unpacked without any further information. Therefore, each object that a delta depends upon must be present within the pack.
+<P>
+A pack index file (.idx) is generated for fast, random access to the objects in the pack. Placing both the index file (.idx) and the packed archive (.pack) in the pack/ subdirectory of $GIT_OBJECT_DIRECTORY (or any of the directories on $GIT_ALTERNATE_OBJECT_DIRECTORIES) enables Git to read from the pack archive.
+<P>
+The <I>git unpack-objects</I> command can read the packed archive and expand the objects contained in the pack into &quot;one-file one-object&quot; format; this is typically done by the smart-pull commands when a pack is created on-the-fly for efficient network transport by their peers.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+base-name
+<DL COMPACT><DT><DD>
+Write into a pair of files (.pack and .idx), using &lt;base-name&gt; to determine the name of the created file. When this option is used, the two files are written in &lt;base-name&gt;-&lt;SHA-1&gt;.{pack,idx} files. &lt;SHA-1&gt; is a hash based on the pack content and is written to the standard output of the command.
+</DL>
+
+<P>
+
+--stdout
+<DL COMPACT><DT><DD>
+Write the pack contents (what would have been written to .pack file) out to the standard output.
+</DL>
+
+<P>
+
+--revs
+<DL COMPACT><DT><DD>
+Read the revision arguments from the standard input, instead of individual object names. The revision arguments are processed the same way as
+<I>git rev-list</I>
+with the
+<B>--objects</B>
+flag uses its
+<B>commit</B>
+arguments to build the list of objects it outputs. The objects on the resulting list are packed. Besides revisions,
+<B>--not</B>
+or
+<B>--shallow &lt;SHA-1&gt;</B>
+lines are also accepted.
+</DL>
+
+<P>
+
+--unpacked
+<DL COMPACT><DT><DD>
+This implies
+<B>--revs</B>. When processing the list of revision arguments read from the standard input, limit the objects packed to those that are not already packed.
+</DL>
+
+<P>
+
+--all
+<DL COMPACT><DT><DD>
+This implies
+<B>--revs</B>. In addition to the list of revision arguments read from the standard input, pretend as if all refs under
+<B>refs/</B>
+are specified to be included.
+</DL>
+
+<P>
+
+--include-tag
+<DL COMPACT><DT><DD>
+Include unasked-for annotated tags if the object they reference was included in the resulting packfile. This can be useful to send new tags to native Git clients.
+</DL>
+
+<P>
+
+--window=&lt;n&gt;, --depth=&lt;n&gt;
+<DL COMPACT><DT><DD>
+These two options affect how the objects contained in the pack are stored using delta compression. The objects are first internally sorted by type, size and optionally names and compared against the other objects within --window to see if using delta compression saves space. --depth limits the maximum delta depth; making it too deep affects the performance on the unpacker side, because delta data needs to be applied that many times to get to the necessary object. The default value for --window is 10 and --depth is 50.
+</DL>
+
+<P>
+
+--window-memory=&lt;n&gt;
+<DL COMPACT><DT><DD>
+This option provides an additional limit on top of
+<B>--window</B>; the window size will dynamically scale down so as to not take up more than
+<I>&lt;n&gt;</I>
+bytes in memory. This is useful in repositories with a mix of large and small objects to not run out of memory with a large window, but still be able to take advantage of the large window for the smaller objects. The size can be suffixed with &quot;k&quot;, &quot;m&quot;, or &quot;g&quot;.
+<B>--window-memory=0</B>
+makes memory usage unlimited. The default is taken from the
+<B>pack.windowMemory</B>
+configuration variable.
+</DL>
+
+<P>
+
+--max-pack-size=&lt;n&gt;
+<DL COMPACT><DT><DD>
+Maximum size of each output pack file. The size can be suffixed with &quot;k&quot;, &quot;m&quot;, or &quot;g&quot;. The minimum size allowed is limited to 1 MiB. If specified, multiple packfiles may be created, which also prevents the creation of a bitmap index. The default is unlimited, unless the config variable
+<B>pack.packSizeLimit</B>
+is set.
+</DL>
+
+<P>
+
+--honor-pack-keep
+<DL COMPACT><DT><DD>
+This flag causes an object already in a local pack that has a .keep file to be ignored, even if it would have otherwise been packed.
+</DL>
+
+<P>
+
+--incremental
+<DL COMPACT><DT><DD>
+This flag causes an object already in a pack to be ignored even if it would have otherwise been packed.
+</DL>
+
+<P>
+
+--local
+<DL COMPACT><DT><DD>
+This flag causes an object that is borrowed from an alternate object store to be ignored even if it would have otherwise been packed.
+</DL>
+
+<P>
+
+--non-empty
+<DL COMPACT><DT><DD>
+Only create a packed archive if it would contain at least one object.
+</DL>
+
+<P>
+
+--progress
+<DL COMPACT><DT><DD>
+Progress status is reported on the standard error stream by default when it is attached to a terminal, unless -q is specified. This flag forces progress status even if the standard error stream is not directed to a terminal.
+</DL>
+
+<P>
+
+--all-progress
+<DL COMPACT><DT><DD>
+When --stdout is specified then progress report is displayed during the object count and compression phases but inhibited during the write-out phase. The reason is that in some cases the output stream is directly linked to another command which may wish to display progress status of its own as it processes incoming pack data. This flag is like --progress except that it forces progress report for the write-out phase as well even if --stdout is used.
+</DL>
+
+<P>
+
+--all-progress-implied
+<DL COMPACT><DT><DD>
+This is used to imply --all-progress whenever progress display is activated. Unlike --all-progress this flag doesncqt actually force any progress display by itself.
+</DL>
+
+<P>
+
+-q
+<DL COMPACT><DT><DD>
+This flag makes the command not to report its progress on the standard error stream.
+</DL>
+
+<P>
+
+--no-reuse-delta
+<DL COMPACT><DT><DD>
+When creating a packed archive in a repository that has existing packs, the command reuses existing deltas. This sometimes results in a slightly suboptimal pack. This flag tells the command not to reuse existing deltas but compute them from scratch.
+</DL>
+
+<P>
+
+--no-reuse-object
+<DL COMPACT><DT><DD>
+This flag tells the command not to reuse existing object data at all, including non deltified object, forcing recompression of everything. This implies --no-reuse-delta. Useful only in the obscure case where wholesale enforcement of a different compression level on the packed data is desired.
+</DL>
+
+<P>
+
+--compression=&lt;n&gt;
+<DL COMPACT><DT><DD>
+Specifies compression level for newly-compressed data in the generated pack. If not specified, pack compression level is determined first by pack.compression, then by core.compression, and defaults to -1, the zlib default, if neither is set. Add --no-reuse-object if you want to force a uniform compression level on all data no matter the source.
+</DL>
+
+<P>
+
+--thin
+<DL COMPACT><DT><DD>
+Create a &quot;thin&quot; pack by omitting the common objects between a sender and a receiver in order to reduce network transfer. This option only makes sense in conjunction with --stdout.
+<P>
+Note: A thin pack violates the packed archive format by omitting required objects and is thus unusable by Git without making it self-contained. Use
+<B>git index-pack --fix-thin</B>
+(see
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-index-pack">git-index-pack</A></B>(1)) to restore the self-contained property.
+</DL>
+
+<P>
+
+--shallow
+<DL COMPACT><DT><DD>
+Optimize a pack that will be provided to a client with a shallow repository. This option, combined with --thin, can result in a smaller pack at the cost of speed.
+</DL>
+
+<P>
+
+--delta-base-offset
+<DL COMPACT><DT><DD>
+A packed archive can express the base object of a delta as either a 20-byte object name or as an offset in the stream, but ancient versions of Git doncqt understand the latter. By default,
+<I>git pack-objects</I>
+only uses the former format for better compatibility. This option allows the command to use the latter format for compactness. Depending on the average delta chain length, this option typically shrinks the resulting packfile by 3-5 per-cent.
+<P>
+Note: Porcelain commands such as
+<B>git gc</B>
+(see
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-gc">git-gc</A></B>(1)),
+<B>git repack</B>
+(see
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-repack">git-repack</A></B>(1)) pass this option by default in modern Git when they put objects in your repository into pack files. So does
+<B>git bundle</B>
+(see
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-bundle">git-bundle</A></B>(1)) when it creates a bundle.
+</DL>
+
+<P>
+
+--threads=&lt;n&gt;
+<DL COMPACT><DT><DD>
+Specifies the number of threads to spawn when searching for best delta matches. This requires that pack-objects be compiled with pthreads otherwise this option is ignored with a warning. This is meant to reduce packing time on multiprocessor machines. The required amount of memory for the delta search window is however multiplied by the number of threads. Specifying 0 will cause Git to auto-detect the number of CPUcqs and set the number of threads accordingly.
+</DL>
+
+<P>
+
+--index-version=&lt;version&gt;[,&lt;offset&gt;]
+<DL COMPACT><DT><DD>
+This is intended to be used by the test suite only. It allows to force the version for the generated pack index, and to force 64-bit index entries on objects located above the given offset.
+</DL>
+
+<P>
+
+--keep-true-parents
+<DL COMPACT><DT><DD>
+With this option, parents that are hidden by grafts are packed nevertheless.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-rev-list">git-rev-list</A></B>(1) <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-repack">git-repack</A></B>(1) <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-prune-packed">git-prune-packed</A></B>(1)
+<A NAME="lbAG">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:24:33 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-PACK\-OBJECTS</TITLE>
+</HEAD><BODY>
+<H1>GIT\-PACK\-OBJECTS</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-pack-objects - Create a packed archive of objects
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git pack-objects</I> [-q | --progress | --all-progress] [--all-progress-implied]
+        [--no-reuse-delta] [--delta-base-offset] [--non-empty]
+        [--local] [--incremental] [--window=&lt;n&gt;] [--depth=&lt;n&gt;]
+        [--revs [--unpacked | --all]] [--stdout | base-name]
+        [--shallow] [--keep-true-parents] &lt; object-list
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+Reads list of objects from the standard input, and writes a packed archive with specified base-name, or to the standard output.
+<P>
+A packed archive is an efficient way to transfer a set of objects between two repositories as well as an access efficient archival format. In a packed archive, an object is either stored as a compressed whole or as a difference from some other object. The latter is often called a delta.
+<P>
+The packed archive format (.pack) is designed to be self-contained so that it can be unpacked without any further information. Therefore, each object that a delta depends upon must be present within the pack.
+<P>
+A pack index file (.idx) is generated for fast, random access to the objects in the pack. Placing both the index file (.idx) and the packed archive (.pack) in the pack/ subdirectory of $GIT_OBJECT_DIRECTORY (or any of the directories on $GIT_ALTERNATE_OBJECT_DIRECTORIES) enables Git to read from the pack archive.
+<P>
+The <I>git unpack-objects</I> command can read the packed archive and expand the objects contained in the pack into &quot;one-file one-object&quot; format; this is typically done by the smart-pull commands when a pack is created on-the-fly for efficient network transport by their peers.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+base-name
+<DL COMPACT><DT><DD>
+Write into a pair of files (.pack and .idx), using &lt;base-name&gt; to determine the name of the created file. When this option is used, the two files are written in &lt;base-name&gt;-&lt;SHA-1&gt;.{pack,idx} files. &lt;SHA-1&gt; is a hash based on the pack content and is written to the standard output of the command.
+</DL>
+
+<P>
+
+--stdout
+<DL COMPACT><DT><DD>
+Write the pack contents (what would have been written to .pack file) out to the standard output.
+</DL>
+
+<P>
+
+--revs
+<DL COMPACT><DT><DD>
+Read the revision arguments from the standard input, instead of individual object names. The revision arguments are processed the same way as
+<I>git rev-list</I>
+with the
+<B>--objects</B>
+flag uses its
+<B>commit</B>
+arguments to build the list of objects it outputs. The objects on the resulting list are packed. Besides revisions,
+<B>--not</B>
+or
+<B>--shallow &lt;SHA-1&gt;</B>
+lines are also accepted.
+</DL>
+
+<P>
+
+--unpacked
+<DL COMPACT><DT><DD>
+This implies
+<B>--revs</B>. When processing the list of revision arguments read from the standard input, limit the objects packed to those that are not already packed.
+</DL>
+
+<P>
+
+--all
+<DL COMPACT><DT><DD>
+This implies
+<B>--revs</B>. In addition to the list of revision arguments read from the standard input, pretend as if all refs under
+<B>refs/</B>
+are specified to be included.
+</DL>
+
+<P>
+
+--include-tag
+<DL COMPACT><DT><DD>
+Include unasked-for annotated tags if the object they reference was included in the resulting packfile. This can be useful to send new tags to native Git clients.
+</DL>
+
+<P>
+
+--window=&lt;n&gt;, --depth=&lt;n&gt;
+<DL COMPACT><DT><DD>
+These two options affect how the objects contained in the pack are stored using delta compression. The objects are first internally sorted by type, size and optionally names and compared against the other objects within --window to see if using delta compression saves space. --depth limits the maximum delta depth; making it too deep affects the performance on the unpacker side, because delta data needs to be applied that many times to get to the necessary object. The default value for --window is 10 and --depth is 50.
+</DL>
+
+<P>
+
+--window-memory=&lt;n&gt;
+<DL COMPACT><DT><DD>
+This option provides an additional limit on top of
+<B>--window</B>; the window size will dynamically scale down so as to not take up more than
+<I>&lt;n&gt;</I>
+bytes in memory. This is useful in repositories with a mix of large and small objects to not run out of memory with a large window, but still be able to take advantage of the large window for the smaller objects. The size can be suffixed with &quot;k&quot;, &quot;m&quot;, or &quot;g&quot;.
+<B>--window-memory=0</B>
+makes memory usage unlimited. The default is taken from the
+<B>pack.windowMemory</B>
+configuration variable.
+</DL>
+
+<P>
+
+--max-pack-size=&lt;n&gt;
+<DL COMPACT><DT><DD>
+Maximum size of each output pack file. The size can be suffixed with &quot;k&quot;, &quot;m&quot;, or &quot;g&quot;. The minimum size allowed is limited to 1 MiB. If specified, multiple packfiles may be created, which also prevents the creation of a bitmap index. The default is unlimited, unless the config variable
+<B>pack.packSizeLimit</B>
+is set.
+</DL>
+
+<P>
+
+--honor-pack-keep
+<DL COMPACT><DT><DD>
+This flag causes an object already in a local pack that has a .keep file to be ignored, even if it would have otherwise been packed.
+</DL>
+
+<P>
+
+--incremental
+<DL COMPACT><DT><DD>
+This flag causes an object already in a pack to be ignored even if it would have otherwise been packed.
+</DL>
+
+<P>
+
+--local
+<DL COMPACT><DT><DD>
+This flag causes an object that is borrowed from an alternate object store to be ignored even if it would have otherwise been packed.
+</DL>
+
+<P>
+
+--non-empty
+<DL COMPACT><DT><DD>
+Only create a packed archive if it would contain at least one object.
+</DL>
+
+<P>
+
+--progress
+<DL COMPACT><DT><DD>
+Progress status is reported on the standard error stream by default when it is attached to a terminal, unless -q is specified. This flag forces progress status even if the standard error stream is not directed to a terminal.
+</DL>
+
+<P>
+
+--all-progress
+<DL COMPACT><DT><DD>
+When --stdout is specified then progress report is displayed during the object count and compression phases but inhibited during the write-out phase. The reason is that in some cases the output stream is directly linked to another command which may wish to display progress status of its own as it processes incoming pack data. This flag is like --progress except that it forces progress report for the write-out phase as well even if --stdout is used.
+</DL>
+
+<P>
+
+--all-progress-implied
+<DL COMPACT><DT><DD>
+This is used to imply --all-progress whenever progress display is activated. Unlike --all-progress this flag doesncqt actually force any progress display by itself.
+</DL>
+
+<P>
+
+-q
+<DL COMPACT><DT><DD>
+This flag makes the command not to report its progress on the standard error stream.
+</DL>
+
+<P>
+
+--no-reuse-delta
+<DL COMPACT><DT><DD>
+When creating a packed archive in a repository that has existing packs, the command reuses existing deltas. This sometimes results in a slightly suboptimal pack. This flag tells the command not to reuse existing deltas but compute them from scratch.
+</DL>
+
+<P>
+
+--no-reuse-object
+<DL COMPACT><DT><DD>
+This flag tells the command not to reuse existing object data at all, including non deltified object, forcing recompression of everything. This implies --no-reuse-delta. Useful only in the obscure case where wholesale enforcement of a different compression level on the packed data is desired.
+</DL>
+
+<P>
+
+--compression=&lt;n&gt;
+<DL COMPACT><DT><DD>
+Specifies compression level for newly-compressed data in the generated pack. If not specified, pack compression level is determined first by pack.compression, then by core.compression, and defaults to -1, the zlib default, if neither is set. Add --no-reuse-object if you want to force a uniform compression level on all data no matter the source.
+</DL>
+
+<P>
+
+--thin
+<DL COMPACT><DT><DD>
+Create a &quot;thin&quot; pack by omitting the common objects between a sender and a receiver in order to reduce network transfer. This option only makes sense in conjunction with --stdout.
+<P>
+Note: A thin pack violates the packed archive format by omitting required objects and is thus unusable by Git without making it self-contained. Use
+<B>git index-pack --fix-thin</B>
+(see
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-index-pack">git-index-pack</A></B>(1)) to restore the self-contained property.
+</DL>
+
+<P>
+
+--shallow
+<DL COMPACT><DT><DD>
+Optimize a pack that will be provided to a client with a shallow repository. This option, combined with --thin, can result in a smaller pack at the cost of speed.
+</DL>
+
+<P>
+
+--delta-base-offset
+<DL COMPACT><DT><DD>
+A packed archive can express the base object of a delta as either a 20-byte object name or as an offset in the stream, but ancient versions of Git doncqt understand the latter. By default,
+<I>git pack-objects</I>
+only uses the former format for better compatibility. This option allows the command to use the latter format for compactness. Depending on the average delta chain length, this option typically shrinks the resulting packfile by 3-5 per-cent.
+<P>
+Note: Porcelain commands such as
+<B>git gc</B>
+(see
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-gc">git-gc</A></B>(1)),
+<B>git repack</B>
+(see
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-repack">git-repack</A></B>(1)) pass this option by default in modern Git when they put objects in your repository into pack files. So does
+<B>git bundle</B>
+(see
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-bundle">git-bundle</A></B>(1)) when it creates a bundle.
+</DL>
+
+<P>
+
+--threads=&lt;n&gt;
+<DL COMPACT><DT><DD>
+Specifies the number of threads to spawn when searching for best delta matches. This requires that pack-objects be compiled with pthreads otherwise this option is ignored with a warning. This is meant to reduce packing time on multiprocessor machines. The required amount of memory for the delta search window is however multiplied by the number of threads. Specifying 0 will cause Git to auto-detect the number of CPUcqs and set the number of threads accordingly.
+</DL>
+
+<P>
+
+--index-version=&lt;version&gt;[,&lt;offset&gt;]
+<DL COMPACT><DT><DD>
+This is intended to be used by the test suite only. It allows to force the version for the generated pack index, and to force 64-bit index entries on objects located above the given offset.
+</DL>
+
+<P>
+
+--keep-true-parents
+<DL COMPACT><DT><DD>
+With this option, parents that are hidden by grafts are packed nevertheless.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-rev-list">git-rev-list</A></B>(1) <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-repack">git-repack</A></B>(1) <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-prune-packed">git-prune-packed</A></B>(1)
+<A NAME="lbAG">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:34:55 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-PACK\-OBJECTS</TITLE>
+</HEAD><BODY>
+<H1>GIT\-PACK\-OBJECTS</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-pack-objects - Create a packed archive of objects
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git pack-objects</I> [-q | --progress | --all-progress] [--all-progress-implied]
+        [--no-reuse-delta] [--delta-base-offset] [--non-empty]
+        [--local] [--incremental] [--window=&lt;n&gt;] [--depth=&lt;n&gt;]
+        [--revs [--unpacked | --all]] [--stdout | base-name]
+        [--shallow] [--keep-true-parents] &lt; object-list
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+Reads list of objects from the standard input, and writes a packed archive with specified base-name, or to the standard output.
+<P>
+A packed archive is an efficient way to transfer a set of objects between two repositories as well as an access efficient archival format. In a packed archive, an object is either stored as a compressed whole or as a difference from some other object. The latter is often called a delta.
+<P>
+The packed archive format (.pack) is designed to be self-contained so that it can be unpacked without any further information. Therefore, each object that a delta depends upon must be present within the pack.
+<P>
+A pack index file (.idx) is generated for fast, random access to the objects in the pack. Placing both the index file (.idx) and the packed archive (.pack) in the pack/ subdirectory of $GIT_OBJECT_DIRECTORY (or any of the directories on $GIT_ALTERNATE_OBJECT_DIRECTORIES) enables Git to read from the pack archive.
+<P>
+The <I>git unpack-objects</I> command can read the packed archive and expand the objects contained in the pack into &quot;one-file one-object&quot; format; this is typically done by the smart-pull commands when a pack is created on-the-fly for efficient network transport by their peers.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+base-name
+<DL COMPACT><DT><DD>
+Write into a pair of files (.pack and .idx), using &lt;base-name&gt; to determine the name of the created file. When this option is used, the two files are written in &lt;base-name&gt;-&lt;SHA-1&gt;.{pack,idx} files. &lt;SHA-1&gt; is a hash based on the pack content and is written to the standard output of the command.
+</DL>
+
+<P>
+
+--stdout
+<DL COMPACT><DT><DD>
+Write the pack contents (what would have been written to .pack file) out to the standard output.
+</DL>
+
+<P>
+
+--revs
+<DL COMPACT><DT><DD>
+Read the revision arguments from the standard input, instead of individual object names. The revision arguments are processed the same way as
+<I>git rev-list</I>
+with the
+<B>--objects</B>
+flag uses its
+<B>commit</B>
+arguments to build the list of objects it outputs. The objects on the resulting list are packed. Besides revisions,
+<B>--not</B>
+or
+<B>--shallow &lt;SHA-1&gt;</B>
+lines are also accepted.
+</DL>
+
+<P>
+
+--unpacked
+<DL COMPACT><DT><DD>
+This implies
+<B>--revs</B>. When processing the list of revision arguments read from the standard input, limit the objects packed to those that are not already packed.
+</DL>
+
+<P>
+
+--all
+<DL COMPACT><DT><DD>
+This implies
+<B>--revs</B>. In addition to the list of revision arguments read from the standard input, pretend as if all refs under
+<B>refs/</B>
+are specified to be included.
+</DL>
+
+<P>
+
+--include-tag
+<DL COMPACT><DT><DD>
+Include unasked-for annotated tags if the object they reference was included in the resulting packfile. This can be useful to send new tags to native Git clients.
+</DL>
+
+<P>
+
+--window=&lt;n&gt;, --depth=&lt;n&gt;
+<DL COMPACT><DT><DD>
+These two options affect how the objects contained in the pack are stored using delta compression. The objects are first internally sorted by type, size and optionally names and compared against the other objects within --window to see if using delta compression saves space. --depth limits the maximum delta depth; making it too deep affects the performance on the unpacker side, because delta data needs to be applied that many times to get to the necessary object. The default value for --window is 10 and --depth is 50.
+</DL>
+
+<P>
+
+--window-memory=&lt;n&gt;
+<DL COMPACT><DT><DD>
+This option provides an additional limit on top of
+<B>--window</B>; the window size will dynamically scale down so as to not take up more than
+<I>&lt;n&gt;</I>
+bytes in memory. This is useful in repositories with a mix of large and small objects to not run out of memory with a large window, but still be able to take advantage of the large window for the smaller objects. The size can be suffixed with &quot;k&quot;, &quot;m&quot;, or &quot;g&quot;.
+<B>--window-memory=0</B>
+makes memory usage unlimited. The default is taken from the
+<B>pack.windowMemory</B>
+configuration variable.
+</DL>
+
+<P>
+
+--max-pack-size=&lt;n&gt;
+<DL COMPACT><DT><DD>
+Maximum size of each output pack file. The size can be suffixed with &quot;k&quot;, &quot;m&quot;, or &quot;g&quot;. The minimum size allowed is limited to 1 MiB. If specified, multiple packfiles may be created, which also prevents the creation of a bitmap index. The default is unlimited, unless the config variable
+<B>pack.packSizeLimit</B>
+is set.
+</DL>
+
+<P>
+
+--honor-pack-keep
+<DL COMPACT><DT><DD>
+This flag causes an object already in a local pack that has a .keep file to be ignored, even if it would have otherwise been packed.
+</DL>
+
+<P>
+
+--incremental
+<DL COMPACT><DT><DD>
+This flag causes an object already in a pack to be ignored even if it would have otherwise been packed.
+</DL>
+
+<P>
+
+--local
+<DL COMPACT><DT><DD>
+This flag causes an object that is borrowed from an alternate object store to be ignored even if it would have otherwise been packed.
+</DL>
+
+<P>
+
+--non-empty
+<DL COMPACT><DT><DD>
+Only create a packed archive if it would contain at least one object.
+</DL>
+
+<P>
+
+--progress
+<DL COMPACT><DT><DD>
+Progress status is reported on the standard error stream by default when it is attached to a terminal, unless -q is specified. This flag forces progress status even if the standard error stream is not directed to a terminal.
+</DL>
+
+<P>
+
+--all-progress
+<DL COMPACT><DT><DD>
+When --stdout is specified then progress report is displayed during the object count and compression phases but inhibited during the write-out phase. The reason is that in some cases the output stream is directly linked to another command which may wish to display progress status of its own as it processes incoming pack data. This flag is like --progress except that it forces progress report for the write-out phase as well even if --stdout is used.
+</DL>
+
+<P>
+
+--all-progress-implied
+<DL COMPACT><DT><DD>
+This is used to imply --all-progress whenever progress display is activated. Unlike --all-progress this flag doesncqt actually force any progress display by itself.
+</DL>
+
+<P>
+
+-q
+<DL COMPACT><DT><DD>
+This flag makes the command not to report its progress on the standard error stream.
+</DL>
+
+<P>
+
+--no-reuse-delta
+<DL COMPACT><DT><DD>
+When creating a packed archive in a repository that has existing packs, the command reuses existing deltas. This sometimes results in a slightly suboptimal pack. This flag tells the command not to reuse existing deltas but compute them from scratch.
+</DL>
+
+<P>
+
+--no-reuse-object
+<DL COMPACT><DT><DD>
+This flag tells the command not to reuse existing object data at all, including non deltified object, forcing recompression of everything. This implies --no-reuse-delta. Useful only in the obscure case where wholesale enforcement of a different compression level on the packed data is desired.
+</DL>
+
+<P>
+
+--compression=&lt;n&gt;
+<DL COMPACT><DT><DD>
+Specifies compression level for newly-compressed data in the generated pack. If not specified, pack compression level is determined first by pack.compression, then by core.compression, and defaults to -1, the zlib default, if neither is set. Add --no-reuse-object if you want to force a uniform compression level on all data no matter the source.
+</DL>
+
+<P>
+
+--thin
+<DL COMPACT><DT><DD>
+Create a &quot;thin&quot; pack by omitting the common objects between a sender and a receiver in order to reduce network transfer. This option only makes sense in conjunction with --stdout.
+<P>
+Note: A thin pack violates the packed archive format by omitting required objects and is thus unusable by Git without making it self-contained. Use
+<B>git index-pack --fix-thin</B>
+(see
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-index-pack">git-index-pack</A></B>(1)) to restore the self-contained property.
+</DL>
+
+<P>
+
+--shallow
+<DL COMPACT><DT><DD>
+Optimize a pack that will be provided to a client with a shallow repository. This option, combined with --thin, can result in a smaller pack at the cost of speed.
+</DL>
+
+<P>
+
+--delta-base-offset
+<DL COMPACT><DT><DD>
+A packed archive can express the base object of a delta as either a 20-byte object name or as an offset in the stream, but ancient versions of Git doncqt understand the latter. By default,
+<I>git pack-objects</I>
+only uses the former format for better compatibility. This option allows the command to use the latter format for compactness. Depending on the average delta chain length, this option typically shrinks the resulting packfile by 3-5 per-cent.
+<P>
+Note: Porcelain commands such as
+<B>git gc</B>
+(see
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-gc">git-gc</A></B>(1)),
+<B>git repack</B>
+(see
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-repack">git-repack</A></B>(1)) pass this option by default in modern Git when they put objects in your repository into pack files. So does
+<B>git bundle</B>
+(see
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-bundle">git-bundle</A></B>(1)) when it creates a bundle.
+</DL>
+
+<P>
+
+--threads=&lt;n&gt;
+<DL COMPACT><DT><DD>
+Specifies the number of threads to spawn when searching for best delta matches. This requires that pack-objects be compiled with pthreads otherwise this option is ignored with a warning. This is meant to reduce packing time on multiprocessor machines. The required amount of memory for the delta search window is however multiplied by the number of threads. Specifying 0 will cause Git to auto-detect the number of CPUcqs and set the number of threads accordingly.
+</DL>
+
+<P>
+
+--index-version=&lt;version&gt;[,&lt;offset&gt;]
+<DL COMPACT><DT><DD>
+This is intended to be used by the test suite only. It allows to force the version for the generated pack index, and to force 64-bit index entries on objects located above the given offset.
+</DL>
+
+<P>
+
+--keep-true-parents
+<DL COMPACT><DT><DD>
+With this option, parents that are hidden by grafts are packed nevertheless.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-rev-list">git-rev-list</A></B>(1) <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-repack">git-repack</A></B>(1) <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-prune-packed">git-prune-packed</A></B>(1)
+<A NAME="lbAG">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:39:07 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-PACK\-OBJECTS</TITLE>
+</HEAD><BODY>
+<H1>GIT\-PACK\-OBJECTS</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-pack-objects - Create a packed archive of objects
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git pack-objects</I> [-q | --progress | --all-progress] [--all-progress-implied]
+        [--no-reuse-delta] [--delta-base-offset] [--non-empty]
+        [--local] [--incremental] [--window=&lt;n&gt;] [--depth=&lt;n&gt;]
+        [--revs [--unpacked | --all]] [--stdout | base-name]
+        [--shallow] [--keep-true-parents] &lt; object-list
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+Reads list of objects from the standard input, and writes a packed archive with specified base-name, or to the standard output.
+<P>
+A packed archive is an efficient way to transfer a set of objects between two repositories as well as an access efficient archival format. In a packed archive, an object is either stored as a compressed whole or as a difference from some other object. The latter is often called a delta.
+<P>
+The packed archive format (.pack) is designed to be self-contained so that it can be unpacked without any further information. Therefore, each object that a delta depends upon must be present within the pack.
+<P>
+A pack index file (.idx) is generated for fast, random access to the objects in the pack. Placing both the index file (.idx) and the packed archive (.pack) in the pack/ subdirectory of $GIT_OBJECT_DIRECTORY (or any of the directories on $GIT_ALTERNATE_OBJECT_DIRECTORIES) enables Git to read from the pack archive.
+<P>
+The <I>git unpack-objects</I> command can read the packed archive and expand the objects contained in the pack into &quot;one-file one-object&quot; format; this is typically done by the smart-pull commands when a pack is created on-the-fly for efficient network transport by their peers.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+base-name
+<DL COMPACT><DT><DD>
+Write into a pair of files (.pack and .idx), using &lt;base-name&gt; to determine the name of the created file. When this option is used, the two files are written in &lt;base-name&gt;-&lt;SHA-1&gt;.{pack,idx} files. &lt;SHA-1&gt; is a hash based on the pack content and is written to the standard output of the command.
+</DL>
+
+<P>
+
+--stdout
+<DL COMPACT><DT><DD>
+Write the pack contents (what would have been written to .pack file) out to the standard output.
+</DL>
+
+<P>
+
+--revs
+<DL COMPACT><DT><DD>
+Read the revision arguments from the standard input, instead of individual object names. The revision arguments are processed the same way as
+<I>git rev-list</I>
+with the
+<B>--objects</B>
+flag uses its
+<B>commit</B>
+arguments to build the list of objects it outputs. The objects on the resulting list are packed. Besides revisions,
+<B>--not</B>
+or
+<B>--shallow &lt;SHA-1&gt;</B>
+lines are also accepted.
+</DL>
+
+<P>
+
+--unpacked
+<DL COMPACT><DT><DD>
+This implies
+<B>--revs</B>. When processing the list of revision arguments read from the standard input, limit the objects packed to those that are not already packed.
+</DL>
+
+<P>
+
+--all
+<DL COMPACT><DT><DD>
+This implies
+<B>--revs</B>. In addition to the list of revision arguments read from the standard input, pretend as if all refs under
+<B>refs/</B>
+are specified to be included.
+</DL>
+
+<P>
+
+--include-tag
+<DL COMPACT><DT><DD>
+Include unasked-for annotated tags if the object they reference was included in the resulting packfile. This can be useful to send new tags to native Git clients.
+</DL>
+
+<P>
+
+--window=&lt;n&gt;, --depth=&lt;n&gt;
+<DL COMPACT><DT><DD>
+These two options affect how the objects contained in the pack are stored using delta compression. The objects are first internally sorted by type, size and optionally names and compared against the other objects within --window to see if using delta compression saves space. --depth limits the maximum delta depth; making it too deep affects the performance on the unpacker side, because delta data needs to be applied that many times to get to the necessary object. The default value for --window is 10 and --depth is 50.
+</DL>
+
+<P>
+
+--window-memory=&lt;n&gt;
+<DL COMPACT><DT><DD>
+This option provides an additional limit on top of
+<B>--window</B>; the window size will dynamically scale down so as to not take up more than
+<I>&lt;n&gt;</I>
+bytes in memory. This is useful in repositories with a mix of large and small objects to not run out of memory with a large window, but still be able to take advantage of the large window for the smaller objects. The size can be suffixed with &quot;k&quot;, &quot;m&quot;, or &quot;g&quot;.
+<B>--window-memory=0</B>
+makes memory usage unlimited. The default is taken from the
+<B>pack.windowMemory</B>
+configuration variable.
+</DL>
+
+<P>
+
+--max-pack-size=&lt;n&gt;
+<DL COMPACT><DT><DD>
+Maximum size of each output pack file. The size can be suffixed with &quot;k&quot;, &quot;m&quot;, or &quot;g&quot;. The minimum size allowed is limited to 1 MiB. If specified, multiple packfiles may be created, which also prevents the creation of a bitmap index. The default is unlimited, unless the config variable
+<B>pack.packSizeLimit</B>
+is set.
+</DL>
+
+<P>
+
+--honor-pack-keep
+<DL COMPACT><DT><DD>
+This flag causes an object already in a local pack that has a .keep file to be ignored, even if it would have otherwise been packed.
+</DL>
+
+<P>
+
+--incremental
+<DL COMPACT><DT><DD>
+This flag causes an object already in a pack to be ignored even if it would have otherwise been packed.
+</DL>
+
+<P>
+
+--local
+<DL COMPACT><DT><DD>
+This flag causes an object that is borrowed from an alternate object store to be ignored even if it would have otherwise been packed.
+</DL>
+
+<P>
+
+--non-empty
+<DL COMPACT><DT><DD>
+Only create a packed archive if it would contain at least one object.
+</DL>
+
+<P>
+
+--progress
+<DL COMPACT><DT><DD>
+Progress status is reported on the standard error stream by default when it is attached to a terminal, unless -q is specified. This flag forces progress status even if the standard error stream is not directed to a terminal.
+</DL>
+
+<P>
+
+--all-progress
+<DL COMPACT><DT><DD>
+When --stdout is specified then progress report is displayed during the object count and compression phases but inhibited during the write-out phase. The reason is that in some cases the output stream is directly linked to another command which may wish to display progress status of its own as it processes incoming pack data. This flag is like --progress except that it forces progress report for the write-out phase as well even if --stdout is used.
+</DL>
+
+<P>
+
+--all-progress-implied
+<DL COMPACT><DT><DD>
+This is used to imply --all-progress whenever progress display is activated. Unlike --all-progress this flag doesncqt actually force any progress display by itself.
+</DL>
+
+<P>
+
+-q
+<DL COMPACT><DT><DD>
+This flag makes the command not to report its progress on the standard error stream.
+</DL>
+
+<P>
+
+--no-reuse-delta
+<DL COMPACT><DT><DD>
+When creating a packed archive in a repository that has existing packs, the command reuses existing deltas. This sometimes results in a slightly suboptimal pack. This flag tells the command not to reuse existing deltas but compute them from scratch.
+</DL>
+
+<P>
+
+--no-reuse-object
+<DL COMPACT><DT><DD>
+This flag tells the command not to reuse existing object data at all, including non deltified object, forcing recompression of everything. This implies --no-reuse-delta. Useful only in the obscure case where wholesale enforcement of a different compression level on the packed data is desired.
+</DL>
+
+<P>
+
+--compression=&lt;n&gt;
+<DL COMPACT><DT><DD>
+Specifies compression level for newly-compressed data in the generated pack. If not specified, pack compression level is determined first by pack.compression, then by core.compression, and defaults to -1, the zlib default, if neither is set. Add --no-reuse-object if you want to force a uniform compression level on all data no matter the source.
+</DL>
+
+<P>
+
+--thin
+<DL COMPACT><DT><DD>
+Create a &quot;thin&quot; pack by omitting the common objects between a sender and a receiver in order to reduce network transfer. This option only makes sense in conjunction with --stdout.
+<P>
+Note: A thin pack violates the packed archive format by omitting required objects and is thus unusable by Git without making it self-contained. Use
+<B>git index-pack --fix-thin</B>
+(see
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-index-pack">git-index-pack</A></B>(1)) to restore the self-contained property.
+</DL>
+
+<P>
+
+--shallow
+<DL COMPACT><DT><DD>
+Optimize a pack that will be provided to a client with a shallow repository. This option, combined with --thin, can result in a smaller pack at the cost of speed.
+</DL>
+
+<P>
+
+--delta-base-offset
+<DL COMPACT><DT><DD>
+A packed archive can express the base object of a delta as either a 20-byte object name or as an offset in the stream, but ancient versions of Git doncqt understand the latter. By default,
+<I>git pack-objects</I>
+only uses the former format for better compatibility. This option allows the command to use the latter format for compactness. Depending on the average delta chain length, this option typically shrinks the resulting packfile by 3-5 per-cent.
+<P>
+Note: Porcelain commands such as
+<B>git gc</B>
+(see
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-gc">git-gc</A></B>(1)),
+<B>git repack</B>
+(see
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-repack">git-repack</A></B>(1)) pass this option by default in modern Git when they put objects in your repository into pack files. So does
+<B>git bundle</B>
+(see
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-bundle">git-bundle</A></B>(1)) when it creates a bundle.
+</DL>
+
+<P>
+
+--threads=&lt;n&gt;
+<DL COMPACT><DT><DD>
+Specifies the number of threads to spawn when searching for best delta matches. This requires that pack-objects be compiled with pthreads otherwise this option is ignored with a warning. This is meant to reduce packing time on multiprocessor machines. The required amount of memory for the delta search window is however multiplied by the number of threads. Specifying 0 will cause Git to auto-detect the number of CPUcqs and set the number of threads accordingly.
+</DL>
+
+<P>
+
+--index-version=&lt;version&gt;[,&lt;offset&gt;]
+<DL COMPACT><DT><DD>
+This is intended to be used by the test suite only. It allows to force the version for the generated pack index, and to force 64-bit index entries on objects located above the given offset.
+</DL>
+
+<P>
+
+--keep-true-parents
+<DL COMPACT><DT><DD>
+With this option, parents that are hidden by grafts are packed nevertheless.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-rev-list">git-rev-list</A></B>(1) <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-repack">git-repack</A></B>(1) <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-prune-packed">git-prune-packed</A></B>(1)
+<A NAME="lbAG">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+<DT><A HREF="#lbAG">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:45:15 GMT, June 13, 2017
+</BODY>
+</HTML>

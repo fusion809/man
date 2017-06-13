@@ -1,0 +1,652 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of Git::SVN::Utils</TITLE>
+</HEAD><BODY>
+<H1>Git::SVN::Utils</H1>
+Section: User Contributed Perl Documentation (3)<BR>Updated: 2017-06-05<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+Git::SVN::Utils - utility functions used across Git::SVN
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<A NAME="ixAAC"></A>
+
+
+<PRE>
+    use Git::SVN::Utils qw(functions to import);
+
+</PRE>
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<A NAME="ixAAD"></A>
+This module contains functions which are useful across many different
+parts of Git::SVN.  Mostly it's a place to put utility functions
+rather than duplicate the code or have classes grabbing at other
+classes.
+<A NAME="lbAE">&nbsp;</A>
+<H2>FUNCTIONS</H2>
+
+<A NAME="ixAAE"></A>
+All functions can be imported only on request.
+<P>
+
+<I>fatal</I>
+<A NAME="ixAAF"></A>
+<P>
+
+
+
+<PRE>
+    fatal(@message);
+
+</PRE>
+
+
+<P>
+
+Display a message and exit with a fatal error code.
+<P>
+
+<I>can_compress</I>
+<A NAME="ixAAG"></A>
+<P>
+
+
+
+<PRE>
+    my $can_compress = can_compress;
+
+</PRE>
+
+
+<P>
+
+Returns true if Compress::Zlib is available, false otherwise.
+<P>
+
+<I>canonicalize_path</I>
+<A NAME="ixAAH"></A>
+<P>
+
+
+
+<PRE>
+    my $canoncalized_path = canonicalize_path($path);
+
+</PRE>
+
+
+<P>
+
+Converts <TT>$path</TT> into a canonical form which is safe to pass to the <FONT SIZE="-1">SVN
+API</FONT> as a file path.
+<P>
+
+<I>canonicalize_url</I>
+<A NAME="ixAAI"></A>
+<P>
+
+
+
+<PRE>
+    my $canonicalized_url = canonicalize_url($url);
+
+</PRE>
+
+
+<P>
+
+Converts <TT>$url</TT> into a canonical form which is safe to pass to the <FONT SIZE="-1">SVN
+API</FONT> as a <FONT SIZE="-1">URL.</FONT>
+<P>
+
+<I>join_paths</I>
+<A NAME="ixAAJ"></A>
+<P>
+
+
+
+<PRE>
+    my $new_path = join_paths(@paths);
+
+</PRE>
+
+
+<P>
+
+Appends <TT>@paths</TT> together into a single path.  Any empty paths are ignored.
+<P>
+
+<I>add_path_to_url</I>
+<A NAME="ixAAK"></A>
+<P>
+
+
+
+<PRE>
+    my $new_url = add_path_to_url($url, $path);
+
+</PRE>
+
+
+<P>
+
+Appends <TT>$path</TT> onto the <TT>$url</TT>.  If <TT>$path</TT> is empty, <TT>$url</TT> is returned unchanged.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">FUNCTIONS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:34:56 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of Git::SVN::Utils</TITLE>
+</HEAD><BODY>
+<H1>Git::SVN::Utils</H1>
+Section: User Contributed Perl Documentation (3)<BR>Updated: 2017-06-05<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+Git::SVN::Utils - utility functions used across Git::SVN
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<A NAME="ixAAC"></A>
+
+
+<PRE>
+    use Git::SVN::Utils qw(functions to import);
+
+</PRE>
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<A NAME="ixAAD"></A>
+This module contains functions which are useful across many different
+parts of Git::SVN.  Mostly it's a place to put utility functions
+rather than duplicate the code or have classes grabbing at other
+classes.
+<A NAME="lbAE">&nbsp;</A>
+<H2>FUNCTIONS</H2>
+
+<A NAME="ixAAE"></A>
+All functions can be imported only on request.
+<P>
+
+<I>fatal</I>
+<A NAME="ixAAF"></A>
+<P>
+
+
+
+<PRE>
+    fatal(@message);
+
+</PRE>
+
+
+<P>
+
+Display a message and exit with a fatal error code.
+<P>
+
+<I>can_compress</I>
+<A NAME="ixAAG"></A>
+<P>
+
+
+
+<PRE>
+    my $can_compress = can_compress;
+
+</PRE>
+
+
+<P>
+
+Returns true if Compress::Zlib is available, false otherwise.
+<P>
+
+<I>canonicalize_path</I>
+<A NAME="ixAAH"></A>
+<P>
+
+
+
+<PRE>
+    my $canoncalized_path = canonicalize_path($path);
+
+</PRE>
+
+
+<P>
+
+Converts <TT>$path</TT> into a canonical form which is safe to pass to the <FONT SIZE="-1">SVN
+API</FONT> as a file path.
+<P>
+
+<I>canonicalize_url</I>
+<A NAME="ixAAI"></A>
+<P>
+
+
+
+<PRE>
+    my $canonicalized_url = canonicalize_url($url);
+
+</PRE>
+
+
+<P>
+
+Converts <TT>$url</TT> into a canonical form which is safe to pass to the <FONT SIZE="-1">SVN
+API</FONT> as a <FONT SIZE="-1">URL.</FONT>
+<P>
+
+<I>join_paths</I>
+<A NAME="ixAAJ"></A>
+<P>
+
+
+
+<PRE>
+    my $new_path = join_paths(@paths);
+
+</PRE>
+
+
+<P>
+
+Appends <TT>@paths</TT> together into a single path.  Any empty paths are ignored.
+<P>
+
+<I>add_path_to_url</I>
+<A NAME="ixAAK"></A>
+<P>
+
+
+
+<PRE>
+    my $new_url = add_path_to_url($url, $path);
+
+</PRE>
+
+
+<P>
+
+Appends <TT>$path</TT> onto the <TT>$url</TT>.  If <TT>$path</TT> is empty, <TT>$url</TT> is returned unchanged.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">FUNCTIONS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:35:27 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of Git::SVN::Utils</TITLE>
+</HEAD><BODY>
+<H1>Git::SVN::Utils</H1>
+Section: User Contributed Perl Documentation (3)<BR>Updated: 2017-06-05<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+Git::SVN::Utils - utility functions used across Git::SVN
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<A NAME="ixAAC"></A>
+
+
+<PRE>
+    use Git::SVN::Utils qw(functions to import);
+
+</PRE>
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<A NAME="ixAAD"></A>
+This module contains functions which are useful across many different
+parts of Git::SVN.  Mostly it's a place to put utility functions
+rather than duplicate the code or have classes grabbing at other
+classes.
+<A NAME="lbAE">&nbsp;</A>
+<H2>FUNCTIONS</H2>
+
+<A NAME="ixAAE"></A>
+All functions can be imported only on request.
+<P>
+
+<I>fatal</I>
+<A NAME="ixAAF"></A>
+<P>
+
+
+
+<PRE>
+    fatal(@message);
+
+</PRE>
+
+
+<P>
+
+Display a message and exit with a fatal error code.
+<P>
+
+<I>can_compress</I>
+<A NAME="ixAAG"></A>
+<P>
+
+
+
+<PRE>
+    my $can_compress = can_compress;
+
+</PRE>
+
+
+<P>
+
+Returns true if Compress::Zlib is available, false otherwise.
+<P>
+
+<I>canonicalize_path</I>
+<A NAME="ixAAH"></A>
+<P>
+
+
+
+<PRE>
+    my $canoncalized_path = canonicalize_path($path);
+
+</PRE>
+
+
+<P>
+
+Converts <TT>$path</TT> into a canonical form which is safe to pass to the <FONT SIZE="-1">SVN
+API</FONT> as a file path.
+<P>
+
+<I>canonicalize_url</I>
+<A NAME="ixAAI"></A>
+<P>
+
+
+
+<PRE>
+    my $canonicalized_url = canonicalize_url($url);
+
+</PRE>
+
+
+<P>
+
+Converts <TT>$url</TT> into a canonical form which is safe to pass to the <FONT SIZE="-1">SVN
+API</FONT> as a <FONT SIZE="-1">URL.</FONT>
+<P>
+
+<I>join_paths</I>
+<A NAME="ixAAJ"></A>
+<P>
+
+
+
+<PRE>
+    my $new_path = join_paths(@paths);
+
+</PRE>
+
+
+<P>
+
+Appends <TT>@paths</TT> together into a single path.  Any empty paths are ignored.
+<P>
+
+<I>add_path_to_url</I>
+<A NAME="ixAAK"></A>
+<P>
+
+
+
+<PRE>
+    my $new_url = add_path_to_url($url, $path);
+
+</PRE>
+
+
+<P>
+
+Appends <TT>$path</TT> onto the <TT>$url</TT>.  If <TT>$path</TT> is empty, <TT>$url</TT> is returned unchanged.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">FUNCTIONS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:39:07 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of Git::SVN::Utils</TITLE>
+</HEAD><BODY>
+<H1>Git::SVN::Utils</H1>
+Section: User Contributed Perl Documentation (3)<BR>Updated: 2017-06-05<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+Git::SVN::Utils - utility functions used across Git::SVN
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<A NAME="ixAAC"></A>
+
+
+<PRE>
+    use Git::SVN::Utils qw(functions to import);
+
+</PRE>
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<A NAME="ixAAD"></A>
+This module contains functions which are useful across many different
+parts of Git::SVN.  Mostly it's a place to put utility functions
+rather than duplicate the code or have classes grabbing at other
+classes.
+<A NAME="lbAE">&nbsp;</A>
+<H2>FUNCTIONS</H2>
+
+<A NAME="ixAAE"></A>
+All functions can be imported only on request.
+<P>
+
+<I>fatal</I>
+<A NAME="ixAAF"></A>
+<P>
+
+
+
+<PRE>
+    fatal(@message);
+
+</PRE>
+
+
+<P>
+
+Display a message and exit with a fatal error code.
+<P>
+
+<I>can_compress</I>
+<A NAME="ixAAG"></A>
+<P>
+
+
+
+<PRE>
+    my $can_compress = can_compress;
+
+</PRE>
+
+
+<P>
+
+Returns true if Compress::Zlib is available, false otherwise.
+<P>
+
+<I>canonicalize_path</I>
+<A NAME="ixAAH"></A>
+<P>
+
+
+
+<PRE>
+    my $canoncalized_path = canonicalize_path($path);
+
+</PRE>
+
+
+<P>
+
+Converts <TT>$path</TT> into a canonical form which is safe to pass to the <FONT SIZE="-1">SVN
+API</FONT> as a file path.
+<P>
+
+<I>canonicalize_url</I>
+<A NAME="ixAAI"></A>
+<P>
+
+
+
+<PRE>
+    my $canonicalized_url = canonicalize_url($url);
+
+</PRE>
+
+
+<P>
+
+Converts <TT>$url</TT> into a canonical form which is safe to pass to the <FONT SIZE="-1">SVN
+API</FONT> as a <FONT SIZE="-1">URL.</FONT>
+<P>
+
+<I>join_paths</I>
+<A NAME="ixAAJ"></A>
+<P>
+
+
+
+<PRE>
+    my $new_path = join_paths(@paths);
+
+</PRE>
+
+
+<P>
+
+Appends <TT>@paths</TT> together into a single path.  Any empty paths are ignored.
+<P>
+
+<I>add_path_to_url</I>
+<A NAME="ixAAK"></A>
+<P>
+
+
+
+<PRE>
+    my $new_url = add_path_to_url($url, $path);
+
+</PRE>
+
+
+<P>
+
+Appends <TT>$path</TT> onto the <TT>$url</TT>.  If <TT>$path</TT> is empty, <TT>$url</TT> is returned unchanged.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">FUNCTIONS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:45:16 GMT, June 13, 2017
+</BODY>
+</HTML>

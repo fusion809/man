@@ -1,0 +1,1252 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-WEB\-\-BROWSE</TITLE>
+</HEAD><BODY>
+<H1>GIT\-WEB\-\-BROWSE</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-web--browse - Git helper script to launch a web browser
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git web--browse</I> [OPTIONS] URL/FILE ...
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+This script tries, as much as possible, to display the URLs and FILEs that are passed as arguments, as HTML pages in new tabs on an already opened web browser.
+<P>
+The following browsers (or commands) are currently supported:
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+firefox (this is the default under X Window when not using KDE)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+iceweasel
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+seamonkey
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+iceape
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+chromium (also supported as chromium-browser)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+google-chrome (also supported as chrome)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+konqueror (this is the default under KDE, see
+<I>Note about konqueror</I>
+below)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+opera
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+w3m (this is the default outside graphical environments)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+elinks
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+links
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+lynx
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+dillo
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+open (this is the default under Mac OS X GUI)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+start (this is the default under MinGW)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+cygstart (this is the default under Cygwin)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+xdg-open
+</DL>
+
+<P>
+Custom commands may also be specified.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+-b &lt;browser&gt;, --browser=&lt;browser&gt;
+<DL COMPACT><DT><DD>
+Use the specified browser. It must be in the list of supported browsers.
+</DL>
+
+<P>
+
+-t &lt;browser&gt;, --tool=&lt;browser&gt;
+<DL COMPACT><DT><DD>
+Same as above.
+</DL>
+
+<P>
+
+-c &lt;conf.var&gt;, --config=&lt;conf.var&gt;
+<DL COMPACT><DT><DD>
+CONF.VAR is looked up in the Git config files. If itcqs set, then its value specifies the browser that should be used.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>CONFIGURATION VARIABLES</H2>
+
+<A NAME="lbAG">&nbsp;</A>
+<H3>CONF.VAR (from -c option) and web.browser</H3>
+
+<P>
+The web browser can be specified using a configuration variable passed with the -c (or --config) command-line option, or the <B>web.browser</B> configuration variable if the former is not used.
+<A NAME="lbAH">&nbsp;</A>
+<H3>browser.&lt;tool&gt;.path</H3>
+
+<P>
+You can explicitly provide a full path to your preferred browser by setting the configuration variable <B>browser.&lt;tool&gt;.path</B>. For example, you can configure the absolute path to firefox by setting <I>browser.firefox.path</I>. Otherwise, <I>git web--browse</I> assumes the tool is available in PATH.
+<A NAME="lbAI">&nbsp;</A>
+<H3>browser.&lt;tool&gt;.cmd</H3>
+
+<P>
+When the browser, specified by options or configuration variables, is not among the supported ones, then the corresponding <B>browser.&lt;tool&gt;.cmd</B> configuration variable will be looked up. If this variable exists then <I>git web--browse</I> will treat the specified tool as a custom command and will use a shell eval to run the command with the URLs passed as arguments.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>NOTE ABOUT KONQUEROR</H2>
+
+<P>
+When <I>konqueror</I> is specified by a command-line option or a configuration variable, we launch <I>kfmclient</I> to try to open the HTML man page on an already opened konqueror in a new tab if possible.
+<P>
+For consistency, we also try such a trick if <I>browser.konqueror.path</I> is set to something like <I>A_PATH_TO/konqueror</I>. That means we will try to launch <I>A_PATH_TO/kfmclient</I> instead.
+<P>
+If you really want to use <I>konqueror</I>, then you can use something like the following:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+        [web]
+                browser = konq
+
+        [browser &quot;konq&quot;]
+                cmd = A_PATH_TO/konqueror
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+<A NAME="lbAK">&nbsp;</A>
+<H3>Note about git-config --global</H3>
+
+<P>
+Note that these configuration variables should probably be set using the <B>--global</B> flag, for example like this:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+$ git config --global web.browser firefox
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+<P>
+as they are probably more user specific than repository specific. See <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-config">git-config</A></B>(1) for more information about this.
+<A NAME="lbAL">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">CONFIGURATION VARIABLES</A><DD>
+<DL>
+<DT><A HREF="#lbAG">CONF.VAR (from -c option) and web.browser</A><DD>
+<DT><A HREF="#lbAH">browser.&lt;tool&gt;.path</A><DD>
+<DT><A HREF="#lbAI">browser.&lt;tool&gt;.cmd</A><DD>
+</DL>
+<DT><A HREF="#lbAJ">NOTE ABOUT KONQUEROR</A><DD>
+<DL>
+<DT><A HREF="#lbAK">Note about git-config --global</A><DD>
+</DL>
+<DT><A HREF="#lbAL">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:24:33 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-WEB\-\-BROWSE</TITLE>
+</HEAD><BODY>
+<H1>GIT\-WEB\-\-BROWSE</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-web--browse - Git helper script to launch a web browser
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git web--browse</I> [OPTIONS] URL/FILE ...
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+This script tries, as much as possible, to display the URLs and FILEs that are passed as arguments, as HTML pages in new tabs on an already opened web browser.
+<P>
+The following browsers (or commands) are currently supported:
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+firefox (this is the default under X Window when not using KDE)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+iceweasel
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+seamonkey
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+iceape
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+chromium (also supported as chromium-browser)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+google-chrome (also supported as chrome)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+konqueror (this is the default under KDE, see
+<I>Note about konqueror</I>
+below)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+opera
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+w3m (this is the default outside graphical environments)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+elinks
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+links
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+lynx
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+dillo
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+open (this is the default under Mac OS X GUI)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+start (this is the default under MinGW)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+cygstart (this is the default under Cygwin)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+xdg-open
+</DL>
+
+<P>
+Custom commands may also be specified.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+-b &lt;browser&gt;, --browser=&lt;browser&gt;
+<DL COMPACT><DT><DD>
+Use the specified browser. It must be in the list of supported browsers.
+</DL>
+
+<P>
+
+-t &lt;browser&gt;, --tool=&lt;browser&gt;
+<DL COMPACT><DT><DD>
+Same as above.
+</DL>
+
+<P>
+
+-c &lt;conf.var&gt;, --config=&lt;conf.var&gt;
+<DL COMPACT><DT><DD>
+CONF.VAR is looked up in the Git config files. If itcqs set, then its value specifies the browser that should be used.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>CONFIGURATION VARIABLES</H2>
+
+<A NAME="lbAG">&nbsp;</A>
+<H3>CONF.VAR (from -c option) and web.browser</H3>
+
+<P>
+The web browser can be specified using a configuration variable passed with the -c (or --config) command-line option, or the <B>web.browser</B> configuration variable if the former is not used.
+<A NAME="lbAH">&nbsp;</A>
+<H3>browser.&lt;tool&gt;.path</H3>
+
+<P>
+You can explicitly provide a full path to your preferred browser by setting the configuration variable <B>browser.&lt;tool&gt;.path</B>. For example, you can configure the absolute path to firefox by setting <I>browser.firefox.path</I>. Otherwise, <I>git web--browse</I> assumes the tool is available in PATH.
+<A NAME="lbAI">&nbsp;</A>
+<H3>browser.&lt;tool&gt;.cmd</H3>
+
+<P>
+When the browser, specified by options or configuration variables, is not among the supported ones, then the corresponding <B>browser.&lt;tool&gt;.cmd</B> configuration variable will be looked up. If this variable exists then <I>git web--browse</I> will treat the specified tool as a custom command and will use a shell eval to run the command with the URLs passed as arguments.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>NOTE ABOUT KONQUEROR</H2>
+
+<P>
+When <I>konqueror</I> is specified by a command-line option or a configuration variable, we launch <I>kfmclient</I> to try to open the HTML man page on an already opened konqueror in a new tab if possible.
+<P>
+For consistency, we also try such a trick if <I>browser.konqueror.path</I> is set to something like <I>A_PATH_TO/konqueror</I>. That means we will try to launch <I>A_PATH_TO/kfmclient</I> instead.
+<P>
+If you really want to use <I>konqueror</I>, then you can use something like the following:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+        [web]
+                browser = konq
+
+        [browser &quot;konq&quot;]
+                cmd = A_PATH_TO/konqueror
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+<A NAME="lbAK">&nbsp;</A>
+<H3>Note about git-config --global</H3>
+
+<P>
+Note that these configuration variables should probably be set using the <B>--global</B> flag, for example like this:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+$ git config --global web.browser firefox
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+<P>
+as they are probably more user specific than repository specific. See <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-config">git-config</A></B>(1) for more information about this.
+<A NAME="lbAL">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">CONFIGURATION VARIABLES</A><DD>
+<DL>
+<DT><A HREF="#lbAG">CONF.VAR (from -c option) and web.browser</A><DD>
+<DT><A HREF="#lbAH">browser.&lt;tool&gt;.path</A><DD>
+<DT><A HREF="#lbAI">browser.&lt;tool&gt;.cmd</A><DD>
+</DL>
+<DT><A HREF="#lbAJ">NOTE ABOUT KONQUEROR</A><DD>
+<DL>
+<DT><A HREF="#lbAK">Note about git-config --global</A><DD>
+</DL>
+<DT><A HREF="#lbAL">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:34:56 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-WEB\-\-BROWSE</TITLE>
+</HEAD><BODY>
+<H1>GIT\-WEB\-\-BROWSE</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-web--browse - Git helper script to launch a web browser
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git web--browse</I> [OPTIONS] URL/FILE ...
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+This script tries, as much as possible, to display the URLs and FILEs that are passed as arguments, as HTML pages in new tabs on an already opened web browser.
+<P>
+The following browsers (or commands) are currently supported:
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+firefox (this is the default under X Window when not using KDE)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+iceweasel
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+seamonkey
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+iceape
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+chromium (also supported as chromium-browser)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+google-chrome (also supported as chrome)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+konqueror (this is the default under KDE, see
+<I>Note about konqueror</I>
+below)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+opera
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+w3m (this is the default outside graphical environments)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+elinks
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+links
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+lynx
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+dillo
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+open (this is the default under Mac OS X GUI)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+start (this is the default under MinGW)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+cygstart (this is the default under Cygwin)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+xdg-open
+</DL>
+
+<P>
+Custom commands may also be specified.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+-b &lt;browser&gt;, --browser=&lt;browser&gt;
+<DL COMPACT><DT><DD>
+Use the specified browser. It must be in the list of supported browsers.
+</DL>
+
+<P>
+
+-t &lt;browser&gt;, --tool=&lt;browser&gt;
+<DL COMPACT><DT><DD>
+Same as above.
+</DL>
+
+<P>
+
+-c &lt;conf.var&gt;, --config=&lt;conf.var&gt;
+<DL COMPACT><DT><DD>
+CONF.VAR is looked up in the Git config files. If itcqs set, then its value specifies the browser that should be used.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>CONFIGURATION VARIABLES</H2>
+
+<A NAME="lbAG">&nbsp;</A>
+<H3>CONF.VAR (from -c option) and web.browser</H3>
+
+<P>
+The web browser can be specified using a configuration variable passed with the -c (or --config) command-line option, or the <B>web.browser</B> configuration variable if the former is not used.
+<A NAME="lbAH">&nbsp;</A>
+<H3>browser.&lt;tool&gt;.path</H3>
+
+<P>
+You can explicitly provide a full path to your preferred browser by setting the configuration variable <B>browser.&lt;tool&gt;.path</B>. For example, you can configure the absolute path to firefox by setting <I>browser.firefox.path</I>. Otherwise, <I>git web--browse</I> assumes the tool is available in PATH.
+<A NAME="lbAI">&nbsp;</A>
+<H3>browser.&lt;tool&gt;.cmd</H3>
+
+<P>
+When the browser, specified by options or configuration variables, is not among the supported ones, then the corresponding <B>browser.&lt;tool&gt;.cmd</B> configuration variable will be looked up. If this variable exists then <I>git web--browse</I> will treat the specified tool as a custom command and will use a shell eval to run the command with the URLs passed as arguments.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>NOTE ABOUT KONQUEROR</H2>
+
+<P>
+When <I>konqueror</I> is specified by a command-line option or a configuration variable, we launch <I>kfmclient</I> to try to open the HTML man page on an already opened konqueror in a new tab if possible.
+<P>
+For consistency, we also try such a trick if <I>browser.konqueror.path</I> is set to something like <I>A_PATH_TO/konqueror</I>. That means we will try to launch <I>A_PATH_TO/kfmclient</I> instead.
+<P>
+If you really want to use <I>konqueror</I>, then you can use something like the following:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+        [web]
+                browser = konq
+
+        [browser &quot;konq&quot;]
+                cmd = A_PATH_TO/konqueror
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+<A NAME="lbAK">&nbsp;</A>
+<H3>Note about git-config --global</H3>
+
+<P>
+Note that these configuration variables should probably be set using the <B>--global</B> flag, for example like this:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+$ git config --global web.browser firefox
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+<P>
+as they are probably more user specific than repository specific. See <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-config">git-config</A></B>(1) for more information about this.
+<A NAME="lbAL">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">CONFIGURATION VARIABLES</A><DD>
+<DL>
+<DT><A HREF="#lbAG">CONF.VAR (from -c option) and web.browser</A><DD>
+<DT><A HREF="#lbAH">browser.&lt;tool&gt;.path</A><DD>
+<DT><A HREF="#lbAI">browser.&lt;tool&gt;.cmd</A><DD>
+</DL>
+<DT><A HREF="#lbAJ">NOTE ABOUT KONQUEROR</A><DD>
+<DL>
+<DT><A HREF="#lbAK">Note about git-config --global</A><DD>
+</DL>
+<DT><A HREF="#lbAL">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:39:07 GMT, June 13, 2017
+</BODY>
+</HTML>
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of GIT\-WEB\-\-BROWSE</TITLE>
+</HEAD><BODY>
+<H1>GIT\-WEB\-\-BROWSE</H1>
+Section: Git Manual (1)<BR>Updated: 06/05/2017<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+git-web--browse - Git helper script to launch a web browser
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<PRE>
+<I>git web--browse</I> [OPTIONS] URL/FILE ...
+</PRE>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+This script tries, as much as possible, to display the URLs and FILEs that are passed as arguments, as HTML pages in new tabs on an already opened web browser.
+<P>
+The following browsers (or commands) are currently supported:
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+firefox (this is the default under X Window when not using KDE)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+iceweasel
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+seamonkey
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+iceape
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+chromium (also supported as chromium-browser)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+google-chrome (also supported as chrome)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+konqueror (this is the default under KDE, see
+<I>Note about konqueror</I>
+below)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+opera
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+w3m (this is the default outside graphical environments)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+elinks
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+links
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+lynx
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+dillo
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+open (this is the default under Mac OS X GUI)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+start (this is the default under MinGW)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+cygstart (this is the default under Cygwin)
+</DL>
+
+<P>
+<DL COMPACT><DT><DD>
+*
+
+
+xdg-open
+</DL>
+
+<P>
+Custom commands may also be specified.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+
+-b &lt;browser&gt;, --browser=&lt;browser&gt;
+<DL COMPACT><DT><DD>
+Use the specified browser. It must be in the list of supported browsers.
+</DL>
+
+<P>
+
+-t &lt;browser&gt;, --tool=&lt;browser&gt;
+<DL COMPACT><DT><DD>
+Same as above.
+</DL>
+
+<P>
+
+-c &lt;conf.var&gt;, --config=&lt;conf.var&gt;
+<DL COMPACT><DT><DD>
+CONF.VAR is looked up in the Git config files. If itcqs set, then its value specifies the browser that should be used.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>CONFIGURATION VARIABLES</H2>
+
+<A NAME="lbAG">&nbsp;</A>
+<H3>CONF.VAR (from -c option) and web.browser</H3>
+
+<P>
+The web browser can be specified using a configuration variable passed with the -c (or --config) command-line option, or the <B>web.browser</B> configuration variable if the former is not used.
+<A NAME="lbAH">&nbsp;</A>
+<H3>browser.&lt;tool&gt;.path</H3>
+
+<P>
+You can explicitly provide a full path to your preferred browser by setting the configuration variable <B>browser.&lt;tool&gt;.path</B>. For example, you can configure the absolute path to firefox by setting <I>browser.firefox.path</I>. Otherwise, <I>git web--browse</I> assumes the tool is available in PATH.
+<A NAME="lbAI">&nbsp;</A>
+<H3>browser.&lt;tool&gt;.cmd</H3>
+
+<P>
+When the browser, specified by options or configuration variables, is not among the supported ones, then the corresponding <B>browser.&lt;tool&gt;.cmd</B> configuration variable will be looked up. If this variable exists then <I>git web--browse</I> will treat the specified tool as a custom command and will use a shell eval to run the command with the URLs passed as arguments.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>NOTE ABOUT KONQUEROR</H2>
+
+<P>
+When <I>konqueror</I> is specified by a command-line option or a configuration variable, we launch <I>kfmclient</I> to try to open the HTML man page on an already opened konqueror in a new tab if possible.
+<P>
+For consistency, we also try such a trick if <I>browser.konqueror.path</I> is set to something like <I>A_PATH_TO/konqueror</I>. That means we will try to launch <I>A_PATH_TO/kfmclient</I> instead.
+<P>
+If you really want to use <I>konqueror</I>, then you can use something like the following:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+        [web]
+                browser = konq
+
+        [browser &quot;konq&quot;]
+                cmd = A_PATH_TO/konqueror
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+<A NAME="lbAK">&nbsp;</A>
+<H3>Note about git-config --global</H3>
+
+<P>
+Note that these configuration variables should probably be set using the <B>--global</B> flag, for example like this:
+<P>
+<DL COMPACT><DT><DD>
+
+
+
+<PRE>
+$ git config --global web.browser firefox
+</PRE>
+
+</DL>
+
+
+
+
+<P>
+<P>
+as they are probably more user specific than repository specific. See <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git-config">git-config</A></B>(1) for more information about this.
+<A NAME="lbAL">&nbsp;</A>
+<H2>GIT</H2>
+
+<P>
+Part of the <B><A HREF="http://localhost/cgi-bin/man/man2html?1+git">git</A></B>(1) suite
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">CONFIGURATION VARIABLES</A><DD>
+<DL>
+<DT><A HREF="#lbAG">CONF.VAR (from -c option) and web.browser</A><DD>
+<DT><A HREF="#lbAH">browser.&lt;tool&gt;.path</A><DD>
+<DT><A HREF="#lbAI">browser.&lt;tool&gt;.cmd</A><DD>
+</DL>
+<DT><A HREF="#lbAJ">NOTE ABOUT KONQUEROR</A><DD>
+<DL>
+<DT><A HREF="#lbAK">Note about git-config --global</A><DD>
+</DL>
+<DT><A HREF="#lbAL">GIT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:45:16 GMT, June 13, 2017
+</BODY>
+</HTML>
