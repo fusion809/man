@@ -1,0 +1,1779 @@
+
+
+<HTML><HEAD><TITLE>Manpage of GFORTRAN</TITLE>
+</HEAD><BODY>
+<H1>GFORTRAN</H1>
+Section: GNU (1)<BR>Updated: 2016-12-21<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+gfortran - GNU Fortran compiler
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<A NAME="ixAAC"></A>
+gfortran [<B>-c</B>|<B>-S</B>|<B>-E</B>]
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<B>-g</B>]&nbsp;[<B>-pg</B>]&nbsp;[<B>-O</B><I>level</I>]
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<B>-W</B><I>warn</I>...]&nbsp;[<B>-pedantic</B>]
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<B>-I</B><I>dir</I>...]&nbsp;[<B>-L</B><I>dir</I>...]
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<B>-D</B><I>macro</I>[=<I>defn</I>]...]&nbsp;[<B>-U</B><I>macro</I>]
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<B>-f</B><I>option</I>...]
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<B>-m</B><I>machine-option</I>...]
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<B>-o</B>&nbsp;<I>outfile</I>]&nbsp;<I>infile</I>...
+<P>
+
+Only the most useful options are listed here; see below for the
+remainder.
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<A NAME="ixAAD"></A>
+The <B>gfortran</B> command supports all the options supported by the
+<B>gcc</B> command.  Only options specific to <FONT SIZE="-1">GNU</FONT> Fortran are documented
+here.
+<P>
+
+All <FONT SIZE="-1">GCC</FONT> and <FONT SIZE="-1">GNU</FONT> Fortran options
+are accepted both by <B>gfortran</B> and by <B>gcc</B>
+(as well as any other drivers built at the same time,
+such as <B>g++</B>),
+since adding <FONT SIZE="-1">GNU</FONT> Fortran to the <FONT SIZE="-1">GCC</FONT> distribution
+enables acceptance of <FONT SIZE="-1">GNU</FONT> Fortran options
+by all of the relevant drivers.
+<P>
+
+In some cases, options have positive and negative forms;
+the negative form of <B>-ffoo</B> would be <B>-fno-foo</B>.
+This manual documents only one of these two forms, whichever
+one is not the default.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<A NAME="ixAAE"></A>
+Here is a summary of all the options specific to <FONT SIZE="-1">GNU</FONT> Fortran, grouped
+by type.  Explanations are in the following sections.
+<DL COMPACT>
+<DT><I>Fortran Language Options</I><DD>
+<A NAME="ixAAF"></A>
+<B>-fall-intrinsics -fbackslash -fcray-pointer -fd-lines-as-code 
+-fd-lines-as-comments 
+-fdec -fdec-structure -fdefault-double-8 -fdefault-integer-8 
+-fdefault-real-8 -fdollar-ok -ffixed-line-length-</B><I>n</I> 
+<B>-ffixed-line-length-none -ffree-form -ffree-line-length-</B><I>n</I> 
+<B>-ffree-line-length-none -fimplicit-none -finteger-4-integer-8 
+-fmax-identifier-length -fmodule-private -ffixed-form -fno-range-check 
+-fopenacc -fopenmp -freal-4-real-10 -freal-4-real-16 -freal-4-real-8 
+-freal-8-real-10 -freal-8-real-16 -freal-8-real-4 -std=</B><I>std</I><B> </B>
+<DT><I>Preprocessing Options</I><DD>
+<A NAME="ixAAG"></A>
+<B>-A-</B><I>question</I>[<B>=</B><I>answer</I>]
+<B>-A</B><I>question</I><B>=</B><I>answer</I> <B>-C -CC -D</B><I>macro</I>[<B>=</B><I>defn</I>]
+<B>-H -P 
+-U</B><I>macro</I> <B>-cpp -dD -dI -dM -dN -dU -fworking-directory
+-imultilib</B> <I>dir</I> 
+<B>-iprefix</B> <I>file</I> <B>-iquote -isysroot</B> <I>dir</I> <B>-isystem</B> <I>dir</I> <B>-nocpp 
+-nostdinc 
+-undef</B>
+<DT><I>Error and Warning Options</I><DD>
+<A NAME="ixAAH"></A>
+<B>-Waliasing -Wall -Wampersand -Warray-bounds
+-Wc-binding-type -Wcharacter-truncation 
+-Wconversion -Wfunction-elimination -Wimplicit-interface 
+-Wimplicit-procedure -Wintrinsic-shadow -Wuse-without-only -Wintrinsics-std 
+-Wline-truncation -Wno-align-commons -Wno-tabs -Wreal-q-constant 
+-Wsurprising -Wunderflow -Wunused-parameter -Wrealloc-lhs -Wrealloc-lhs-all 
+-Wtarget-lifetime -fmax-errors=</B><I>n</I> <B>-fsyntax-only -pedantic -pedantic-errors</B>
+<DT><I>Debugging Options</I><DD>
+<A NAME="ixAAI"></A>
+<B>-fbacktrace -fdump-fortran-optimized -fdump-fortran-original 
+-fdump-parse-tree -ffpe-trap=</B><I>list</I> <B>-ffpe-summary=</B><I>list</I><B> </B>
+<DT><I>Directory Options</I><DD>
+<A NAME="ixAAJ"></A>
+<B>-I</B><I>dir</I>  <B>-J</B><I>dir</I> <B>-fintrinsic-modules-path</B> <I>dir</I>
+<DT><I>Link Options</I><DD>
+<A NAME="ixAAK"></A>
+<B>-static-libgfortran</B>
+<DT><I>Runtime Options</I><DD>
+<A NAME="ixAAL"></A>
+<B>-fconvert=</B><I>conversion</I> <B>-fmax-subrecord-length=</B><I>length</I> 
+<B>-frecord-marker=</B><I>length</I> <B>-fsign-zero</B>
+<DT><I>Code Generation Options</I><DD>
+<A NAME="ixAAM"></A>
+<B>-faggressive-function-elimination -fblas-matmul-limit=</B><I>n</I> 
+<B>-fbounds-check -fcheck-array-temporaries 
+-fcheck=</B><I>&lt;all|array-temps|bounds|do|mem|pointer|recursion&gt;</I> 
+<B>-fcoarray=</B><I>&lt;none|single|lib&gt;</I> <B>-fexternal-blas -ff2c
+-ffrontend-optimize 
+-finit-character=</B><I>n</I> <B>-finit-integer=</B><I>n</I> <B>-finit-local-zero 
+-finit-logical=</B><I>&lt;true|false&gt;</I>
+<B>-finit-real=</B><I>&lt;zero|inf|-inf|nan|snan&gt;</I> 
+<B>-finline-matmul-limit=</B><I>n</I> 
+<B>-fmax-array-constructor=</B><I>n</I> <B>-fmax-stack-var-size=</B><I>n</I>
+<B>-fno-align-commons 
+-fno-automatic -fno-protect-parens -fno-underscoring 
+-fsecond-underscore -fpack-derived -frealloc-lhs -frecursive 
+-frepack-arrays -fshort-enums -fstack-arrays</B>
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H3>Options controlling Fortran dialect</H3>
+
+<A NAME="ixAAN"></A>
+The following options control the details of the Fortran dialect
+accepted by the compiler:
+<DL COMPACT>
+<DT><B>-ffree-form</B><DD>
+<A NAME="ixAAO"></A>
+
+<DT><B>-ffixed-form</B><DD>
+<A NAME="ixAAP"></A>
+
+Specify the layout used by the source file.  The free form layout
+was introduced in Fortran 90.  Fixed form was traditionally used in
+older Fortran programs.  When neither option is specified, the source
+form is determined by the file extension.
+<DT><B>-fall-intrinsics</B><DD>
+<A NAME="ixAAQ"></A>
+This option causes all intrinsic procedures (including the GNU-specific
+extensions) to be accepted.  This can be useful with <B>-std=f95</B> to
+force standard-compliance but get access to the full range of intrinsics
+available with <B>gfortran</B>.  As a consequence, <B>-Wintrinsics-std</B>
+will be ignored and no user-defined procedure with the same name as any
+intrinsic will be called except when it is explicitly declared <TT>&quot;EXTERNAL&quot;</TT>.
+<DT><B>-fd-lines-as-code</B><DD>
+<A NAME="ixAAR"></A>
+
+<DT><B>-fd-lines-as-comments</B><DD>
+<A NAME="ixAAS"></A>
+
+Enable special treatment for lines beginning with <TT>&quot;d&quot;</TT> or <TT>&quot;D&quot;</TT>
+in fixed form sources.  If the <B>-fd-lines-as-code</B> option is
+given they are treated as if the first column contained a blank.  If the
+<B>-fd-lines-as-comments</B> option is given, they are treated as
+comment lines.
+<DT><B>-fdec</B><DD>
+<A NAME="ixAAT"></A>
+<FONT SIZE="-1">DEC</FONT> compatibility mode. Enables extensions and other features that mimic
+the default behavior of older compilers (such as <FONT SIZE="-1">DEC</FONT>).
+These features are non-standard and should be avoided at all costs.
+For details on <FONT SIZE="-1">GNU</FONT> Fortran's implementation of these extensions see the 
+full documentation.
+
+
+<P>
+
+
+Other flags enabled by this switch are:
+<B>-fdollar-ok</B> <B>-fcray-pointer</B> <B>-fdec-structure</B>
+<DT><B>-fdec-structure</B><DD>
+<A NAME="ixAAU"></A>
+Enable <FONT SIZE="-1">DEC </FONT><TT>&quot;STRUCTURE&quot;</TT> and <TT>&quot;RECORD&quot;</TT> as well as <TT>&quot;UNION&quot;</TT>,
+<TT>&quot;MAP&quot;</TT>, and dot ('.') as a member separator (in addition to '%'). This is
+provided for compatibility only; Fortran 90 derived types should be used
+instead where possible.
+<DT><B>-fdollar-ok</B><DD>
+<A NAME="ixAAV"></A>
+Allow <B>$</B> as a valid non-first character in a symbol name. Symbols 
+that start with <B>$</B> are rejected since it is unclear which rules to
+apply to implicit typing as different vendors implement different rules.
+Using <B>$</B> in <TT>&quot;IMPLICIT&quot;</TT> statements is also rejected.
+<DT><B>-fbackslash</B><DD>
+<A NAME="ixAAW"></A>
+Change the interpretation of backslashes in string literals from a single
+backslash character to ``C-style'' escape characters. The following
+combinations are expanded <TT>&quot;\a&quot;</TT>, <TT>&quot;\b&quot;</TT>, <TT>&quot;\f&quot;</TT>, <TT>&quot;\n&quot;</TT>,
+<TT>&quot;\r&quot;</TT>, <TT>&quot;\t&quot;</TT>, <TT>&quot;\v&quot;</TT>, <TT>&quot;\\&quot;</TT>, and <TT>&quot;\0&quot;</TT> to the <FONT SIZE="-1">ASCII</FONT>
+characters alert, backspace, form feed, newline, carriage return,
+horizontal tab, vertical tab, backslash, and <FONT SIZE="-1">NUL,</FONT> respectively.
+Additionally, <TT>&quot;\x&quot;</TT><I>nn</I>, <TT>&quot;\u&quot;</TT><I>nnnn</I> and
+<TT>&quot;\U&quot;</TT><I>nnnnnnnn</I> (where each <I>n</I> is a hexadecimal digit) are
+translated into the Unicode characters corresponding to the specified code
+points. All other combinations of a character preceded by \ are
+unexpanded.
+<DT><B>-fmodule-private</B><DD>
+<A NAME="ixAAX"></A>
+Set the default accessibility of module entities to <TT>&quot;PRIVATE&quot;</TT>.
+Use-associated entities will not be accessible unless they are explicitly
+declared as <TT>&quot;PUBLIC&quot;</TT>.
+<DT><B>-ffixed-line-length-</B><I>n</I><DD>
+<A NAME="ixAAY"></A>
+Set column after which characters are ignored in typical fixed-form
+lines in the source file, and through which spaces are assumed (as
+if padded to that length) after the ends of short fixed-form lines.
+
+
+<P>
+
+
+Popular values for <I>n</I> include 72 (the
+standard and the default), 80 (card image), and 132 (corresponding
+to ``extended-source'' options in some popular compilers).
+<I>n</I> may also be <B>none</B>, meaning that the entire line is meaningful
+and that continued character constants never have implicit spaces appended
+to them to fill out the line.
+<B>-ffixed-line-length-0</B> means the same thing as
+<B>-ffixed-line-length-none</B>.
+<DT><B>-ffree-line-length-</B><I>n</I><DD>
+<A NAME="ixAAZ"></A>
+Set column after which characters are ignored in typical free-form
+lines in the source file. The default value is 132.
+<I>n</I> may be <B>none</B>, meaning that the entire line is meaningful.
+<B>-ffree-line-length-0</B> means the same thing as
+<B>-ffree-line-length-none</B>.
+<DT><B>-fmax-identifier-length=</B><I>n</I><DD>
+<A NAME="ixABA"></A>
+Specify the maximum allowed identifier length. Typical values are
+31 (Fortran 95) and 63 (Fortran 2003 and Fortran 2008).
+<DT><B>-fimplicit-none</B><DD>
+<A NAME="ixABB"></A>
+Specify that no implicit typing is allowed, unless overridden by explicit
+<TT>&quot;IMPLICIT&quot;</TT> statements.  This is the equivalent of adding
+<TT>&quot;implicit none&quot;</TT> to the start of every procedure.
+<DT><B>-fcray-pointer</B><DD>
+<A NAME="ixABC"></A>
+Enable the Cray pointer extension, which provides C-like pointer
+functionality.
+<DT><B>-fopenacc</B><DD>
+<A NAME="ixABD"></A>
+Enable the OpenACC extensions.  This includes OpenACC <TT>&quot;!$acc&quot;</TT>
+directives in free form and <TT>&quot;c$acc&quot;</TT>, <TT>*$acc</TT> and
+<TT>&quot;!$acc&quot;</TT> directives in fixed form, <TT>&quot;!$&quot;</TT> conditional
+compilation sentinels in free form and <TT>&quot;c$&quot;</TT>, <TT>&quot;*$&quot;</TT> and
+<TT>&quot;!$&quot;</TT> sentinels in fixed form, and when linking arranges for the
+OpenACC runtime library to be linked in.
+
+
+<P>
+
+
+Note that this is an experimental feature, incomplete, and subject to
+change in future versions of <FONT SIZE="-1">GCC. </FONT> See
+&lt;<B><A HREF="https://gcc.gnu.org/wiki/OpenACC">https://gcc.gnu.org/wiki/OpenACC</A></B>&gt; for more information.
+<DT><B>-fopenmp</B><DD>
+<A NAME="ixABE"></A>
+Enable the OpenMP extensions.  This includes OpenMP <TT>&quot;!$omp&quot;</TT> directives
+in free form
+and <TT>&quot;c$omp&quot;</TT>, <TT>*$omp</TT> and <TT>&quot;!$omp&quot;</TT> directives in fixed form,
+<TT>&quot;!$&quot;</TT> conditional compilation sentinels in free form
+and <TT>&quot;c$&quot;</TT>, <TT>&quot;*$&quot;</TT> and <TT>&quot;!$&quot;</TT> sentinels in fixed form, 
+and when linking arranges for the OpenMP runtime library to be linked
+in.  The option <B>-fopenmp</B> implies <B>-frecursive</B>.
+<DT><B>-fno-range-check</B><DD>
+<A NAME="ixABF"></A>
+Disable range checking on results of simplification of constant
+expressions during compilation.  For example, <FONT SIZE="-1">GNU</FONT> Fortran will give
+an error at compile time when simplifying <TT>&quot;a = 1. / 0&quot;</TT>.
+With this option, no error will be given and <TT>&quot;a&quot;</TT> will be assigned
+the value <TT>&quot;+Infinity&quot;</TT>.  If an expression evaluates to a value
+outside of the relevant range of [<TT>&quot;-HUGE()&quot;</TT>:<TT>&quot;HUGE()&quot;</TT>],
+then the expression will be replaced by <TT>&quot;-Inf&quot;</TT> or <TT>&quot;+Inf&quot;</TT>
+as appropriate.
+Similarly, <TT>&quot;DATA i/Z'FFFFFFFF'/&quot;</TT> will result in an integer overflow
+on most systems, but with <B>-fno-range-check</B> the value will
+``wrap around'' and <TT>&quot;i&quot;</TT> will be initialized to -1 instead.
+<DT><B>-fdefault-integer-8</B><DD>
+<A NAME="ixABG"></A>
+Set the default integer and logical types to an 8 byte wide type.  This option
+also affects the kind of integer constants like <TT>42</TT>. Unlike
+<B>-finteger-4-integer-8</B>, it does not promote variables with explicit
+kind declaration.
+<DT><B>-fdefault-real-8</B><DD>
+<A NAME="ixABH"></A>
+Set the default real type to an 8 byte wide type. This option also affects
+the kind of non-double real constants like <TT>1.0</TT>, and does promote
+the default width of <TT>&quot;DOUBLE PRECISION&quot;</TT> to 16 bytes if possible, unless
+<TT>&quot;-fdefault-double-8&quot;</TT> is given, too. Unlike <B>-freal-4-real-8</B>,
+it does not promote variables with explicit kind declaration.
+<DT><B>-fdefault-double-8</B><DD>
+<A NAME="ixABI"></A>
+Set the <TT>&quot;DOUBLE PRECISION&quot;</TT> type to an 8 byte wide type.  Do nothing if this
+is already the default.  If <B>-fdefault-real-8</B> is given,
+<TT>&quot;DOUBLE PRECISION&quot;</TT> would instead be promoted to 16 bytes if possible, and
+<B>-fdefault-double-8</B> can be used to prevent this.  The kind of real
+constants like <TT>&quot;1.d0&quot;</TT> will not be changed by <B>-fdefault-real-8</B>
+though, so also <B>-fdefault-double-8</B> does not affect it.
+<DT><B>-finteger-4-integer-8</B><DD>
+<A NAME="ixABJ"></A>
+Promote all <TT>&quot;INTEGER(KIND=4)&quot;</TT> entities to an <TT>&quot;INTEGER(KIND=8)&quot;</TT>
+entities.  If <TT>&quot;KIND=8&quot;</TT> is unavailable, then an error will be issued.
+This option should be used with care and may not be suitable for your codes.
+Areas of possible concern include calls to external procedures,
+alignment in <TT>&quot;EQUIVALENCE&quot;</TT> and/or <TT>&quot;COMMON&quot;</TT>, generic interfaces,
+<FONT SIZE="-1">BOZ</FONT> literal constant conversion, and I/O.  Inspection of the intermediate
+representation of the translated Fortran code, produced by
+<B>-fdump-tree-original</B>, is suggested.
+<DT><B>-freal-4-real-8</B><DD>
+<A NAME="ixABK"></A>
+
+<DT><B>-freal-4-real-10</B><DD>
+<A NAME="ixABL"></A>
+<DT><B>-freal-4-real-16</B><DD>
+<A NAME="ixABM"></A>
+<DT><B>-freal-8-real-4</B><DD>
+<A NAME="ixABN"></A>
+<DT><B>-freal-8-real-10</B><DD>
+<A NAME="ixABO"></A>
+<DT><B>-freal-8-real-16</B><DD>
+<A NAME="ixABP"></A>
+
+Promote all <TT>&quot;REAL(KIND=M)&quot;</TT> entities to <TT>&quot;REAL(KIND=N)&quot;</TT> entities.
+If <TT>&quot;REAL(KIND=N)&quot;</TT> is unavailable, then an error will be issued.
+All other real kind types are unaffected by this option.
+These options should be used with care and may not be suitable for your
+codes.  Areas of possible concern include calls to external procedures,
+alignment in <TT>&quot;EQUIVALENCE&quot;</TT> and/or <TT>&quot;COMMON&quot;</TT>, generic interfaces,
+<FONT SIZE="-1">BOZ</FONT> literal constant conversion, and I/O.  Inspection of the intermediate
+representation of the translated Fortran code, produced by
+<B>-fdump-tree-original</B>, is suggested.
+<DT><B>-std=</B><I>std</I><DD>
+<A NAME="ixABQ"></A>
+Specify the standard to which the program is expected to conform, which
+may be one of <B>f95</B>, <B>f2003</B>, <B>f2008</B>, <B>gnu</B>, or
+<B>legacy</B>.  The default value for <I>std</I> is <B>gnu</B>, which
+specifies a superset of the Fortran 95 standard that includes all of the
+extensions supported by <FONT SIZE="-1">GNU</FONT> Fortran, although warnings will be given for
+obsolete extensions not recommended for use in new code.  The
+<B>legacy</B> value is equivalent but without the warnings for obsolete
+extensions, and may be useful for old non-standard programs.  The
+<B>f95</B>, <B>f2003</B> and <B>f2008</B> values specify strict
+conformance to the Fortran 95, Fortran 2003 and Fortran 2008 standards,
+respectively; errors are given for all extensions beyond the relevant
+language standard, and warnings are given for the Fortran 77 features
+that are permitted but obsolescent in later standards. <B>-std=f2008ts</B>
+allows the Fortran 2008 standard including the additions of the 
+Technical Specification (<FONT SIZE="-1">TS</FONT>) 29113 on Further Interoperability of Fortran
+with C and <FONT SIZE="-1">TS 18508</FONT> on Additional Parallel Features in Fortran.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H3>Enable and customize preprocessing</H3>
+
+<A NAME="ixABR"></A>
+Preprocessor related options. See section 
+<B>Preprocessing and conditional compilation</B> for more detailed
+information on preprocessing in <B>gfortran</B>.
+<DL COMPACT>
+<DT><B>-cpp</B><DD>
+<A NAME="ixABS"></A>
+
+<DT><B>-nocpp</B><DD>
+<A NAME="ixABT"></A>
+
+Enable preprocessing. The preprocessor is automatically invoked if
+the file extension is <I>.fpp</I>, <I>.FPP</I>,  <I>.F</I>, <I>.FOR</I>,
+<I>.FTN</I>, <I>.F90</I>, <I>.F95</I>, <I>.F03</I> or <I>.F08</I>. Use
+this option to manually enable preprocessing of any kind of Fortran file.
+
+
+<P>
+
+
+To disable preprocessing of files with any of the above listed extensions,
+use the negative form: <B>-nocpp</B>.
+
+
+<P>
+
+
+The preprocessor is run in traditional mode. Any restrictions of the
+file-format, especially the limits on line length, apply for
+preprocessed output as well, so it might be advisable to use the
+<B>-ffree-line-length-none</B> or <B>-ffixed-line-length-none</B>
+options.
+<DT><B>-dM</B><DD>
+<A NAME="ixABU"></A>
+Instead of the normal output, generate a list of <TT>'#define'</TT>
+directives for all the macros defined during the execution of the
+preprocessor, including predefined macros. This gives you a way
+of finding out what is predefined in your version of the preprocessor.
+Assuming you have no file <I>foo.f90</I>, the command
+
+
+<P>
+
+
+
+
+<PRE>
+          touch foo.f90; gfortran -cpp -E -dM foo.f90
+
+</PRE>
+
+
+
+
+<P>
+
+
+will show all the predefined macros.
+<DT><B>-dD</B><DD>
+<A NAME="ixABV"></A>
+Like <B>-dM</B> except in two respects: it does not include the
+predefined macros, and it outputs both the <TT>&quot;#define&quot;</TT> directives
+and the result of preprocessing. Both kinds of output go to the
+standard output file.
+<DT><B>-dN</B><DD>
+<A NAME="ixABW"></A>
+Like <B>-dD</B>, but emit only the macro names, not their expansions.
+<DT><B>-dU</B><DD>
+<A NAME="ixABX"></A>
+Like <B>dD</B> except that only macros that are expanded, or whose
+definedness is tested in preprocessor directives, are output; the 
+output is delayed until the use or test of the macro; and <TT>'#undef'</TT>
+directives are also output for macros tested but undefined at the time.
+<DT><B>-dI</B><DD>
+<A NAME="ixABY"></A>
+Output <TT>'#include'</TT> directives in addition to the result
+of preprocessing.
+<DT><B>-fworking-directory</B><DD>
+<A NAME="ixABZ"></A>
+Enable generation of linemarkers in the preprocessor output that will
+let the compiler know the current working directory at the time of
+preprocessing. When this option is enabled, the preprocessor will emit,
+after the initial linemarker, a second linemarker with the current
+working directory followed by two slashes. <FONT SIZE="-1">GCC</FONT> will use this directory,
+when it is present in the preprocessed input, as the directory emitted
+as the current working directory in some debugging information formats.
+This option is implicitly enabled if debugging information is enabled,
+but this can be inhibited with the negated form
+<B>-fno-working-directory</B>. If the <B>-P</B> flag is present
+in the command line, this option has no effect, since no <TT>&quot;#line&quot;</TT>
+directives are emitted whatsoever.
+<DT><B>-idirafter</B> <I>dir</I><DD>
+<A NAME="ixACA"></A>
+Search <I>dir</I> for include files, but do it after all directories
+specified with <B>-I</B> and the standard system directories have
+been exhausted. <I>dir</I> is treated as a system include directory.
+If dir begins with <TT>&quot;=&quot;</TT>, then the <TT>&quot;=&quot;</TT> will be replaced by
+the sysroot prefix; see <B>--sysroot</B> and <B>-isysroot</B>.
+<DT><B>-imultilib</B> <I>dir</I><DD>
+<A NAME="ixACB"></A>
+Use <I>dir</I> as a subdirectory of the directory containing target-specific
+C<FONT SIZE="-2">++</FONT> headers.
+<DT><B>-iprefix</B> <I>prefix</I><DD>
+<A NAME="ixACC"></A>
+Specify <I>prefix</I> as the prefix for subsequent <B>-iwithprefix</B>
+options. If the <I>prefix</I> represents a directory, you should include
+the final <TT>'/'</TT>.
+<DT><B>-isysroot</B> <I>dir</I><DD>
+<A NAME="ixACD"></A>
+This option is like the <B>--sysroot</B> option, but applies only to
+header files. See the <B>--sysroot</B> option for more information.
+<DT><B>-iquote</B> <I>dir</I><DD>
+<A NAME="ixACE"></A>
+Search <I>dir</I> only for header files requested with <TT>&quot;#include &quot;file&quot;&quot;</TT>;
+they are not searched for <TT>&quot;#include &lt;file&gt;&quot;</TT>, before all directories
+specified by <B>-I</B> and before the standard system directories. If
+<I>dir</I> begins with <TT>&quot;=&quot;</TT>, then the <TT>&quot;=&quot;</TT> will be replaced by the
+sysroot prefix; see <B>--sysroot</B> and <B>-isysroot</B>.
+<DT><B>-isystem</B> <I>dir</I><DD>
+<A NAME="ixACF"></A>
+Search <I>dir</I> for header files, after all directories specified by
+<B>-I</B> but before the standard system directories. Mark it as a
+system directory, so that it gets the same special treatment as is
+applied to the standard system directories. If <I>dir</I> begins with
+<TT>&quot;=&quot;</TT>, then the <TT>&quot;=&quot;</TT> will be replaced by the sysroot prefix;
+see <B>--sysroot</B> and <B>-isysroot</B>.
+<DT><B>-nostdinc</B><DD>
+<A NAME="ixACG"></A>
+Do not search the standard system directories for header files. Only
+the directories you have specified with <B>-I</B> options (and the
+directory of the current file, if appropriate) are searched.
+<DT><B>-undef</B><DD>
+<A NAME="ixACH"></A>
+Do not predefine any system-specific or GCC-specific macros.
+The standard predefined macros remain defined.
+<DT><B>-A</B><I>predicate</I><B>=</B><I>answer</I><DD>
+<A NAME="ixACI"></A>
+Make an assertion with the predicate <I>predicate</I> and answer <I>answer</I>.
+This form is preferred to the older form -A predicate(answer), which is still
+supported, because it does not use shell special characters.
+<DT><B>-A-</B><I>predicate</I><B>=</B><I>answer</I><DD>
+<A NAME="ixACJ"></A>
+Cancel an assertion with the predicate <I>predicate</I> and answer <I>answer</I>.
+<DT><B>-C</B><DD>
+<A NAME="ixACK"></A>
+Do not discard comments. All comments are passed through to the output
+file, except for comments in processed directives, which are deleted
+along with the directive.
+
+
+<P>
+
+
+You should be prepared for side effects when using <B>-C</B>; it causes
+the preprocessor to treat comments as tokens in their own right. For example,
+comments appearing at the start of what would be a directive line have the
+effect of turning that line into an ordinary source line, since the first
+token on the line is no longer a <TT>'#'</TT>.
+
+
+<P>
+
+
+Warning: this currently handles C-Style comments only. The preprocessor
+does not yet recognize Fortran-style comments.
+<DT><B>-CC</B><DD>
+<A NAME="ixACL"></A>
+Do not discard comments, including during macro expansion. This is like
+<B>-C</B>, except that comments contained within macros are also passed
+through to the output file where the macro is expanded.
+
+
+<P>
+
+
+In addition to the side-effects of the <B>-C</B> option, the <B>-CC</B>
+option causes all C<FONT SIZE="-2">++</FONT>-style comments inside a macro to be converted to C-style
+comments. This is to prevent later use of that macro from inadvertently
+commenting out the remainder of the source line. The <B>-CC</B> option
+is generally used to support lint comments.
+
+
+<P>
+
+
+Warning: this currently handles C- and C<FONT SIZE="-2">++</FONT>-Style comments only. The
+preprocessor does not yet recognize Fortran-style comments.
+<DT><B>-D</B><I>name</I><DD>
+<A NAME="ixACM"></A>
+Predefine name as a macro, with definition <TT>1</TT>.
+<DT><B>-D</B><I>name</I><B>=</B><I>definition</I><DD>
+<A NAME="ixACN"></A>
+The contents of <I>definition</I> are tokenized and processed as if they
+appeared during translation phase three in a <TT>'#define'</TT> directive.
+In particular, the definition will be truncated by embedded newline
+characters.
+
+
+<P>
+
+
+If you are invoking the preprocessor from a shell or shell-like program
+you may need to use the shell's quoting syntax to protect characters such
+as spaces that have a meaning in the shell syntax.
+
+
+<P>
+
+
+If you wish to define a function-like macro on the command line, write
+its argument list with surrounding parentheses before the equals sign
+(if any). Parentheses are meaningful to most shells, so you will need
+to quote the option. With sh and csh, <TT>&quot;-D'name(args...)=definition'&quot;</TT>
+works.
+
+
+<P>
+
+
+<B>-D</B> and <B>-U</B> options are processed in the order they are
+given on the command line. All -imacros file and -include file options
+are processed after all -D and -U options.
+<DT><B>-H</B><DD>
+<A NAME="ixACO"></A>
+Print the name of each header file used, in addition to other normal
+activities. Each name is indented to show how deep in the <TT>'#include'</TT>
+stack it is.
+<DT><B>-P</B><DD>
+<A NAME="ixACP"></A>
+Inhibit generation of linemarkers in the output from the preprocessor.
+This might be useful when running the preprocessor on something that
+is not C code, and will be sent to a program which might be confused
+by the linemarkers.
+<DT><B>-U</B><I>name</I><DD>
+<A NAME="ixACQ"></A>
+Cancel any previous definition of <I>name</I>, either built in or provided
+with a <B>-D</B> option.
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H3>Options to request or suppress errors and warnings</H3>
+
+<A NAME="ixACR"></A>
+Errors are diagnostic messages that report that the <FONT SIZE="-1">GNU</FONT> Fortran compiler
+cannot compile the relevant piece of source code.  The compiler will
+continue to process the program in an attempt to report further errors
+to aid in debugging, but will not produce any compiled output.
+<P>
+
+Warnings are diagnostic messages that report constructions which
+are not inherently erroneous but which are risky or suggest there is
+likely to be a bug in the program.  Unless <B>-Werror</B> is specified,
+they do not prevent compilation of the program.
+<P>
+
+You can request many specific warnings with options beginning <B>-W</B>,
+for example <B>-Wimplicit</B> to request warnings on implicit
+declarations.  Each of these specific warning options also has a
+negative form beginning <B>-Wno-</B> to turn off warnings;
+for example, <B>-Wno-implicit</B>.  This manual lists only one of the
+two forms, whichever is not the default.
+<P>
+
+These options control the amount and kinds of errors and warnings produced
+by <FONT SIZE="-1">GNU</FONT> Fortran:
+<DL COMPACT>
+<DT><B>-fmax-errors=</B><I>n</I><DD>
+<A NAME="ixACS"></A>
+Limits the maximum number of error messages to <I>n</I>, at which point
+<FONT SIZE="-1">GNU</FONT> Fortran bails out rather than attempting to continue processing the
+source code.  If <I>n</I> is 0, there is no limit on the number of error
+messages produced.
+<DT><B>-fsyntax-only</B><DD>
+<A NAME="ixACT"></A>
+Check the code for syntax errors, but do not actually compile it.  This
+will generate module files for each module present in the code, but no
+other output file.
+<DT><B>-pedantic</B><DD>
+<A NAME="ixACU"></A>
+Issue warnings for uses of extensions to Fortran 95.
+<B>-pedantic</B> also applies to C-language constructs where they
+occur in <FONT SIZE="-1">GNU</FONT> Fortran source files, such as use of <B>\e</B> in a
+character constant within a directive like <TT>&quot;#include&quot;</TT>.
+
+
+<P>
+
+
+Valid Fortran 95 programs should compile properly with or without
+this option.
+However, without this option, certain <FONT SIZE="-1">GNU</FONT> extensions and traditional
+Fortran features are supported as well.
+With this option, many of them are rejected.
+
+
+<P>
+
+
+Some users try to use <B>-pedantic</B> to check programs for conformance.
+They soon find that it does not do quite what they want---it finds some
+nonstandard practices, but not all.
+However, improvements to <FONT SIZE="-1">GNU</FONT> Fortran in this area are welcome.
+
+
+<P>
+
+
+This should be used in conjunction with <B>-std=f95</B>,
+<B>-std=f2003</B> or <B>-std=f2008</B>.
+<DT><B>-pedantic-errors</B><DD>
+<A NAME="ixACV"></A>
+Like <B>-pedantic</B>, except that errors are produced rather than
+warnings.
+<DT><B>-Wall</B><DD>
+<A NAME="ixACW"></A>
+Enables commonly used warning options pertaining to usage that
+we recommend avoiding and that we believe are easy to avoid.
+This currently includes <B>-Waliasing</B>, <B>-Wampersand</B>,
+<B>-Wconversion</B>, <B>-Wsurprising</B>, <B>-Wc-binding-type</B>,
+<B>-Wintrinsics-std</B>, <B>-Wtabs</B>, <B>-Wintrinsic-shadow</B>,
+<B>-Wline-truncation</B>, <B>-Wtarget-lifetime</B>,
+<B>-Winteger-division</B>, <B>-Wreal-q-constant</B> and <B>-Wunused</B>.
+<DT><B>-Waliasing</B><DD>
+<A NAME="ixACX"></A>
+Warn about possible aliasing of dummy arguments. Specifically, it warns
+if the same actual argument is associated with a dummy argument with
+<TT>&quot;INTENT(IN)&quot;</TT> and a dummy argument with <TT>&quot;INTENT(OUT)&quot;</TT> in a call
+with an explicit interface.
+
+
+<P>
+
+
+The following example will trigger the warning.
+
+
+<P>
+
+
+
+
+<PRE>
+          interface
+            subroutine bar(a,b)
+              integer, intent(in) :: a
+              integer, intent(out) :: b
+            end subroutine
+          end interface
+          integer :: a
+        
+          call bar(a,a)
+
+</PRE>
+
+
+<DT><B>-Wampersand</B><DD>
+<A NAME="ixACY"></A>
+Warn about missing ampersand in continued character constants. The warning is
+given with <B>-Wampersand</B>, <B>-pedantic</B>, <B>-std=f95</B>,
+<B>-std=f2003</B> and <B>-std=f2008</B>. Note: With no ampersand
+given in a continued character constant, <FONT SIZE="-1">GNU</FONT> Fortran assumes continuation
+at the first non-comment, non-whitespace character after the ampersand
+that initiated the continuation.
+<DT><B>-Warray-temporaries</B><DD>
+<A NAME="ixACZ"></A>
+Warn about array temporaries generated by the compiler.  The information
+generated by this warning is sometimes useful in optimization, in order to
+avoid such temporaries.
+<DT><B>-Wc-binding-type</B><DD>
+<A NAME="ixADA"></A>
+Warn if the a variable might not be C interoperable.  In particular, warn if 
+the variable has been declared using an intrinsic type with default kind
+instead of using a kind parameter defined for C interoperability in the
+intrinsic <TT>&quot;ISO_C_Binding&quot;</TT> module.  This option is implied by
+<B>-Wall</B>.
+<DT><B>-Wcharacter-truncation</B><DD>
+<A NAME="ixADB"></A>
+Warn when a character assignment will truncate the assigned string.
+<DT><B>-Wline-truncation</B><DD>
+<A NAME="ixADC"></A>
+Warn when a source code line will be truncated.  This option is
+implied by <B>-Wall</B>.  For free-form source code, the default is
+<B>-Werror=line-truncation</B> such that truncations are reported as
+error.
+<DT><B>-Wconversion</B><DD>
+<A NAME="ixADD"></A>
+Warn about implicit conversions that are likely to change the value of 
+the expression after conversion. Implied by <B>-Wall</B>.
+<DT><B>-Wconversion-extra</B><DD>
+<A NAME="ixADE"></A>
+Warn about implicit conversions between different types and kinds. This
+option does <I>not</I> imply <B>-Wconversion</B>.
+<DT><B>-Wextra</B><DD>
+<A NAME="ixADF"></A>
+Enables some warning options for usages of language features which
+may be problematic. This currently includes <B>-Wcompare-reals</B>
+and <B>-Wunused-parameter</B>.
+<DT><B>-Wimplicit-interface</B><DD>
+<A NAME="ixADG"></A>
+Warn if a procedure is called without an explicit interface.
+Note this only checks that an explicit interface is present.  It does not
+check that the declared interfaces are consistent across program units.
+<DT><B>-Wimplicit-procedure</B><DD>
+<A NAME="ixADH"></A>
+Warn if a procedure is called that has neither an explicit interface
+nor has been declared as <TT>&quot;EXTERNAL&quot;</TT>.
+<DT><B>-Winteger-division</B><DD>
+<A NAME="ixADI"></A>
+Warn if a constant integer division truncates it result.
+As an example, 3/5 evaluates to 0.
+<DT><B>-Wintrinsics-std</B><DD>
+<A NAME="ixADJ"></A>
+Warn if <B>gfortran</B> finds a procedure named like an intrinsic not
+available in the currently selected standard (with <B>-std</B>) and treats
+it as <TT>&quot;EXTERNAL&quot;</TT> procedure because of this.  <B>-fall-intrinsics</B> can
+be used to never trigger this behavior and always link to the intrinsic
+regardless of the selected standard.
+<DT><B>-Wreal-q-constant</B><DD>
+<A NAME="ixADK"></A>
+Produce a warning if a real-literal-constant contains a <TT>&quot;q&quot;</TT>
+exponent-letter.
+<DT><B>-Wsurprising</B><DD>
+<A NAME="ixADL"></A>
+Produce a warning when ``suspicious'' code constructs are encountered.
+While technically legal these usually indicate that an error has been made.
+
+
+<P>
+
+
+This currently produces a warning under the following circumstances:
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT>*<DD>
+An <FONT SIZE="-1">INTEGER SELECT</FONT> construct has a <FONT SIZE="-1">CASE</FONT> that can never be matched as its
+lower value is greater than its upper value.
+<DT>*<DD>
+A <FONT SIZE="-1">LOGICAL SELECT</FONT> construct has three <FONT SIZE="-1">CASE</FONT> statements.
+<DT>*<DD>
+A <FONT SIZE="-1">TRANSFER</FONT> specifies a source that is shorter than the destination.
+<DT>*<DD>
+The type of a function result is declared more than once with the same type.  If
+<B>-pedantic</B> or standard-conforming mode is enabled, this is an error.
+<DT>*<DD>
+A <TT>&quot;CHARACTER&quot;</TT> variable is declared with negative length.
+</DL>
+</DL>
+
+<DL COMPACT><DT><DD>
+</DL>
+
+<DT><B>-Wtabs</B><DD>
+<A NAME="ixADM"></A>
+By default, tabs are accepted as whitespace, but tabs are not members
+of the Fortran Character Set.  For continuation lines, a tab followed
+by a digit between 1 and 9 is supported.  <B>-Wtabs</B> will cause
+a warning to be issued if a tab is encountered. Note, <B>-Wtabs</B>
+is active for <B>-pedantic</B>, <B>-std=f95</B>, <B>-std=f2003</B>,
+<B>-std=f2008</B>, <B>-std=f2008ts</B> and <B>-Wall</B>.
+<DT><B>-Wunderflow</B><DD>
+<A NAME="ixADN"></A>
+Produce a warning when numerical constant expressions are
+encountered, which yield an <FONT SIZE="-1">UNDERFLOW</FONT> during compilation. Enabled by default.
+<DT><B>-Wintrinsic-shadow</B><DD>
+<A NAME="ixADO"></A>
+Warn if a user-defined procedure or module procedure has the same name as an
+intrinsic; in this case, an explicit interface or <TT>&quot;EXTERNAL&quot;</TT> or
+<TT>&quot;INTRINSIC&quot;</TT> declaration might be needed to get calls later resolved to
+the desired intrinsic/procedure.  This option is implied by <B>-Wall</B>.
+<DT><B>-Wuse-without-only</B><DD>
+<A NAME="ixADP"></A>
+Warn if a <TT>&quot;USE&quot;</TT> statement has no <TT>&quot;ONLY&quot;</TT> qualifier and 
+thus implicitly imports all public entities of the used module.
+<DT><B>-Wunused-dummy-argument</B><DD>
+<A NAME="ixADQ"></A>
+Warn about unused dummy arguments. This option is implied by <B>-Wall</B>.
+<DT><B>-Wunused-parameter</B><DD>
+<A NAME="ixADR"></A>
+Contrary to <B>gcc</B>'s meaning of <B>-Wunused-parameter</B>,
+<B>gfortran</B>'s implementation of this option does not warn
+about unused dummy arguments (see <B>-Wunused-dummy-argument</B>),
+but about unused <TT>&quot;PARAMETER&quot;</TT> values. <B>-Wunused-parameter</B>
+is implied by <B>-Wextra</B> if also <B>-Wunused</B> or
+<B>-Wall</B> is used.
+<DT><B>-Walign-commons</B><DD>
+<A NAME="ixADS"></A>
+By default, <B>gfortran</B> warns about any occasion of variables being
+padded for proper alignment inside a <TT>&quot;COMMON&quot;</TT> block. This warning can be turned
+off via <B>-Wno-align-commons</B>. See also <B>-falign-commons</B>.
+<DT><B>-Wfunction-elimination</B><DD>
+<A NAME="ixADT"></A>
+Warn if any calls to functions are eliminated by the optimizations
+enabled by the <B>-ffrontend-optimize</B> option.
+<DT><B>-Wrealloc-lhs</B><DD>
+<A NAME="ixADU"></A>
+Warn when the compiler might insert code to for allocation or reallocation of
+an allocatable array variable of intrinsic type in intrinsic assignments.  In
+hot loops, the Fortran 2003 reallocation feature may reduce the performance.
+If the array is already allocated with the correct shape, consider using a
+whole-array array-spec (e.g. <TT>&quot;(:,:,:)&quot;</TT>) for the variable on the left-hand
+side to prevent the reallocation check. Note that in some cases the warning
+is shown, even if the compiler will optimize reallocation checks away.  For
+instance, when the right-hand side contains the same variable multiplied by
+a scalar.  See also <B>-frealloc-lhs</B>.
+<DT><B>-Wrealloc-lhs-all</B><DD>
+<A NAME="ixADV"></A>
+Warn when the compiler inserts code to for allocation or reallocation of an
+allocatable variable; this includes scalars and derived types.
+<DT><B>-Wcompare-reals</B><DD>
+<A NAME="ixADW"></A>
+Warn when comparing real or complex types for equality or inequality.
+This option is implied by <B>-Wextra</B>.
+<DT><B>-Wtarget-lifetime</B><DD>
+<A NAME="ixADX"></A>
+Warn if the pointer in a pointer assignment might be longer than the its
+target. This option is implied by <B>-Wall</B>.
+<DT><B>-Wzerotrip</B><DD>
+<A NAME="ixADY"></A>
+Warn if a <TT>&quot;DO&quot;</TT> loop is known to execute zero times at compile
+time.  This option is implied by <B>-Wall</B>.
+<DT><B>-Werror</B><DD>
+<A NAME="ixADZ"></A>
+Turns all warnings into errors.
+</DL>
+<P>
+
+Some of these have no effect when compiling programs written in Fortran.
+<A NAME="lbAI">&nbsp;</A>
+<H3>Options for debugging your program or <FONT SIZE="-1">GNU</FONT> Fortran</H3>
+
+<A NAME="ixAEA"></A>
+<FONT SIZE="-1">GNU</FONT> Fortran has various special options that are used for debugging
+either your program or the <FONT SIZE="-1">GNU</FONT> Fortran compiler.
+<DL COMPACT>
+<DT><B>-fdump-fortran-original</B><DD>
+<A NAME="ixAEB"></A>
+Output the internal parse tree after translating the source program
+into internal representation.  Only really useful for debugging the
+<FONT SIZE="-1">GNU</FONT> Fortran compiler itself.
+<DT><B>-fdump-fortran-optimized</B><DD>
+<A NAME="ixAEC"></A>
+Output the parse tree after front-end optimization.  Only really
+useful for debugging the <FONT SIZE="-1">GNU</FONT> Fortran compiler itself.
+<DT><B>-fdump-parse-tree</B><DD>
+<A NAME="ixAED"></A>
+Output the internal parse tree after translating the source program
+into internal representation.  Only really useful for debugging the
+<FONT SIZE="-1">GNU</FONT> Fortran compiler itself.  This option is deprecated; use
+<TT>&quot;-fdump-fortran-original&quot;</TT> instead.
+<DT><B>-ffpe-trap=</B><I>list</I><DD>
+<A NAME="ixAEE"></A>
+Specify a list of floating point exception traps to enable.  On most
+systems, if a floating point exception occurs and the trap for that
+exception is enabled, a <FONT SIZE="-1">SIGFPE</FONT> signal will be sent and the program
+being aborted, producing a core file useful for debugging.  <I>list</I>
+is a (possibly empty) comma-separated list of the following
+exceptions: <B>invalid</B> (invalid floating point operation, such as
+<TT>&quot;SQRT(-1.0)&quot;</TT>), <B>zero</B> (division by zero), <B>overflow</B>
+(overflow in a floating point operation), <B>underflow</B> (underflow
+in a floating point operation), <B>inexact</B> (loss of precision
+during operation), and <B>denormal</B> (operation performed on a
+denormal value).  The first five exceptions correspond to the five
+<FONT SIZE="-1">IEEE 754</FONT> exceptions, whereas the last one (<B>denormal</B>) is not
+part of the <FONT SIZE="-1">IEEE 754</FONT> standard but is available on some common
+architectures such as x86.
+
+
+<P>
+
+
+The first three exceptions (<B>invalid</B>, <B>zero</B>, and
+<B>overflow</B>) often indicate serious errors, and unless the program
+has provisions for dealing with these exceptions, enabling traps for
+these three exceptions is probably a good idea.
+
+
+<P>
+
+
+Many, if not most, floating point operations incur loss of precision
+due to rounding, and hence the <TT>&quot;ffpe-trap=inexact&quot;</TT> is likely to
+be uninteresting in practice.
+
+
+<P>
+
+
+By default no exception traps are enabled.
+<DT><B>-ffpe-summary=</B><I>list</I><DD>
+<A NAME="ixAEF"></A>
+Specify a list of floating-point exceptions, whose flag status is printed
+to <TT>&quot;ERROR_UNIT&quot;</TT> when invoking <TT>&quot;STOP&quot;</TT> and <TT>&quot;ERROR STOP&quot;</TT>.
+<I>list</I> can be either <B>none</B>, <B>all</B> or a comma-separated list
+of the following exceptions: <B>invalid</B>, <B>zero</B>, <B>overflow</B>,
+<B>underflow</B>, <B>inexact</B> and <B>denormal</B>. (See
+<B>-ffpe-trap</B> for a description of the exceptions.)
+
+
+<P>
+
+
+By default, a summary for all exceptions but <B>inexact</B> is shown.
+<DT><B>-fno-backtrace</B><DD>
+<A NAME="ixAEG"></A>
+When a serious runtime error is encountered or a deadly signal is
+emitted (segmentation fault, illegal instruction, bus error,
+floating-point exception, and the other <FONT SIZE="-1">POSIX</FONT> signals that have the
+action <B>core</B>), the Fortran runtime library tries to output a
+backtrace of the error. <TT>&quot;-fno-backtrace&quot;</TT> disables the backtrace
+generation. This option only has influence for compilation of the
+Fortran main program.
+</DL>
+<A NAME="lbAJ">&nbsp;</A>
+<H3>Options for directory search</H3>
+
+<A NAME="ixAEH"></A>
+These options affect how <FONT SIZE="-1">GNU</FONT> Fortran searches
+for files specified by the <TT>&quot;INCLUDE&quot;</TT> directive and where it searches
+for previously compiled modules.
+<P>
+
+It also affects the search paths used by <B>cpp</B> when used to preprocess
+Fortran source.
+<DL COMPACT>
+<DT><B>-I</B><I>dir</I><DD>
+<A NAME="ixAEI"></A>
+These affect interpretation of the <TT>&quot;INCLUDE&quot;</TT> directive
+(as well as of the <TT>&quot;#include&quot;</TT> directive of the <B>cpp</B>
+preprocessor).
+
+
+<P>
+
+
+Also note that the general behavior of <B>-I</B> and
+<TT>&quot;INCLUDE&quot;</TT> is pretty much the same as of <B>-I</B> with
+<TT>&quot;#include&quot;</TT> in the <B>cpp</B> preprocessor, with regard to
+looking for <I>header.gcc</I> files and other such things.
+
+
+<P>
+
+
+This path is also used to search for <I>.mod</I> files when previously
+compiled modules are required by a <TT>&quot;USE&quot;</TT> statement.
+<DT><B>-J</B><I>dir</I><DD>
+<A NAME="ixAEJ"></A>
+This option specifies where to put <I>.mod</I> files for compiled modules.
+It is also added to the list of directories to searched by an <TT>&quot;USE&quot;</TT>
+statement.
+
+
+<P>
+
+
+The default is the current directory.
+<DT><B>-fintrinsic-modules-path</B> <I>dir</I><DD>
+<A NAME="ixAEK"></A>
+This option specifies the location of pre-compiled intrinsic modules, if
+they are not in the default location expected by the compiler.
+</DL>
+<A NAME="lbAK">&nbsp;</A>
+<H3>Influencing the linking step</H3>
+
+<A NAME="ixAEL"></A>
+These options come into play when the compiler links object files into an 
+executable output file. They are meaningless if the compiler is not doing 
+a link step.
+<DL COMPACT>
+<DT><B>-static-libgfortran</B><DD>
+<A NAME="ixAEM"></A>
+On systems that provide <I>libgfortran</I> as a shared and a static
+library, this option forces the use of the static version. If no
+shared version of <I>libgfortran</I> was built when the compiler was
+configured, this option has no effect.
+</DL>
+<A NAME="lbAL">&nbsp;</A>
+<H3>Influencing runtime behavior</H3>
+
+<A NAME="ixAEN"></A>
+These options affect the runtime behavior of programs compiled with <FONT SIZE="-1">GNU</FONT> Fortran.
+<DL COMPACT>
+<DT><B>-fconvert=</B><I>conversion</I><DD>
+<A NAME="ixAEO"></A>
+Specify the representation of data for unformatted files.  Valid
+values for conversion are: <B>native</B>, the default; <B>swap</B>,
+swap between big- and little-endian; <B>big-endian</B>, use big-endian
+representation for unformatted files; <B>little-endian</B>, use little-endian
+representation for unformatted files.
+
+
+<P>
+
+
+<I>This option has an effect only when used in the main program.
+The </I>&quot;CONVERT&quot;<I> specifier and the </I><FONT SIZE="-1"><I>GFORTRAN_CONVERT_UNIT</I></FONT><I> environment
+variable override the default specified by </I>-fconvert<I>.</I>
+<DT><B>-frecord-marker=</B><I>length</I><DD>
+<A NAME="ixAEP"></A>
+Specify the length of record markers for unformatted files.
+Valid values for <I>length</I> are 4 and 8.  Default is 4.
+<I>This is different from previous versions of</I> <B>gfortran</B>,
+which specified a default record marker length of 8 on most
+systems.  If you want to read or write files compatible
+with earlier versions of <B>gfortran</B>, use <B>-frecord-marker=8</B>.
+<DT><B>-fmax-subrecord-length=</B><I>length</I><DD>
+<A NAME="ixAEQ"></A>
+Specify the maximum length for a subrecord.  The maximum permitted
+value for length is 2147483639, which is also the default.  Only
+really useful for use by the gfortran testsuite.
+<DT><B>-fsign-zero</B><DD>
+<A NAME="ixAER"></A>
+When enabled, floating point numbers of value zero with the sign bit set
+are written as negative number in formatted output and treated as
+negative in the <TT>&quot;SIGN&quot;</TT> intrinsic.  <B>-fno-sign-zero</B> does not
+print the negative sign of zero values (or values rounded to zero for I/O)
+and regards zero as positive number in the <TT>&quot;SIGN&quot;</TT> intrinsic for
+compatibility with Fortran 77. The default is <B>-fsign-zero</B>.
+</DL>
+<A NAME="lbAM">&nbsp;</A>
+<H3>Options for code generation conventions</H3>
+
+<A NAME="ixAES"></A>
+These machine-independent options control the interface conventions
+used in code generation.
+<P>
+
+Most of them have both positive and negative forms; the negative form
+of <B>-ffoo</B> would be <B>-fno-foo</B>.  In the table below, only
+one of the forms is listed---the one which is not the default.  You
+can figure out the other form by either removing <B>no-</B> or adding
+it.
+<DL COMPACT>
+<DT><B>-fno-automatic</B><DD>
+<A NAME="ixAET"></A>
+Treat each program unit (except those marked as <FONT SIZE="-1">RECURSIVE</FONT>) as if the
+<TT>&quot;SAVE&quot;</TT> statement were specified for every local variable and array
+referenced in it. Does not affect common blocks. (Some Fortran compilers
+provide this option under the name <B>-static</B> or <B>-save</B>.)
+The default, which is <B>-fautomatic</B>, uses the stack for local
+variables smaller than the value given by <B>-fmax-stack-var-size</B>.
+Use the option <B>-frecursive</B> to use no static memory.
+<DT><B>-ff2c</B><DD>
+<A NAME="ixAEU"></A>
+Generate code designed to be compatible with code generated
+by <B>g77</B> and <B>f2c</B>.
+
+
+<P>
+
+
+The calling conventions used by <B>g77</B> (originally implemented
+in <B>f2c</B>) require functions that return type
+default <TT>&quot;REAL&quot;</TT> to actually return the C type <TT>&quot;double&quot;</TT>, and
+functions that return type <TT>&quot;COMPLEX&quot;</TT> to return the values via an
+extra argument in the calling sequence that points to where to
+store the return value.  Under the default <FONT SIZE="-1">GNU</FONT> calling conventions, such
+functions simply return their results as they would in <FONT SIZE="-1">GNU</FONT>
+C---default <TT>&quot;REAL&quot;</TT> functions return the C type <TT>&quot;float&quot;</TT>, and
+<TT>&quot;COMPLEX&quot;</TT> functions return the <FONT SIZE="-1">GNU C</FONT> type <TT>&quot;complex&quot;</TT>.
+Additionally, this option implies the <B>-fsecond-underscore</B>
+option, unless <B>-fno-second-underscore</B> is explicitly requested.
+
+
+<P>
+
+
+This does not affect the generation of code that interfaces with
+the <B>libgfortran</B> library.
+
+
+<P>
+
+
+<I>Caution:</I> It is not a good idea to mix Fortran code compiled with
+<B>-ff2c</B> with code compiled with the default <B>-fno-f2c</B>
+calling conventions as, calling <TT>&quot;COMPLEX&quot;</TT> or default <TT>&quot;REAL&quot;</TT>
+functions between program parts which were compiled with different
+calling conventions will break at execution time.
+
+
+<P>
+
+
+<I>Caution:</I> This will break code which passes intrinsic functions
+of type default <TT>&quot;REAL&quot;</TT> or <TT>&quot;COMPLEX&quot;</TT> as actual arguments, as
+the library implementations use the <B>-fno-f2c</B> calling conventions.
+<DT><B>-fno-underscoring</B><DD>
+<A NAME="ixAEV"></A>
+Do not transform names of entities specified in the Fortran
+source file by appending underscores to them.
+
+
+<P>
+
+
+With <B>-funderscoring</B> in effect, <FONT SIZE="-1">GNU</FONT> Fortran appends one
+underscore to external names with no underscores.  This is done to ensure
+compatibility with code produced by many <FONT SIZE="-1">UNIX</FONT> Fortran compilers.
+
+
+<P>
+
+
+<I>Caution</I>: The default behavior of <FONT SIZE="-1">GNU</FONT> Fortran is
+incompatible with <B>f2c</B> and <B>g77</B>, please use the
+<B>-ff2c</B> option if you want object files compiled with
+<FONT SIZE="-1">GNU</FONT> Fortran to be compatible with object code created with these
+tools.
+
+
+<P>
+
+
+Use of <B>-fno-underscoring</B> is not recommended unless you are
+experimenting with issues such as integration of <FONT SIZE="-1">GNU</FONT> Fortran into
+existing system environments (vis-a-vis existing libraries, tools,
+and so on).
+
+
+<P>
+
+
+For example, with <B>-funderscoring</B>, and assuming that <TT>&quot;j()&quot;</TT> and
+<TT>&quot;max_count()&quot;</TT> are external functions while <TT>&quot;my_var&quot;</TT> and
+<TT>&quot;lvar&quot;</TT> are local variables, a statement like
+
+
+<P>
+
+
+
+
+<PRE>
+        I = J() + MAX_COUNT (MY_VAR, LVAR)
+
+</PRE>
+
+
+
+
+<P>
+
+
+is implemented as something akin to:
+
+
+<P>
+
+
+
+
+<PRE>
+        i = j_() + max_count__(&amp;my_var__, &amp;lvar);
+
+</PRE>
+
+
+
+
+<P>
+
+
+With <B>-fno-underscoring</B>, the same statement is implemented as:
+
+
+<P>
+
+
+
+
+<PRE>
+        i = j() + max_count(&amp;my_var, &amp;lvar);
+
+</PRE>
+
+
+
+
+<P>
+
+
+Use of <B>-fno-underscoring</B> allows direct specification of
+user-defined names while debugging and when interfacing <FONT SIZE="-1">GNU</FONT> Fortran
+code with other languages.
+
+
+<P>
+
+
+Note that just because the names match does <I>not</I> mean that the
+interface implemented by <FONT SIZE="-1">GNU</FONT> Fortran for an external name matches the
+interface implemented by some other language for that same name.
+That is, getting code produced by <FONT SIZE="-1">GNU</FONT> Fortran to link to code produced
+by some other compiler using this or any other method can be only a
+small part of the overall solution---getting the code generated by
+both compilers to agree on issues other than naming can require
+significant effort, and, unlike naming disagreements, linkers normally
+cannot detect disagreements in these other areas.
+
+
+<P>
+
+
+Also, note that with <B>-fno-underscoring</B>, the lack of appended
+underscores introduces the very real possibility that a user-defined
+external name will conflict with a name in a system library, which
+could make finding unresolved-reference bugs quite difficult in some
+cases---they might occur at program run time, and show up only as
+buggy behavior at run time.
+
+
+<P>
+
+
+In future versions of <FONT SIZE="-1">GNU</FONT> Fortran we hope to improve naming and linking
+issues so that debugging always involves using the names as they appear
+in the source, even if the names as seen by the linker are mangled to
+prevent accidental linking between procedures with incompatible
+interfaces.
+<DT><B>-fsecond-underscore</B><DD>
+<A NAME="ixAEW"></A>
+By default, <FONT SIZE="-1">GNU</FONT> Fortran appends an underscore to external
+names.  If this option is used <FONT SIZE="-1">GNU</FONT> Fortran appends two
+underscores to names with underscores and one underscore to external names
+with no underscores.  <FONT SIZE="-1">GNU</FONT> Fortran also appends two underscores to
+internal names with underscores to avoid naming collisions with external
+names.
+
+
+<P>
+
+
+This option has no effect if <B>-fno-underscoring</B> is
+in effect.  It is implied by the <B>-ff2c</B> option.
+
+
+<P>
+
+
+Otherwise, with this option, an external name such as <TT>&quot;MAX_COUNT&quot;</TT>
+is implemented as a reference to the link-time external symbol
+<TT>&quot;max_count__&quot;</TT>, instead of <TT>&quot;max_count_&quot;</TT>.  This is required
+for compatibility with <B>g77</B> and <B>f2c</B>, and is implied
+by use of the <B>-ff2c</B> option.
+<DT><B>-fcoarray=</B><I>&lt;keyword&gt;</I><DD>
+<A NAME="ixAEX"></A>
+<DL COMPACT><DT><DD>
+
+<DL COMPACT>
+<DT><B>none</B><DD>
+<A NAME="ixAEY"></A>
+
+Disable coarray support; using coarray declarations and image-control
+statements will produce a compile-time error. (Default)
+<DT><B>single</B><DD>
+<A NAME="ixAEZ"></A>
+Single-image mode, i.e. <TT>&quot;num_images()&quot;</TT> is always one.
+<DT><B>lib</B><DD>
+<A NAME="ixAFA"></A>
+Library-based coarray parallelization; a suitable <FONT SIZE="-1">GNU</FONT> Fortran coarray
+library needs to be linked.
+</DL>
+</DL>
+
+<DL COMPACT><DT><DD>
+</DL>
+
+<DT><B>-fcheck=</B><I>&lt;keyword&gt;</I><DD>
+<A NAME="ixAFB"></A>
+Enable the generation of run-time checks; the argument shall be
+a comma-delimited list of the following keywords.  Prefixing a check with
+<B>no-</B> disables it if it was activated by a previous specification.
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT><B>all</B><DD>
+<A NAME="ixAFC"></A>
+Enable all run-time test of <B>-fcheck</B>.
+<DT><B>array-temps</B><DD>
+<A NAME="ixAFD"></A>
+Warns at run time when for passing an actual argument a temporary array
+had to be generated. The information generated by this warning is
+sometimes useful in optimization, in order to avoid such temporaries.
+
+
+<P>
+
+
+Note: The warning is only printed once per location.
+<DT><B>bounds</B><DD>
+<A NAME="ixAFE"></A>
+Enable generation of run-time checks for array subscripts
+and against the declared minimum and maximum values.  It also
+checks array indices for assumed and deferred
+shape arrays against the actual allocated bounds and ensures that all string
+lengths are equal for character array constructors without an explicit
+typespec.
+
+
+<P>
+
+
+Some checks require that <B>-fcheck=bounds</B> is set for
+the compilation of the main program.
+
+
+<P>
+
+
+Note: In the future this may also include other forms of checking, e.g.,
+checking substring references.
+<DT><B>do</B><DD>
+<A NAME="ixAFF"></A>
+Enable generation of run-time checks for invalid modification of loop
+iteration variables.
+<DT><B>mem</B><DD>
+<A NAME="ixAFG"></A>
+Enable generation of run-time checks for memory allocation.
+Note: This option does not affect explicit allocations using the
+<TT>&quot;ALLOCATE&quot;</TT> statement, which will be always checked.
+<DT><B>pointer</B><DD>
+<A NAME="ixAFH"></A>
+Enable generation of run-time checks for pointers and allocatables.
+<DT><B>recursion</B><DD>
+<A NAME="ixAFI"></A>
+Enable generation of run-time checks for recursively called subroutines and
+functions which are not marked as recursive. See also <B>-frecursive</B>.
+Note: This check does not work for OpenMP programs and is disabled if used
+together with <B>-frecursive</B> and <B>-fopenmp</B>.
+</DL>
+</DL>
+
+<DL COMPACT><DT><DD>
+
+
+<P>
+
+
+Example: Assuming you have a file <I>foo.f90</I>, the command
+
+
+<P>
+
+
+
+
+<PRE>
+          gfortran -fcheck=all,no-array-temps foo.f90
+
+</PRE>
+
+
+
+
+<P>
+
+
+will compile the file with all checks enabled as specified above except
+warnings for generated array temporaries.
+</DL>
+
+<DT><B>-fbounds-check</B><DD>
+<A NAME="ixAFJ"></A>
+Deprecated alias for <B>-fcheck=bounds</B>.
+<DT><B>-fcheck-array-temporaries</B><DD>
+<A NAME="ixAFK"></A>
+Deprecated alias for <B>-fcheck=array-temps</B>.
+<DT><B>-fmax-array-constructor=</B><I>n</I><DD>
+<A NAME="ixAFL"></A>
+This option can be used to increase the upper limit permitted in 
+array constructors.  The code below requires this option to expand
+the array at compile time.
+
+
+<P>
+
+
+
+
+<PRE>
+        program test
+        implicit none
+        integer j
+        integer, parameter :: n = 100000
+        integer, parameter :: <A HREF="http://localhost/cgi-bin/man/man2html?n+i">i</A>(n) = (/ (2*j, j = 1, n) /)
+        print '(10(I0,1X))', i
+        end program test
+
+</PRE>
+
+
+
+
+<P>
+
+
+<I>Caution:  This option can lead to long compile times and excessively
+large object files.</I>
+
+
+<P>
+
+
+The default value for <I>n</I> is 65535.
+<DT><B>-fmax-stack-var-size=</B><I>n</I><DD>
+<A NAME="ixAFM"></A>
+This option specifies the size in bytes of the largest array that will be put
+on the stack; if the size is exceeded static memory is used (except in
+procedures marked as <FONT SIZE="-1">RECURSIVE</FONT>). Use the option <B>-frecursive</B> to
+allow for recursive procedures which do not have a <FONT SIZE="-1">RECURSIVE</FONT> attribute or
+for parallel programs. Use <B>-fno-automatic</B> to never use the stack.
+
+
+<P>
+
+
+This option currently only affects local arrays declared with constant
+bounds, and may not apply to all character variables.
+Future versions of <FONT SIZE="-1">GNU</FONT> Fortran may improve this behavior.
+
+
+<P>
+
+
+The default value for <I>n</I> is 32768.
+<DT><B>-fstack-arrays</B><DD>
+<A NAME="ixAFN"></A>
+Adding this option will make the Fortran compiler put all local arrays,
+even those of unknown size onto stack memory.  If your program uses very
+large local arrays it is possible that you will have to extend your runtime
+limits for stack memory on some operating systems. This flag is enabled
+by default at optimization level <B>-Ofast</B>.
+<DT><B>-fpack-derived</B><DD>
+<A NAME="ixAFO"></A>
+This option tells <FONT SIZE="-1">GNU</FONT> Fortran to pack derived type members as closely as
+possible.  Code compiled with this option is likely to be incompatible
+with code compiled without this option, and may execute slower.
+<DT><B>-frepack-arrays</B><DD>
+<A NAME="ixAFP"></A>
+In some circumstances <FONT SIZE="-1">GNU</FONT> Fortran may pass assumed shape array
+sections via a descriptor describing a noncontiguous area of memory.
+This option adds code to the function prologue to repack the data into
+a contiguous block at runtime.
+
+
+<P>
+
+
+This should result in faster accesses to the array.  However it can introduce
+significant overhead to the function call, especially  when the passed data
+is noncontiguous.
+<DT><B>-fshort-enums</B><DD>
+<A NAME="ixAFQ"></A>
+This option is provided for interoperability with C code that was
+compiled with the <B>-fshort-enums</B> option.  It will make
+<FONT SIZE="-1">GNU</FONT> Fortran choose the smallest <TT>&quot;INTEGER&quot;</TT> kind a given
+enumerator set will fit in, and give all its enumerators this kind.
+<DT><B>-fexternal-blas</B><DD>
+<A NAME="ixAFR"></A>
+This option will make <B>gfortran</B> generate calls to <FONT SIZE="-1">BLAS</FONT> functions
+for some matrix operations like <TT>&quot;MATMUL&quot;</TT>, instead of using our own
+algorithms, if the size of the matrices involved is larger than a given
+limit (see <B>-fblas-matmul-limit</B>).  This may be profitable if an
+optimized vendor <FONT SIZE="-1">BLAS</FONT> library is available.  The <FONT SIZE="-1">BLAS</FONT> library will have
+to be specified at link time.
+<DT><B>-fblas-matmul-limit=</B><I>n</I><DD>
+<A NAME="ixAFS"></A>
+Only significant when <B>-fexternal-blas</B> is in effect.
+Matrix multiplication of matrices with size larger than (or equal to) <I>n</I>
+will be performed by calls to <FONT SIZE="-1">BLAS</FONT> functions, while others will be
+handled by <B>gfortran</B> internal algorithms. If the matrices
+involved are not square, the size comparison is performed using the
+geometric mean of the dimensions of the argument and result matrices.
+
+
+<P>
+
+
+The default value for <I>n</I> is 30.
+<DT><B>-finline-matmul-limit=</B><I>n</I><DD>
+<A NAME="ixAFT"></A>
+When front-end optimiztion is active, some calls to the <TT>&quot;MATMUL&quot;</TT>
+intrinsic function will be inlined.  This may result in code size
+increase if the size of the matrix cannot be determined at compile
+time, as code for both cases is generated.  Setting
+<TT>&quot;-finline-matmul-limit=0&quot;</TT> will disable inlining in all cases.
+Setting this option with a value of <I>n</I> will produce inline code
+for matrices with size up to <I>n</I>. If the matrices involved are not
+square, the size comparison is performed using the geometric mean of
+the dimensions of the argument and result matrices.
+
+
+<P>
+
+
+The default value for <I>n</I> is the value specified for
+<TT>&quot;-fblas-matmul-limit&quot;</TT> if this option is specified, or unlimitited
+otherwise.
+<DT><B>-frecursive</B><DD>
+<A NAME="ixAFU"></A>
+Allow indirect recursion by forcing all local arrays to be allocated
+on the stack. This flag cannot be used together with
+<B>-fmax-stack-var-size=</B> or <B>-fno-automatic</B>.
+<DT><B>-finit-local-zero</B><DD>
+<A NAME="ixAFV"></A>
+
+<DT><B>-finit-integer=</B><I>n</I><DD>
+<A NAME="ixAFW"></A>
+<DT><B>-finit-real=</B><I>&lt;zero|inf|-inf|nan|snan&gt;</I><DD>
+<A NAME="ixAFX"></A>
+<DT><B>-finit-logical=</B><I>&lt;true|false&gt;</I><DD>
+<A NAME="ixAFY"></A>
+<DT><B>-finit-character=</B><I>n</I><DD>
+<A NAME="ixAFZ"></A>
+
+The <B>-finit-local-zero</B> option instructs the compiler to
+initialize local <TT>&quot;INTEGER&quot;</TT>, <TT>&quot;REAL&quot;</TT>, and <TT>&quot;COMPLEX&quot;</TT>
+variables to zero, <TT>&quot;LOGICAL&quot;</TT> variables to false, and
+<TT>&quot;CHARACTER&quot;</TT> variables to a string of null bytes.  Finer-grained
+initialization options are provided by the
+<B>-finit-integer=</B><I>n</I>,
+<B>-finit-real=</B><I>&lt;zero|inf|-inf|nan|snan&gt;</I> (which also initializes
+the real and imaginary parts of local <TT>&quot;COMPLEX&quot;</TT> variables),
+<B>-finit-logical=</B><I>&lt;true|false&gt;</I>, and
+<B>-finit-character=</B><I>n</I> (where <I>n</I> is an <FONT SIZE="-1">ASCII</FONT> character
+value) options.  These options do not initialize
+<DL COMPACT><DT><DD>
+<DL COMPACT>
+<DT>*<DD>
+allocatable arrays
+<DT>*<DD>
+components of derived type variables
+<DT>*<DD>
+variables that appear in an <TT>&quot;EQUIVALENCE&quot;</TT> statement.
+</DL>
+</DL>
+
+<DL COMPACT><DT><DD>
+
+
+<P>
+
+
+(These limitations may be removed in future releases).
+
+
+<P>
+
+
+Note that the <B>-finit-real=nan</B> option initializes <TT>&quot;REAL&quot;</TT>
+and <TT>&quot;COMPLEX&quot;</TT> variables with a quiet NaN. For a signalling NaN
+use <B>-finit-real=snan</B>; note, however, that compile-time
+optimizations may convert them into quiet NaN and that trapping
+needs to be enabled (e.g. via <B>-ffpe-trap</B>).
+
+
+<P>
+
+
+Finally, note that enabling any of the <B>-finit-*</B> options will
+silence warnings that would have been emitted by <B>-Wuninitialized</B>
+for the affected local variables.
+</DL>
+
+<DT><B>-falign-commons</B><DD>
+<A NAME="ixAGA"></A>
+By default, <B>gfortran</B> enforces proper alignment of all variables in a
+<TT>&quot;COMMON&quot;</TT> block by padding them as needed. On certain platforms this is mandatory,
+on others it increases performance. If a <TT>&quot;COMMON&quot;</TT> block is not declared with
+consistent data types everywhere, this padding can cause trouble, and
+<B>-fno-align-commons</B> can be used to disable automatic alignment. The
+same form of this option should be used for all files that share a <TT>&quot;COMMON&quot;</TT> block.
+To avoid potential alignment issues in <TT>&quot;COMMON&quot;</TT> blocks, it is recommended to order
+objects from largest to smallest.
+<DT><B>-fno-protect-parens</B><DD>
+<A NAME="ixAGB"></A>
+By default the parentheses in expression are honored for all optimization
+levels such that the compiler does not do any re-association. Using
+<B>-fno-protect-parens</B> allows the compiler to reorder <TT>&quot;REAL&quot;</TT> and
+<TT>&quot;COMPLEX&quot;</TT> expressions to produce faster code. Note that for the re-association
+optimization <B>-fno-signed-zeros</B> and <B>-fno-trapping-math</B>
+need to be in effect. The parentheses protection is enabled by default, unless
+<B>-Ofast</B> is given.
+<DT><B>-frealloc-lhs</B><DD>
+<A NAME="ixAGC"></A>
+An allocatable left-hand side of an intrinsic assignment is automatically
+(re)allocated if it is either unallocated or has a different shape. The
+option is enabled by default except when <B>-std=f95</B> is given. See
+also <B>-Wrealloc-lhs</B>.
+<DT><B>-faggressive-function-elimination</B><DD>
+<A NAME="ixAGD"></A>
+Functions with identical argument lists are eliminated within
+statements, regardless of whether these functions are marked
+<TT>&quot;PURE&quot;</TT> or not. For example, in
+
+
+<P>
+
+
+
+
+<PRE>
+          a = f(b,c) + f(b,c)
+
+</PRE>
+
+
+
+
+<P>
+
+
+there will only be a single call to <TT>&quot;f&quot;</TT>.  This option only works
+if <B>-ffrontend-optimize</B> is in effect.
+<DT><B>-ffrontend-optimize</B><DD>
+<A NAME="ixAGE"></A>
+This option performs front-end optimization, based on manipulating
+parts the Fortran parse tree.  Enabled by default by any <B>-O</B>
+option.  Optimizations enabled by this option include inlining calls
+to <TT>&quot;MATMUL&quot;</TT>, elimination of identical function calls within
+expressions, removing unnecessary calls to <TT>&quot;TRIM&quot;</TT> in comparisons
+and assignments and replacing <TT>TRIM(a)</TT> with
+<TT>&quot;a(1:LEN_TRIM(a))&quot;</TT>.  It can be deselected by specifying
+<B>-fno-frontend-optimize</B>.
+</DL>
+<A NAME="lbAN">&nbsp;</A>
+<H2>ENVIRONMENT</H2>
+
+<A NAME="ixAGF"></A>
+The <B>gfortran</B> compiler currently does not make use of any environment
+variables to control its operation above and beyond those
+that affect the operation of <B>gcc</B>.
+<A NAME="lbAO">&nbsp;</A>
+<H2>BUGS</H2>
+
+<A NAME="ixAGG"></A>
+For instructions on reporting bugs, see
+&lt;<B><A HREF="https://bugs.gentoo.org/">https://bugs.gentoo.org/</A></B>&gt;.
+<A NAME="lbAP">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A NAME="ixAGH"></A>
+<I><A HREF="http://localhost/cgi-bin/man/man2html?7+gpl">gpl</A></I>(7), <I><A HREF="http://localhost/cgi-bin/man/man2html?7+gfdl">gfdl</A></I>(7), <I><A HREF="http://localhost/cgi-bin/man/man2html?7+fsf-funding">fsf-funding</A></I>(7),
+<I><A HREF="http://localhost/cgi-bin/man/man2html?1+cpp">cpp</A></I>(1), <I><A HREF="http://localhost/cgi-bin/man/man2html?1+gcov">gcov</A></I>(1), <I><A HREF="http://localhost/cgi-bin/man/man2html?1+gcc">gcc</A></I>(1), <I><A HREF="http://localhost/cgi-bin/man/man2html?1+as">as</A></I>(1), <I><A HREF="http://localhost/cgi-bin/man/man2html?1+ld">ld</A></I>(1), <I><A HREF="http://localhost/cgi-bin/man/man2html?1+gdb">gdb</A></I>(1), <I><A HREF="http://localhost/cgi-bin/man/man2html?1+adb">adb</A></I>(1), <I><A HREF="http://localhost/cgi-bin/man/man2html?1+dbx">dbx</A></I>(1), <I><A HREF="http://localhost/cgi-bin/man/man2html?1+sdb">sdb</A></I>(1)
+and the Info entries for <I>gcc</I>, <I>cpp</I>, <I>gfortran</I>, <I>as</I>,
+<I>ld</I>, <I>binutils</I> and <I>gdb</I>.
+<A NAME="lbAQ">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+<A NAME="ixAGI"></A>
+See the Info entry for <B>gfortran</B> for contributors to <FONT SIZE="-1">GCC</FONT> and
+<FONT SIZE="-1">GNU</FONT> Fortran.
+<A NAME="lbAR">&nbsp;</A>
+<H2>COPYRIGHT</H2>
+
+<A NAME="ixAGJ"></A>
+Copyright (c) 2004-2016 Free Software Foundation, Inc.
+<P>
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the <FONT SIZE="-1">GNU</FONT> Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being ``Funding Free Software'', the Front-Cover
+Texts being (a) (see below), and with the Back-Cover Texts being (b)
+(see below).  A copy of the license is included in the <I><A HREF="http://localhost/cgi-bin/man/man2html?7+gfdl">gfdl</A></I>(7) man page.
+<P>
+
+(a) The <FONT SIZE="-1">FSF</FONT>'s Front-Cover Text is:
+<P>
+
+
+
+<PRE>
+     A GNU Manual
+
+</PRE>
+
+
+<P>
+
+(b) The <FONT SIZE="-1">FSF</FONT>'s Back-Cover Text is:
+<P>
+
+
+
+<PRE>
+     You have freedom to copy and modify this GNU Manual, like GNU
+     software.  Copies published by the Free Software Foundation raise
+     funds for GNU development.
+
+</PRE>
+
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DL>
+<DT><A HREF="#lbAF">Options controlling Fortran dialect</A><DD>
+<DT><A HREF="#lbAG">Enable and customize preprocessing</A><DD>
+<DT><A HREF="#lbAH">Options to request or suppress errors and warnings</A><DD>
+<DT><A HREF="#lbAI">Options for debugging your program or <FONT SIZE="-1">GNU</FONT> Fortran</A><DD>
+<DT><A HREF="#lbAJ">Options for directory search</A><DD>
+<DT><A HREF="#lbAK">Influencing the linking step</A><DD>
+<DT><A HREF="#lbAL">Influencing runtime behavior</A><DD>
+<DT><A HREF="#lbAM">Options for code generation conventions</A><DD>
+</DL>
+<DT><A HREF="#lbAN">ENVIRONMENT</A><DD>
+<DT><A HREF="#lbAO">BUGS</A><DD>
+<DT><A HREF="#lbAP">SEE ALSO</A><DD>
+<DT><A HREF="#lbAQ">AUTHOR</A><DD>
+<DT><A HREF="#lbAR">COPYRIGHT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 15:25:18 GMT, June 13, 2017
+</BODY>
+</HTML>
