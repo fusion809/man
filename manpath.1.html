@@ -1,0 +1,217 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of MANPATH</TITLE>
+</HEAD><BODY>
+<H1>MANPATH</H1>
+Section: Manual pager utils (1)<BR>Updated: 2016-12-12<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+manpath - determine search path for manual pages
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>manpath  </B>
+
+[<B>-qgdc?V</B>]
+
+[<B>-m</B>
+
+<I>system</I>[,...]]
+
+[<B>-C</B>
+
+<I>file</I>]
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+If 
+$<B>MANPATH</B>
+
+is set, 
+<B>manpath</B>
+
+will simply display its contents and issue a warning.
+If not, 
+<B>manpath </B>
+
+will determine a suitable manual page hierarchy search path and display the
+results.
+<P>
+The colon-delimited path is determined using information gained from the
+man-db configuration file -
+(<I>/etc/man_db.conf</I>)
+
+and the user's environment.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<DL COMPACT>
+<DT><B>-q</B>, <B>--quiet</B>
+
+<DD>
+Do not issue warnings.
+<DT><B>-d</B>, <B>--debug</B>
+
+<DD>
+Print debugging information.
+<DT><B>-c</B>, <B>--catpath</B>
+
+<DD>
+Produce a catpath as opposed to a manpath. 
+Once the manpath is determined,
+each path element is converted to its relative catpath.
+<DT><B>-g</B>, <B>--global</B>
+
+<DD>
+Produce a manpath consisting of all paths named as `global' within the
+man-db configuration file. 
+
+
+
+
+
+
+
+</DL>
+<P>
+
+<B>-m </B>
+
+<I>system </I>[,...],
+<B>--systems=</B><I>system</I>[,...]
+<DL COMPACT><DT><DD>
+If this system has access to other operating system's manual hierarchies, 
+this option can be used to include them in the output of
+<B>manpath</B>.
+
+To include NewOS's manual page hierarchies use the option
+<B>-m</B>
+
+<B>NewOS</B>.
+
+<P>
+The
+<I>system</I>
+
+specified can be a combination of comma delimited operating system names.
+To include the native operating system's manual page hierarchies, 
+the system name
+<B>man</B>
+
+must be included in the argument string.
+This option will override the
+$<B>SYSTEM</B>
+
+environment variable.
+</DL>
+
+<DL COMPACT>
+<DT><B>-C&nbsp;</B><I>file</I><B></B>,&nbsp;<B>--config-file=</B><I>file</I>
+
+<DD>
+Use this user configuration file rather than the default of
+<I>~/.manpath</I>.
+
+<DT><B>-?</B>, <B>--help</B>
+
+<DD>
+Print a help message and exit.
+<DT><B>--usage</B>
+
+<DD>
+Print a short usage message and exit.
+<DT><B>-V</B>, <B>--version</B>
+
+<DD>
+Display version information.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>ENVIRONMENT</H2>
+
+<DL COMPACT>
+<DT><B>MANPATH</B>
+
+<DD>
+If
+$<B>MANPATH</B>
+
+is set,
+<B>manpath</B>
+
+displays its value rather than determining it on the fly.
+If 
+$<B>MANPATH</B>
+
+is prefixed by a colon, then the value of the variable is appended
+to the list determined from the content of the configuration files.
+If the colon comes at the end of the value in the variable, then the
+determined list is appended to the content of the variable.
+If the value of the variable contains a double colon
+(<B>::</B>),
+
+then the determined list is inserted in the middle of the value, between
+the two colons.
+<DT><B>SYSTEM</B>
+
+<DD>
+If
+$<B>SYSTEM</B>
+
+is set, it will have the same effect as if it had been specified as the
+argument to the
+<B>-m</B>
+
+option.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>FILES</H2>
+
+<DL COMPACT>
+<DT><I>/etc/man_db.conf</I>
+
+<DD>
+man-db configuration file.
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+apropos">apropos</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+man">man</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+whatis">whatis</A></B>(1)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+<PRE>
+Wilf. (<A HREF="mailto:G.Wilford@ee.surrey.ac.uk">G.Wilford@ee.surrey.ac.uk</A>).
+Fabrizio Polacco (<A HREF="mailto:fpolacco@debian.org">fpolacco@debian.org</A>).
+Colin Watson (<A HREF="mailto:cjwatson@debian.org">cjwatson@debian.org</A>).
+</PRE>
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">ENVIRONMENT</A><DD>
+<DT><A HREF="#lbAG">FILES</A><DD>
+<DT><A HREF="#lbAH">SEE ALSO</A><DD>
+<DT><A HREF="#lbAI">AUTHOR</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:19:47 GMT, June 13, 2017
+</BODY>
+</HTML>
