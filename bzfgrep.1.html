@@ -1,65 +1,113 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8"/>
-<style>
-table.head, table.foot { width: 100%; }
-td.head-rtitle, td.foot-os { text-align: right; }
-td.head-vol { text-align: center; }
-table.foot td { width: 50%; }
-table.head td { width: 33%; }
-div.spacer { margin: 1em 0; }
-</style>
-<title>
-BZGREP(1)</title>
-</head>
-<body>
-<div class="mandoc">
-<table class="head">
-<tbody>
-<tr>
-<td class="head-ltitle">
-BZGREP(1)</td>
-<td class="head-vol">
-General Commands Manual</td>
-<td class="head-rtitle">
-BZGREP(1)</td>
-</tr>
-</tbody>
-</table>
-<div style="height: 1.00em;">
-&#160;</div>
-<div style="height: 1.00em;">
-&#160;</div>
-<div class="section">
-<h1>NAME</h1> bzgrep, bzfgrep, bzegrep - search possibly bzip2 compressed files for a regular expression</div>
-<div class="section">
-<h1>SYNOPSIS</h1> <b>bzgrep</b> [ grep_options ] <b>[&#160;-e&#160;]</b><i> pattern</i> <i>filename</i>...<div style="height: 0.00em;">
-&#160;</div>
-<b>bzegrep</b> [ egrep_options ] <b>[&#160;-e&#160;]</b><i> pattern</i> <i>filename</i>...<div style="height: 0.00em;">
-&#160;</div>
-<b>bzfgrep</b> [ fgrep_options ] <b>[&#160;-e&#160;]</b><i> pattern</i> <i>filename</i>...</div>
-<div class="section">
-<h1>DESCRIPTION</h1> <i>Bzgrep</i> is used to invoke the <i>grep</i> on bzip2-compressed files. All options specified are passed directly to <i>grep.</i> If no file is specified, then the standard input is decompressed if necessary and fed to grep. Otherwise the given files are uncompressed if necessary and fed to <i>grep.</i><div class="spacer">
-</div>
-If <i>bzgrep</i> is invoked as <i>bzegrep</i> or <i>bzfgrep</i> then <i>egrep</i> or <i>fgrep</i> is used instead of <i>grep.</i> If the GREP environment variable is set, <i>bzgrep</i> uses it as the <i>grep</i> program to be invoked. For example:<div style="height: 1.00em;">
-&#160;</div>
-<br/>
-    for sh:  GREP=fgrep  bzgrep string files<br/>
-    for csh: (setenv GREP fgrep; bzgrep string files)</div>
-<div class="section">
-<h1>AUTHOR</h1> Charles Levert (charles@comm.polymtl.ca). Adapted to bzip2 by Philippe Troin &lt;phil@fifi.org&gt; for Debian GNU/Linux.</div>
-<div class="section">
-<h1>SEE ALSO</h1> grep(1), egrep(1), fgrep(1), bzdiff(1), bzmore(1), bzless(1), bzip2(1)</div>
-<table class="foot">
-<tr>
-<td class="foot-date">
-</td>
-<td class="foot-os">
-</td>
-</tr>
-</table>
-</div>
-</body>
-</html>
+Content-type: text/html
 
+<HTML><HEAD><TITLE>Manpage of BZGREP</TITLE>
+</HEAD><BODY>
+<H1>BZGREP</H1>
+Section: User Commands  (1)<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+bzgrep, bzfgrep, bzegrep - search possibly bzip2 compressed files for a regular expression
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>bzgrep</B>
+
+[ grep_options ]
+<B>[&nbsp;-e&nbsp;]</B><I> pattern</I>
+
+<I>filename</I>...
+
+<BR>
+
+<B>bzegrep</B>
+
+[ egrep_options ]
+<B>[&nbsp;-e&nbsp;]</B><I> pattern</I>
+
+<I>filename</I>...
+
+<BR>
+
+<B>bzfgrep</B>
+
+[ fgrep_options ]
+<B>[&nbsp;-e&nbsp;]</B><I> pattern</I>
+
+<I>filename</I>...
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<I>Bzgrep</I>
+
+is used to invoke the
+<I>grep</I>
+
+on bzip2-compressed files. All options specified are passed directly to
+<I>grep.</I>
+
+If no file is specified, then the standard input is decompressed
+if necessary and fed to grep.
+Otherwise the given files are uncompressed if necessary and fed to
+<I>grep.</I>
+
+<P>
+
+If
+<I>bzgrep</I>
+
+is invoked as
+<I>bzegrep</I>
+
+or
+<I>bzfgrep</I>
+
+then
+<I>egrep</I>
+
+or
+<I>fgrep</I>
+
+is used instead of
+<I>grep.</I>
+
+If the GREP environment variable is set,
+<I>bzgrep</I>
+
+uses it as the
+<I>grep</I>
+
+program to be invoked. For example:
+<P>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;sh:&nbsp;&nbsp;GREP=fgrep&nbsp;&nbsp;bzgrep&nbsp;string&nbsp;files
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;csh:&nbsp;(setenv&nbsp;GREP&nbsp;fgrep;&nbsp;bzgrep&nbsp;string&nbsp;files)
+<A NAME="lbAE">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Charles Levert (<A HREF="mailto:charles@comm.polymtl.ca">charles@comm.polymtl.ca</A>). Adapted to bzip2 by Philippe
+Troin &lt;<A HREF="mailto:phil@fifi.org">phil@fifi.org</A>&gt; for Debian GNU/Linux.
+<A NAME="lbAF">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A HREF="http://localhost/cgi-bin/man/man2html?1+grep">grep</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+egrep">egrep</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+fgrep">fgrep</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+bzdiff">bzdiff</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+bzmore">bzmore</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+bzless">bzless</A>(1), <A HREF="http://localhost/cgi-bin/man/man2html?1+bzip2">bzip2</A>(1)
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">AUTHOR</A><DD>
+<DT><A HREF="#lbAF">SEE ALSO</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 20:45:45 GMT, June 13, 2017
+</BODY>
+</HTML>
